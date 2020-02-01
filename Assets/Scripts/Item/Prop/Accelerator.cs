@@ -5,6 +5,8 @@ using MyGameApplication.Car;
 
 namespace MyGameApplication.Item {
     public class Accelerator : Prop {
+        [SerializeField] private float m_AccelForce = 50;
+        [SerializeField] private float m_AccelDuration = 5;
         private CarController m_Car;
 
         public override bool isCarItem() {
@@ -23,7 +25,7 @@ namespace MyGameApplication.Item {
         public override void PayLoad() {
             base.PayLoad();
             if (m_Car.AccelInput > 0) {
-                m_Car.Accelerate();
+                m_Car.Accelerate(m_AccelForce, m_AccelDuration);
             }
             expire();
         }

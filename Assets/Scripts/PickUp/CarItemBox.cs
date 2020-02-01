@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace MyGameApplication.PickUp {
     public class CarItemBox : PickUp {
+        [SerializeField] private float m_FreshTime = 5;
+
         // Update is called once per frame
         void Update() {
             //transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
@@ -35,7 +37,7 @@ namespace MyGameApplication.PickUp {
         protected override void onGain() {
             base.onGain();
             gameObject.SetActive(false);
-            Invoke("appear", 5);
+            Invoke("appear", m_FreshTime);
         }
         private void appear() {
             gameObject.SetActive(true);

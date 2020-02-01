@@ -106,7 +106,7 @@ namespace MyGameApplication.Car {
             ApplyDrive(accel);
 
             //LimitSpeedByDrag();
-            //print("speed " + CurrentSpeed);
+            print("speed " + CurrentSpeed);
         }
 
         private void ApplyDrive(float torque) {
@@ -149,13 +149,25 @@ namespace MyGameApplication.Car {
             AddDownForce();
         }
 
-        public void Accelerate() {
+        private IEnumerator Accelerating(float force, float duration) {
+            float countDown = duration;
+            //m_Rb.AddForce(new Vector3(0, 0, force * AccelInput));
+            while (countDown > 0 && AccelInput > 0) {
+                countDown -= Time.deltaTime;
+                m_Rb.AddForce(new Vector3(0, 0, force * (countDown / duration) * AccelInput));
+                yield return null;
+            }
+            Decelerate();
+            yield break;
+        }
+        public void Accelerate(float force, float duration = 5) {
             print("accel");
             m_Rb.drag /= 2;
             m_ForwardTorque *= 2;
-            Invoke("Decelerate", 5);
+            StartCoroutine(Accelerating(force, duration));
         }
         private void Decelerate() {
+            print("decel");
             m_Rb.drag = m_OriginalDrag;
             m_ForwardTorque = m_OriginalForwardTorque;
         }

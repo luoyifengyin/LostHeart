@@ -30,15 +30,15 @@ namespace MyGameApplication.Item {
             public int capacity = -1;               //道具容量（-1代表无上限）
             public string uiPath;                   //道具资源路径
             public int objectPoolCapacity = 100;    //道具对象池容量
-            [NonSerialized] public GameObject mGameObject;
+            [NonSerialized] public GameObject mPrefab;  //外部使用该值时必须只读
             [NonSerialized] public Sprite mSprite;
             public GameObject gameObject {
                 get {
-                    if (!mGameObject) {
+                    if (!mPrefab) {
                         string path = _instance.setting.prefabRootPath + uiPath;
-                        mGameObject = Resources.Load<GameObject>(path);
+                        mPrefab = Resources.Load<GameObject>(path);
                     }
-                    return mGameObject;
+                    return mPrefab;
                 }
             }
             public Sprite sprite {
