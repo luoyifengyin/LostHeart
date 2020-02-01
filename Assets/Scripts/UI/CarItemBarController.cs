@@ -11,7 +11,7 @@ namespace MyGameApplication.UI {
 
         private int m_ItemCapacity;
         private Image[] m_ItemImgs;
-        private Queue<Prop> m_ItemQueue = new Queue<Prop>();
+        private Queue<int> m_ItemQueue = new Queue<int>();
         private Sprite m_Mask;
 
         public static CarItemBarController Instance {
@@ -30,24 +30,27 @@ namespace MyGameApplication.UI {
             m_Mask = m_ItemImgs[0].sprite;
         }
 
-        public void addProp(Prop prop) {
+        public void addProp(int id) {
             if (m_ItemQueue.Count < m_ItemCapacity) {
                 int idx = m_ItemQueue.Count;
-                m_ItemQueue.Enqueue(prop);
-                m_ItemImgs[idx].sprite = ItemManager.Instance.GetSpriteById(prop.ItemId);
+                m_ItemQueue.Enqueue(id);
+                Sprite sprite = ItemManager.Instance.GetSpriteById(id);
+                m_ItemImgs[idx].sprite = sprite;
             }
+        }
+
+        private void useItem() {
+            int id = m_ItemQueue.Dequeue();
+            ItemManager.Instance.CreateItemObjectById(id).GetComponent<Prop>().PayLoad();
+            for (int i = 0; i < m_ItemCapacity - 1; i++) {
+                m_ItemImgs[i].sprite = m_ItemImgs[i + 1].sprite;
+            }
+            m_ItemImgs[m_ItemCapacity - 1].sprite = m_Mask;
         }
 
         private void FixedUpdate() {
             bool use = CrossPlatformInputManager.GetButtonDown("Fire1");
-            if (use && m_ItemQueue.Count > 0) {
-                Prop prop = m_ItemQueue.Dequeue();
-                prop.PayLoad();
-                for(int i = 0;i < m_ItemCapacity - 1; i++) {
-                    m_ItemImgs[i].sprite = m_ItemImgs[i + 1].sprite;
-                }
-                m_ItemImgs[m_ItemCapacity - 1].sprite = m_Mask;
-            }
+            if (use && m_ItemQueue.Count > 0) useItem();
         }
     }
 }

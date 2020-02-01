@@ -25,6 +25,7 @@ namespace MyGameApplication.Car {
         private Rigidbody m_Rb;
         private float m_CurTorque = 0;
         private float m_OriginalDrag;
+        private float m_OriginalForwardTorque;
 
         public float CurrentSpeed { get { return m_Rb.velocity.magnitude; } }
         public float AccelInput { get; private set; }
@@ -52,6 +53,7 @@ namespace MyGameApplication.Car {
             m_Rb = GetComponent<Rigidbody>();
             m_WheelColliders[0].attachedRigidbody.centerOfMass += m_CenterOfMassOffset;
             m_OriginalDrag = m_Rb.drag;
+            m_OriginalForwardTorque = m_ForwardTorque;
         }
 
         // Update is called once per frame
@@ -150,10 +152,12 @@ namespace MyGameApplication.Car {
         public void Accelerate() {
             print("accel");
             m_Rb.drag /= 2;
+            m_ForwardTorque *= 2;
             Invoke("Decelerate", 5);
         }
         private void Decelerate() {
             m_Rb.drag = m_OriginalDrag;
+            m_ForwardTorque = m_OriginalForwardTorque;
         }
     }
 }

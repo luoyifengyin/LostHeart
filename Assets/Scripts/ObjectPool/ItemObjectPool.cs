@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 using ObjectChache = System.Collections.Concurrent.ConcurrentBag<UnityEngine.GameObject>;
 
 namespace MyGameApplication.ObjectPool {
-    //道具对象池
+    //道具对象池，不要直接使用，必须通过ItemManager使用
     public class ItemObjectPool : MonoBehaviour {
         private static ItemObjectPool _instance;
         private Dictionary<int, ObjectChache> objCaches = new Dictionary<int, ObjectChache>();

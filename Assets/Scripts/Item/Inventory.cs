@@ -15,7 +15,7 @@ namespace MyGameApplication.Item {
             return m_AllItems[type];
         }
 
-        public void addItem(int id, int cnt = 1) {
+        public virtual void addItem(int id, int cnt = 1) {
             ItemManager itemManager = ItemManager.Instance;
             ItemManager.ItemBean item = itemManager.itemList[id];
             var items = GetItemsByType(item.type);

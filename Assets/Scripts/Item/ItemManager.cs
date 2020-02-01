@@ -23,13 +23,13 @@ namespace MyGameApplication.Item {
 
         [Serializable]
         public class ItemBean {
-            public int id;
-            public ItemType type;
-            public string name;
-            public string description;
-            public int capacity = -1;
-            public string uiPath;
-            public int objectPoolCapacity = 100;
+            public int id;                          //道具id
+            public ItemType type;                   //道具类型
+            public string name;                     //道具名称
+            public string description;              //道具描述
+            public int capacity = -1;               //道具容量（-1代表无上限）
+            public string uiPath;                   //道具资源路径
+            public int objectPoolCapacity = 100;    //道具对象池容量
             [NonSerialized] public GameObject mGameObject;
             [NonSerialized] public Sprite mSprite;
             public GameObject gameObject {
@@ -75,13 +75,15 @@ namespace MyGameApplication.Item {
         private static ItemManager Initialize() {
             TextAsset textAsset = Resources.Load<TextAsset>("Text/ItemList");
             _instance = JsonUtility.FromJson<ItemManager>(textAsset.text);
+            ItemObjectPool objectPool = ItemObjectPool.Instance;
             for(int i = 1;i < _instance.itemList.Length; i++) {
-                int capacity = _instance.itemList[i].capacity;
-                ItemObjectPool.Instance.SetCapacityById(i, capacity);
+                int capacity = _instance.itemList[i].objectPoolCapacity;
+                objectPool.SetCapacityById(i, capacity);
             }
             return _instance;
         }
 
+        //道具gameObject的生成和释放，必须使用ItemManager的接口，通过对象池进行管理
         public GameObject CreateItemObjectById(int id) {
             GameObject obj = ItemObjectPool.Instance.Get(id);
             obj.SetActive(false);
@@ -90,6 +92,7 @@ namespace MyGameApplication.Item {
             return obj;
         }
         public void ReleaseItemObjectById(int id, GameObject obj) {
+            if (!obj) return;
             ItemObjectPool.Instance.Put(id, obj);
         }
 

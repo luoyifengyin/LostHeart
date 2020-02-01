@@ -16,18 +16,14 @@ namespace MyGameApplication.PickUp {
             }
         }
 
-        public void GainItem(GameObject obj = null) {
-            if (m_IsItem || m_ItemController) {
-                PlayerBag.Instance.addItem(m_PickedItemId, 1, gameObject);
-            }
-            else {
-                PlayerBag.Instance.addItem(m_PickedItemId, 1, obj);
-                onGain();
-            }
+        public void GainItem(int cnt = 1) {
+            PlayerBag.Instance.addItem(m_PickedItemId, cnt);
+            onGain();
         }
 
         protected virtual void onGain() {
-            Destroy(gameObject);
+            if (m_IsItem || m_ItemController)
+                ItemManager.Instance.ReleaseItemObjectById(m_PickedItemId, gameObject);
         }
     }
 }

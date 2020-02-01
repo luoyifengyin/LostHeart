@@ -22,7 +22,9 @@ namespace MyGameApplication.Item {
 
         public override void PayLoad() {
             base.PayLoad();
-            m_Car.Accelerate();
+            if (m_Car.AccelInput > 0) {
+                m_Car.Accelerate();
+            }
             expire();
         }
     }

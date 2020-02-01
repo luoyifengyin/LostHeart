@@ -17,19 +17,23 @@ namespace MyGameApplication.PickUp {
             if (go.CompareTag("Car")) {
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
-                BaseItem item = itemManager.CreateItemObjectById(itemId).GetComponent<BaseItem>();
-                if (item is Prop && ((Prop)item).isCarItem()) {
-                    CarItemBarController.Instance.addProp((Prop)item);
+                GameObject itemObj = itemManager.CreateItemObjectById(itemId);
+                BaseItem item = null;
+                if (itemObj) item = itemObj.GetComponent<BaseItem>();
+                if (item && item is Prop && ((Prop)item).isCarItem()) {
+                    CarItemBarController.Instance.addProp(itemId);
                     onGain();
                 }
                 else {
                     m_PickedItemId = itemId;
-                    GainItem(item.gameObject);
+                    GainItem();
                 }
+                itemManager.ReleaseItemObjectById(itemId, itemObj);
             }
         }
 
         protected override void onGain() {
+            base.onGain();
             gameObject.SetActive(false);
             Invoke("appear", 5);
         }

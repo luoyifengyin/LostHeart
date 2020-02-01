@@ -12,9 +12,12 @@ namespace MyGameApplication.Item {
             }
         }
 
-        public void addItem(int id, int cnt, GameObject itemObject = null) {
+        public override void addItem(int id, int cnt = 1) {
             base.addItem(id, cnt);
-            if (itemObject) ItemManager.Instance.ReleaseItemObjectById(id, itemObject);
+            GameObject go = ItemManager.Instance.itemList[id].gameObject;
+            BaseItem item = null;
+            if (go) item = go.GetComponent<BaseItem>();
+            if (item) item.OnCollected(cnt);
         }
     }
 }
