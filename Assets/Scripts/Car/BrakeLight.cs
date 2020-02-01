@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     public class BrakeLight : MonoBehaviour {
         private CarController m_Car;
         private Renderer m_Renderer;

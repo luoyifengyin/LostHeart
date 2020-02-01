@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace Car {
+namespace MyGameApplication.Car {
     public class HeadLight : MonoBehaviour {
-        [SerializeField] private GameObject m_Light;
+        [SerializeField] private GameObject m_Light = null;
         private Renderer m_Renderer;
         private GameObject[] m_HeadLights;
         private int m_Cnt;

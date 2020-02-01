@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     [RequireComponent(typeof(CarController))]
     [RequireComponent(typeof(CarGear))]
 

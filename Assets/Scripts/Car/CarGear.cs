@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     [RequireComponent(typeof(CarController))]
 
     public class CarGear : MonoBehaviour {
         private CarController m_Car;
-        [SerializeField] private float m_SpeedOfMaxGear;
+        [SerializeField] private float m_SpeedOfMaxGear = 25f;
         [SerializeField] private float m_RevRangeBoundary = 1f;
         private static int NoOfGears = 5;
         private int m_GearNum;

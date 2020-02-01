@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace Car {
+namespace MyGameApplication.Car {
     [RequireComponent(typeof(CarController))]
 
     public class CarUserControl : MonoBehaviour {

@@ -1,0 +1,22 @@
+{
+  "setting": {
+    "prefabRootPath": "Prefabs/Items/",
+    "spriteRootPath": "Sprites/Items/"
+  },
+  "itemList": [
+    {},
+    {
+      "id": 1,
+      "type": "Prop",
+      "name": "¼ÓËÙÆ÷",
+      "description": "",
+      "uiPath": "Accelerator",
+      "objectPoolCapacity": 3
+    }
+  ],
+  "infos": {
+    "carRacingItemList": [
+      { "id": 1, "weight": 10 }
+    ]
+  }
+}

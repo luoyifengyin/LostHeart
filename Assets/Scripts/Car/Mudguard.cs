@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     public class Mudguard : MonoBehaviour {
-        [SerializeField] private GameObject m_Wheel;
+        [SerializeField] private GameObject m_Wheel = null;
         private CarController m_Car;
 
         private Vector3 m_TargetOriginalPosition;

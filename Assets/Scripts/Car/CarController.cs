@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     internal enum CarDriveType {
         FourWheelDrive,     //四轮驱动
         RearWheelDrive,     //后轮驱动
@@ -13,7 +13,7 @@ namespace Car {
         [SerializeField] private CarDriveType m_DriveType = CarDriveType.FourWheelDrive;    //驱动方式
         [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
         [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
-        [SerializeField] private Vector3 m_CenterOfMassOffset;                              //质心偏移量
+        [SerializeField] private Vector3 m_CenterOfMassOffset = new Vector3(0, 0, 0);       //质心偏移量
         [SerializeField] private float m_TurnAngle = 30;                                    //转弯角度
         [SerializeField] private float m_ForwardTorque = 2500;                              //前进车轮扭矩
         [SerializeField] private float m_BackwardTorque = 500;                              //后退车轮扭矩
@@ -104,7 +104,7 @@ namespace Car {
             ApplyDrive(accel);
 
             //LimitSpeedByDrag();
-            print("speed " + CurrentSpeed);
+            //print("speed " + CurrentSpeed);
         }
 
         private void ApplyDrive(float torque) {
@@ -145,6 +145,15 @@ namespace Car {
 
         private void FixedUpdate() {
             AddDownForce();
+        }
+
+        public void Accelerate() {
+            print("accel");
+            m_Rb.drag /= 2;
+            Invoke("Decelerate", 5);
+        }
+        private void Decelerate() {
+            m_Rb.drag = m_OriginalDrag;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Vehicles.Car;
 
-namespace Car {
+namespace MyGameApplication.Car {
     [RequireComponent(typeof(CarController))]
 
     public class Skid : MonoBehaviour {

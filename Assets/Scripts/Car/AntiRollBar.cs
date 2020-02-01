@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Car {
+namespace MyGameApplication.Car {
     public class AntiRollBar : MonoBehaviour {
         [SerializeField] private WheelCollider m_WheelL;
         [SerializeField] private WheelCollider m_WheelR;
