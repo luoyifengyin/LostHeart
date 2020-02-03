@@ -1,6 +1,4 @@
-﻿using MyGameApplication.Item;
-using MyGameApplication.ObjectPool;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +13,12 @@ namespace MyGameApplication.Item {
             return m_AllItems[type];
         }
 
-        public virtual void addItem(int id, int cnt = 1) {
-            ItemManager itemManager = ItemManager.Instance;
-            ItemManager.ItemBean item = itemManager.itemList[id];
+        public virtual void AddItem(int id, int cnt = 1) {
+            ItemManager.ItemBean item = ItemManager.Instance.itemList[id];
             var items = GetItemsByType(item.type);
             if (!items.ContainsKey(id)) items.Add(id, 0);
             items[id] += cnt;
+            if (items[id] < 0) items[id] = 0;
         }
     }
 }

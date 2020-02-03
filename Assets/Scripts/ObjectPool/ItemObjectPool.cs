@@ -22,7 +22,12 @@ namespace MyGameApplication.ObjectPool {
             }
         }
 
+        private void Awake() {
+            DontDestroyOnLoad(gameObject);
+        }
+
         public void SetCapacityById(int id, int capacity) {
+            if (capacity < 1) capacity = 1;
             if (!objCapacitys.ContainsKey(id)) objCapacitys.Add(id, capacity);
             else objCapacitys[id] = capacity;
         }
@@ -45,7 +50,7 @@ namespace MyGameApplication.ObjectPool {
             if (!cache.IsEmpty) {
                 GameObject obj;
                 if (cache.TryTake(out obj)) {
-                    //obj.SetActive(true);
+                    obj.SetActive(true);
                     return obj;
                 }
             }
@@ -55,7 +60,6 @@ namespace MyGameApplication.ObjectPool {
             //        objOverflowCnts[id]--;
             //        return Object.Instantiate(obj);
             //    }
-            //    return null;
             //}
             var prefab = ItemManager.Instance.itemList[id].gameObject;
             var retObj = Object.Instantiate(prefab);

@@ -1,11 +1,10 @@
 ﻿using MyGameApplication.Item;
-using MyGameApplication.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGameApplication.PickUp {
-    public class CarItemBox : PickUp {
+    public class CarItemBox : BasePickUp {
         [SerializeField] private float m_FreshTime = 5;
 
         // Update is called once per frame
@@ -23,23 +22,22 @@ namespace MyGameApplication.PickUp {
                 BaseItem item = null;
                 if (itemObj) item = itemObj.GetComponent<BaseItem>();
                 if (item && item is Prop && ((Prop)item).isCarItem()) {
-                    CarItemBarController.Instance.addProp(itemId);
-                    onGain();
+                    CarItemBarControl.Instance.AddProp(itemId);
+                    OnPicked();
                 }
                 else {
-                    m_PickedItemId = itemId;
-                    GainItem();
+                    PickUpItem(itemId);
                 }
                 itemManager.ReleaseItemObjectById(itemId, itemObj);
             }
         }
 
-        protected override void onGain() {
-            base.onGain();
+        protected override void OnPicked() {
+            base.OnPicked();
             gameObject.SetActive(false);
-            Invoke("appear", m_FreshTime);
+            Invoke("Appear", m_FreshTime);
         }
-        private void appear() {
+        private void Appear() {
             gameObject.SetActive(true);
         }
     }

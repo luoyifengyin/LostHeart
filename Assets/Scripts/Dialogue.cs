@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace MyGameApplication {
     public class Dialogue : MonoBehaviour {
         private Text m_Text;
-        [SerializeField] private float m_InputIntervalTime = 0.1f;
+        [SerializeField] private float m_InputIntervalTime = 0.05f;
         [SerializeField] private float m_FadeOutSpeed = 1f;
         private string m_Words;
         private Coroutine m_Coroutine;
@@ -28,28 +28,33 @@ namespace MyGameApplication {
 
         private IEnumerator FadeIn(float intervalTime) {
             SetAlpha(1f);
-            int curPos = 0;
-            while (true) {
-                m_Text.text = m_Words.Substring(0, ++curPos);
-                if (curPos >= m_Words.Length) {
+            int len = m_Words.Length;
+            float totTime = intervalTime * len;
+            float stTime = Time.time;
+            do {
+                int curPos;
+                if (totTime == 0) curPos = len;
+                else curPos = (int)((Time.time - stTime) / totTime * len);
+                curPos = Mathf.Min(curPos, len);
+                m_Text.text = m_Words.Substring(0, curPos);
+                if (curPos >= len) {
                     Invoke("HideDialogue", 3);
                     m_Coroutine = null;
                     yield break;
                 }
                 yield return new WaitForSeconds(intervalTime);
-            }
+            } while (true);
         }
 
         private IEnumerator FadeOut() {
-            while (true) {
-                float alpha = m_Text.color.a - m_FadeOutSpeed * Time.deltaTime;
-                SetAlpha(Mathf.Clamp(alpha, 0, 1f));
-                if (alpha <= 0) {
-                    m_Coroutine = null;
-                    yield break;
-                }
+            float alpha;
+            do {
+                alpha = m_Text.color.a - m_FadeOutSpeed * Time.deltaTime;
+                SetAlpha(Mathf.Clamp01(alpha));
                 yield return null;
-            }
+            } while (alpha > 0);
+            m_Coroutine = null;
+            yield break;
         }
 
         public void ShowDialogue(string content, Color? color = null, float? intervalTime = null) {
@@ -59,8 +64,7 @@ namespace MyGameApplication {
                 m_Coroutine = null;
             }
             m_Words = content;
-            if (intervalTime == 0) m_Text.text = m_Words;
-            else m_Coroutine = StartCoroutine(FadeIn(intervalTime ?? m_InputIntervalTime));
+            m_Coroutine = StartCoroutine(FadeIn(intervalTime ?? m_InputIntervalTime));
         }
         private void HideDialogue() {
             m_Coroutine = StartCoroutine(FadeOut());

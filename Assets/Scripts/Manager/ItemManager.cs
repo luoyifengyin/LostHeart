@@ -23,13 +23,13 @@ namespace MyGameApplication.Item {
 
         [Serializable]
         public class ItemBean {
-            public int id;                          //道具id
-            public ItemType type;                   //道具类型
+            public int id;                          //道具id（必需）
+            public ItemType type;                   //道具类型（必需）
             public string name;                     //道具名称
             public string description;              //道具描述
             public int capacity = -1;               //道具容量（-1代表无上限）
-            public string uiPath;                   //道具资源路径
-            public int objectPoolCapacity = 100;    //道具对象池容量
+            public string uiPath;                   //道具资源路径（必需）
+            public int objectPoolCapacity = 100;    //道具对象池容量（至少为1）
             [NonSerialized] public GameObject mPrefab;  //外部使用该值时必须只读
             [NonSerialized] public Sprite mSprite;
             public GameObject gameObject {
@@ -83,10 +83,10 @@ namespace MyGameApplication.Item {
             return _instance;
         }
 
-        //道具gameObject的生成和释放，必须使用ItemManager的接口，通过对象池进行管理
+        //道具gameObject的生成和释放，必须使用ItemManager的接口，通过对象池进行管理，必须成对使用，需要手动释放，否则会造成内存泄漏
         public GameObject CreateItemObjectById(int id) {
             GameObject obj = ItemObjectPool.Instance.Get(id);
-            obj.SetActive(false);
+            //obj.SetActive(false);
             BaseItem item = obj.GetComponent<BaseItem>();
             if (item) item.ItemId = id;
             return obj;
@@ -96,8 +96,29 @@ namespace MyGameApplication.Item {
             ItemObjectPool.Instance.Put(id, obj);
         }
 
-        public Sprite GetSpriteById(int id) {
+        public ItemType GetItemTypeById(int id) {
+            return itemList[id].type;
+        }
+        public string GetItemNameById(int id) {
+            return itemList[id].name;
+        }
+        public string GetItemDescById(int id) {
+            return itemList[id].description;
+        }
+        public int GetItemCapacityById(int id) {
+            return itemList[id].capacity;
+        }
+        public Sprite GetItemSpriteById(int id) {
             return itemList[id].sprite;
+        }
+
+        public GameObject UseItemEffectById(int id) {
+            GameObject obj = CreateItemObjectById(id);
+            if (obj) {
+                BaseItem itemController = obj.GetComponent<BaseItem>();
+                if (itemController) itemController.Payload();
+            }
+            return obj;
         }
 
         private int GetRandomItemIdByArray(ItemInfo.InfoBean[] arr, int[] preSum) {

@@ -13,21 +13,32 @@ namespace MyGameApplication.Item {
             Uid = ++s_Uid;
         }
 
-        //当玩家获得该道具时触发
-        public virtual void OnCollected(int cnt) { }
+        //当玩家获得（失去）该道具时触发
+        public virtual void OnGained(int cnt) { }
 
         //使用条件
-        public virtual bool UseCondition() {
+        public virtual bool Condition() {
             return true;
         }
 
         //道具效果
-        public virtual void PayLoad() {
-            if (!UseCondition()) return;
+        protected virtual void Operation() { }
+
+        //使用道具
+        public void Payload() {
+            if (!Condition()) return;
+            Operation();
         }
 
-        //道具过期/丢弃时调用
-        public void expire() {
+        //道具效果失效时调用
+        public virtual void Expire() { }
+
+        //中断该道具的所有效果和特效
+        public virtual void Stop() {
+            Expire();
+        }
+
+        public void Release() {
             ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
         }
     }

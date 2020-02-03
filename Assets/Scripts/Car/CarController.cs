@@ -26,12 +26,18 @@ namespace MyGameApplication.Car {
         private float m_CurTorque = 0;
         private float m_OriginalDrag;
         private float m_OriginalForwardTorque;
+        private CarAudio m_CarAudio;
+        private float m_OriginalHighPitchMultiplier;
 
         public float CurrentSpeed { get { return m_Rb.velocity.magnitude; } }
         public float AccelInput { get; private set; }
         public bool Braking { get; private set; }
         public float SteerAngle { get; private set; }
         public WheelCollider[] WheelColliders { get { return m_WheelColliders; } }
+        public float ForwardTorque {
+            get { return m_ForwardTorque; }
+            set { m_ForwardTorque = value; }
+        }
 
         private void Awake() {
             if (!m_UseAntiRollBar) return;
@@ -54,6 +60,8 @@ namespace MyGameApplication.Car {
             m_WheelColliders[0].attachedRigidbody.centerOfMass += m_CenterOfMassOffset;
             m_OriginalDrag = m_Rb.drag;
             m_OriginalForwardTorque = m_ForwardTorque;
+            m_CarAudio = GetComponent<CarAudio>();
+            if (m_CarAudio) m_OriginalHighPitchMultiplier = m_CarAudio.highPitchMultiplier;
         }
 
         // Update is called once per frame
@@ -147,29 +155,6 @@ namespace MyGameApplication.Car {
 
         private void FixedUpdate() {
             AddDownForce();
-        }
-
-        private IEnumerator Accelerating(float force, float duration) {
-            float countDown = duration;
-            //m_Rb.AddForce(new Vector3(0, 0, force * AccelInput));
-            while (countDown > 0 && AccelInput > 0) {
-                countDown -= Time.deltaTime;
-                m_Rb.AddForce(new Vector3(0, 0, force * (countDown / duration) * AccelInput));
-                yield return null;
-            }
-            Decelerate();
-            yield break;
-        }
-        public void Accelerate(float force, float duration = 5) {
-            print("accel");
-            m_Rb.drag /= 2;
-            m_ForwardTorque *= 2;
-            StartCoroutine(Accelerating(force, duration));
-        }
-        private void Decelerate() {
-            print("decel");
-            m_Rb.drag = m_OriginalDrag;
-            m_ForwardTorque = m_OriginalForwardTorque;
         }
     }
 }
