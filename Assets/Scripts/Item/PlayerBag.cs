@@ -19,7 +19,7 @@ namespace MyGameApplication.Item {
             int capacity = itemManager.GetItemCapacityById(id);
             cnt = Mathf.Min(cnt, capacity - curCnt);
             base.AddItem(id, cnt);
-            GameObject go = itemManager.itemList[id].gameObject;
+            GameObject go = itemManager.itemList[id].prefab;
             if (go) {
                 BaseItem item = go.GetComponent<BaseItem>();
                 if (item) item.OnGained(cnt);

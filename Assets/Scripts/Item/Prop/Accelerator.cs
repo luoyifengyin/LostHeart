@@ -46,6 +46,7 @@ namespace MyGameApplication.Item {
                 Accelerate();
                 progressing = this;
             }
+            else Release();
         }
 
         private IEnumerator Accelerating() {
@@ -65,7 +66,6 @@ namespace MyGameApplication.Item {
                 yield return null;
             }
             Expire();
-            yield break;
         }
 
         public void Accelerate() {
@@ -111,6 +111,7 @@ namespace MyGameApplication.Item {
             if (m_DecelCoroutine != null) {
                 StopCoroutine(m_DecelCoroutine);
                 m_DecelCoroutine = null;
+                m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
                 progressing = null;
                 Release();
             }

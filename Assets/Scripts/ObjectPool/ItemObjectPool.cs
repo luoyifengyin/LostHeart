@@ -12,9 +12,11 @@ namespace MyGameApplication.ObjectPool {
     //道具对象池，不要直接使用，必须通过ItemManager使用
     public class ItemObjectPool : MonoBehaviour {
         private static ItemObjectPool _instance;
-        private Dictionary<int, ObjectChache> objCaches = new Dictionary<int, ObjectChache>();
-        private Dictionary<int, int> objCapacitys = new Dictionary<int, int>();      //对象容量
-        //private static Dictionary<int, int> objOverflowCnts = new Dictionary<int, int>();   //对象溢出数量
+        private Dictionary<int, GameObject> m_Prefabs = new Dictionary<int, GameObject>();
+        private Dictionary<int, ObjectChache> m_UnusedCaches = new Dictionary<int, ObjectChache>();
+        private Dictionary<int, HashSet<GameObject>> m_UsingCaches = new Dictionary<int, HashSet<GameObject>>();
+        private Dictionary<int, int> m_ObjCapacitys = new Dictionary<int, int>();                   //对象容量
+        //private static Dictionary<int, int> objOverflowCnts = new Dictionary<int, int>();         //对象溢出数量
 
         public static ItemObjectPool Instance {
             get{
@@ -28,57 +30,84 @@ namespace MyGameApplication.ObjectPool {
 
         public void SetCapacityById(int id, int capacity) {
             if (capacity < 1) capacity = 1;
-            if (!objCapacitys.ContainsKey(id)) objCapacitys.Add(id, capacity);
-            else objCapacitys[id] = capacity;
+            if (!m_ObjCapacitys.ContainsKey(id)) m_ObjCapacitys.Add(id, capacity);
+            else m_ObjCapacitys[id] = capacity;
         }
 
         public int GetCapacityById(int id) {
-            return objCapacitys[id];
+            return m_ObjCapacitys[id];
         }
 
-        public int GetCntById(int id) {
-            return GetCache(id).Count;
+        public int GetCacheCntById(int id) {
+            return GetUnusedCache(id).Count + GetUsingCache(id).Count;
         }
 
-        private ObjectChache GetCache(int id) {
-            if (!objCaches.ContainsKey(id)) objCaches.Add(id, new ObjectChache());
-            return objCaches[id];
+        private ObjectChache GetUnusedCache(int id) {
+            if (!m_UnusedCaches.ContainsKey(id)) m_UnusedCaches.Add(id, new ObjectChache());
+            return m_UnusedCaches[id];
+        }
+        private HashSet<GameObject> GetUsingCache(int id) {
+            if (!m_UsingCaches.ContainsKey(id)) m_UsingCaches.Add(id, new HashSet<GameObject>());
+            return m_UsingCaches[id];
+        }
+
+        private GameObject Create(int id) {
+            var itemManager = ItemManager.Instance;
+            var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
+            var prefab = Resources.Load<GameObject>(path);
+            prefab.name = "Item_" + id;
+            //prefab.transform.parent = transform;
+            return prefab;
+        }
+        public GameObject GetPrefab(int id) {
+            if (!m_Prefabs.ContainsKey(id)) m_Prefabs.Add(id, Create(id));
+            return m_Prefabs[id];
         }
 
         public GameObject Get(int id) {
-            var cache = GetCache(id);
+            var cache = GetUnusedCache(id);
+            GameObject retObj;
             if (!cache.IsEmpty) {
-                GameObject obj;
-                if (cache.TryTake(out obj)) {
-                    obj.SetActive(true);
-                    return obj;
+                if (cache.TryTake(out retObj)) {
+                    retObj.SetActive(true);
                 }
             }
             //else if (cache.Count == 1 && objOverflowCnts[id] > 0) {
             //    GameObject obj;
             //    if (cache.TryPeek(out obj)) {
             //        objOverflowCnts[id]--;
-            //        return Object.Instantiate(obj);
+            //        retObj = Object.Instantiate(obj);
+            //        retObj.SetActive(true);
             //    }
             //}
-            var itemManager = ItemManager.Instance;
-            var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
-            var prefab = Resources.Load<GameObject>(path);
-            var retObj = Object.Instantiate(prefab);
+            else {
+                var prefab = GetPrefab(id);
+                retObj = Object.Instantiate(prefab);
+                retObj.transform.parent = transform;
+            }
+            GetUsingCache(id).Add(retObj);
             return retObj;
         }
 
         public void Put(int id, GameObject obj) {
-            var cache = GetCache(id);
-            if (cache.Count < objCapacitys[id]) {
+            if (m_Prefabs.ContainsKey(id) && m_Prefabs[id] == obj) return;
+            var cache = GetUnusedCache(id);
+            var usingSet = GetUsingCache(id);
+            if (cache.Count + usingSet.Count < GetCapacityById(id)) {
                 obj.transform.parent = transform;
                 obj.SetActive(false);
+                if (usingSet.Contains(obj)) usingSet.Remove(obj);
                 cache.Add(obj);
             }
             else {
                 Object.Destroy(obj);
                 //objOverflowCnts[id]++;
             }
+        }
+
+        public void ClearPoolById(int id) {
+            m_UnusedCaches.Remove(id);
+            m_UsingCaches.Remove(id);
         }
     }
 }

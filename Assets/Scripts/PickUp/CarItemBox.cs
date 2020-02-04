@@ -18,7 +18,7 @@ namespace MyGameApplication.PickUp {
             if (go.CompareTag("Car")) {
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
-                GameObject itemObj = itemManager.CreateItemObjectById(itemId);
+                GameObject itemObj = itemManager.itemList[itemId].prefab;
                 BaseItem item = null;
                 if (itemObj) item = itemObj.GetComponent<BaseItem>();
                 if (item && item is Prop && ((Prop)item).isCarItem()) {
@@ -28,7 +28,6 @@ namespace MyGameApplication.PickUp {
                 else {
                     PickUpItem(itemId);
                 }
-                itemManager.ReleaseItemObjectById(itemId, itemObj);
             }
         }
 

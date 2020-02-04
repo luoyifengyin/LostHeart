@@ -865,6 +865,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2044537609}
     m_Modifications:
+    - target: {fileID: -1381199611409422818, guid: 2ed830309d1c9f640a65bf22d9060af1,
+        type: 3}
+      propertyPath: m_PickedCnt
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2ed830309d1c9f640a65bf22d9060af1, type: 3}
       propertyPath: m_Name
       value: Pickup
