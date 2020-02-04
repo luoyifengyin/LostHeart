@@ -61,7 +61,9 @@ namespace MyGameApplication.ObjectPool {
             //        return Object.Instantiate(obj);
             //    }
             //}
-            var prefab = ItemManager.Instance.itemList[id].gameObject;
+            var itemManager = ItemManager.Instance;
+            var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
+            var prefab = Resources.Load<GameObject>(path);
             var retObj = Object.Instantiate(prefab);
             return retObj;
         }

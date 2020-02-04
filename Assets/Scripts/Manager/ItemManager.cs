@@ -23,20 +23,19 @@ namespace MyGameApplication.Item {
 
         [Serializable]
         public class ItemBean {
-            public int id;                          //道具id（必需）
-            public ItemType type;                   //道具类型（必需）
-            public string name;                     //道具名称
-            public string description;              //道具描述
-            public int capacity = -1;               //道具容量（-1代表无上限）
-            public string uiPath;                   //道具资源路径（必需）
-            public int objectPoolCapacity = 100;    //道具对象池容量（至少为1）
-            [NonSerialized] public GameObject mPrefab;  //外部使用该值时必须只读
-            [NonSerialized] public Sprite mSprite;
+            public int id;                              //道具id（必需）
+            public ItemType type;                       //道具类型（必需）
+            public string name;                         //道具名称
+            public string description;                  //道具描述
+            public int capacity = -1;                   //道具容量（-1代表无上限）
+            public string uiPath;                       //道具资源路径（必需）
+            public int objectPoolCapacity = 100;        //道具对象池容量（至少为1）
+            [NonSerialized] private GameObject mPrefab; //外部使用该值时必须只读，且不能持有
+            [NonSerialized] private Sprite mSprite;     //道具的精灵图，用于UI显示
             public GameObject gameObject {
                 get {
                     if (!mPrefab) {
-                        string path = _instance.setting.prefabRootPath + uiPath;
-                        mPrefab = Resources.Load<GameObject>(path);
+                        mPrefab = _instance.CreateItemObjectById(id);
                     }
                     return mPrefab;
                 }
@@ -131,7 +130,7 @@ namespace MyGameApplication.Item {
                     preSum[i] = sum;
                 }
             }
-            int rand = Random.Range(0, preSum[len-1]);
+            int rand = Random.Range(0, preSum[len - 1]);
             int idx = Array.BinarySearch(preSum, rand + 1);
             if (idx < 0) idx = ~idx;
             return arr[idx].id;

@@ -38,7 +38,7 @@ namespace MyGameApplication.Item {
             Expire();
         }
 
-        public void Release() {
+        protected void Release() {
             ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
         }
     }

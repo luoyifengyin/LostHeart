@@ -14,11 +14,17 @@ namespace MyGameApplication.Item {
         }
 
         public virtual void AddItem(int id, int cnt = 1) {
-            ItemManager.ItemBean item = ItemManager.Instance.itemList[id];
-            var items = GetItemsByType(item.type);
+            var itemType = ItemManager.Instance.GetItemTypeById(id);
+            var items = GetItemsByType(itemType);
             if (!items.ContainsKey(id)) items.Add(id, 0);
             items[id] += cnt;
             if (items[id] < 0) items[id] = 0;
+        }
+
+        public int GetCntById(int id) {
+            var itemType = ItemManager.Instance.GetItemTypeById(id);
+            var items = GetItemsByType(itemType);
+            return items[id];
         }
     }
 }

@@ -14,8 +14,12 @@ namespace MyGameApplication.Item {
 
         public override void AddItem(int id, int cnt = 1) {
             if (cnt == 0) return;
+            var itemManager = ItemManager.Instance;
+            int curCnt = GetCntById(id);
+            int capacity = itemManager.GetItemCapacityById(id);
+            cnt = Mathf.Min(cnt, capacity - curCnt);
             base.AddItem(id, cnt);
-            GameObject go = ItemManager.Instance.itemList[id].gameObject;
+            GameObject go = itemManager.itemList[id].gameObject;
             if (go) {
                 BaseItem item = go.GetComponent<BaseItem>();
                 if (item) item.OnGained(cnt);
