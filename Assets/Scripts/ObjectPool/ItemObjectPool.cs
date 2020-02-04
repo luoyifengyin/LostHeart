@@ -29,9 +29,19 @@ namespace MyGameApplication.ObjectPool {
         }
 
         public void SetCapacityById(int id, int capacity) {
-            if (capacity < 1) capacity = 1;
+            if (capacity < 0) capacity = 0;
             if (!m_ObjCapacitys.ContainsKey(id)) m_ObjCapacitys.Add(id, capacity);
             else m_ObjCapacitys[id] = capacity;
+        }
+
+        public void CreateSpecifiedObjectById(int id, int cnt) {
+            var prefab = GetPrefab(id);
+            var cache = GetUnusedCache(id);
+            for (int i = 0; i < cnt; i++) {
+                var obj = Instantiate(prefab);
+                obj.transform.parent = transform;
+                cache.Add(obj);
+            }
         }
 
         public int GetCapacityById(int id) {
@@ -56,10 +66,9 @@ namespace MyGameApplication.ObjectPool {
             var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
             var prefab = Resources.Load<GameObject>(path);
             prefab.name = "Item_" + id;
-            //prefab.transform.parent = transform;
             return prefab;
         }
-        public GameObject GetPrefab(int id) {
+        internal GameObject GetPrefab(int id) {
             if (!m_Prefabs.ContainsKey(id)) m_Prefabs.Add(id, Create(id));
             return m_Prefabs[id];
         }
@@ -93,10 +102,10 @@ namespace MyGameApplication.ObjectPool {
             if (m_Prefabs.ContainsKey(id) && m_Prefabs[id] == obj) return;
             var cache = GetUnusedCache(id);
             var usingSet = GetUsingCache(id);
-            if (cache.Count + usingSet.Count < GetCapacityById(id)) {
+            usingSet.Remove(obj);
+            if (cache.Count < GetCapacityById(id)) {
                 obj.transform.parent = transform;
                 obj.SetActive(false);
-                if (usingSet.Contains(obj)) usingSet.Remove(obj);
                 cache.Add(obj);
             }
             else {

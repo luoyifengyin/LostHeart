@@ -69,7 +69,7 @@ namespace MyGameApplication.Item {
         }
 
         public void Accelerate() {
-            print("accel");
+            //print("accel");
             m_CarRb.drag /= 2f;
             m_Car.ForwardTorque *= 2f;
             m_AccelCoroutine = StartCoroutine(Accelerating());
@@ -100,7 +100,7 @@ namespace MyGameApplication.Item {
         }
 
         private void Decelerate() {
-            print("decel");
+            //print("decel");
             m_CarRb.drag = m_OriginalDrag;
             m_Car.ForwardTorque = m_OriginalForwardTorque;
             if (m_CarAudio) m_DecelCoroutine = StartCoroutine(Decelerating());

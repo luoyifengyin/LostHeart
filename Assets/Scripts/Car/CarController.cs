@@ -114,7 +114,7 @@ namespace MyGameApplication.Car {
             ApplyDrive(accel);
 
             //LimitSpeedByDrag();
-            print("speed " + CurrentSpeed);
+            //print("speed " + CurrentSpeed);
         }
 
         private void ApplyDrive(float torque) {

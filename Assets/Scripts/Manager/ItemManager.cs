@@ -29,9 +29,10 @@ namespace MyGameApplication.Item {
             public string description;                  //道具描述
             public int capacity = -1;                   //道具容量（-1代表无上限）
             public string uiPath;                       //道具资源路径（必需）
-            public int objectPoolCapacity = 100;        //道具对象池容量（至少为1）
+            public int objectPoolInitCnt = 0;           //道具对象池初始化数量
+            public int objectPoolCapacity = 100;        //道具对象池容量
             [NonSerialized] private Sprite mSprite;     //道具的精灵图，用于UI显示
-            internal GameObject prefab {
+            public GameObject prefab {
                 get { return ItemObjectPool.Instance.GetPrefab(id); }
             }
             public Sprite sprite {
@@ -72,6 +73,8 @@ namespace MyGameApplication.Item {
             for(int i = 1;i < _instance.itemList.Length; i++) {
                 int capacity = _instance.itemList[i].objectPoolCapacity;
                 objectPool.SetCapacityById(i, capacity);
+                int initCnt = _instance.itemList[i].objectPoolInitCnt;
+                objectPool.CreateSpecifiedObjectById(i, initCnt);
             }
             return _instance;
         }

@@ -39,6 +39,7 @@ namespace MyGameApplication.Item {
         }
 
         private void UseItem() {
+            //print("use item");
             int id = m_ItemQueue.Dequeue();
             ItemManager.Instance.UseItemEffectById(id);
             for (int i = 0; i < m_ItemCapacity - 1; i++) {
@@ -47,8 +48,8 @@ namespace MyGameApplication.Item {
             m_ItemImgs[m_ItemCapacity - 1].sprite = m_Mask;
         }
 
-        private void FixedUpdate() {
-            bool use = CrossPlatformInputManager.GetButtonDown("Fire1");
+        private void Update() {
+            bool use = Input.GetButtonDown("Fire1");
             if (use && m_ItemQueue.Count > 0) UseItem();
         }
     }

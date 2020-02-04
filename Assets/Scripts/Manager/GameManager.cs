@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Item;
+using MyGameApplication.ObjectPool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,13 @@ namespace MyGameApplication.Manager {
         private void Awake() {
             ItemManager itemManager = ItemManager.Instance;
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Update() {
+            //Test();
+        }
+
+        private void Test() {
         }
     }
 }
