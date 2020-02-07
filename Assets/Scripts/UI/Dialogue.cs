@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MyGameApplication {
+namespace MyGameApplication.UI {
     public class Dialogue : MonoBehaviour {
         private Text m_Text;
         [SerializeField] private float m_InputIntervalTime = 0.05f;
-        [SerializeField] private float m_FadeOutSpeed = 1f;
+        [SerializeField] private float m_FadeOutDuration = 1f;
         private string m_Words;
         private Coroutine m_Coroutine;
 
@@ -23,18 +23,18 @@ namespace MyGameApplication {
         // Start is called before the first frame update
         void Start() {
             SetAlpha(0);
-            ShowDialogue("你好，世界。你好，世界。你好，世界。你好，世界。");
         }
 
         private IEnumerator FadeIn(float intervalTime) {
             SetAlpha(1f);
             int len = m_Words.Length;
-            float totTime = intervalTime * len;
+            float totTime = intervalTime * (len - 1);
             float stTime = Time.time;
+            WaitForSeconds wait = new WaitForSeconds(intervalTime);
             do {
                 int curPos;
-                if (totTime == 0) curPos = len;
-                else curPos = (int)((Time.time - stTime) / totTime * len);
+                if (Mathf.Approximately(m_InputIntervalTime, 0)) curPos = len;
+                else curPos = Mathf.CeilToInt(Mathf.Lerp(0, len, (Time.time - stTime) / totTime));
                 curPos = Mathf.Min(curPos, len);
                 m_Text.text = m_Words.Substring(0, curPos);
                 if (curPos >= len) {
@@ -42,14 +42,19 @@ namespace MyGameApplication {
                     m_Coroutine = null;
                     yield break;
                 }
-                yield return new WaitForSeconds(intervalTime);
+                yield return wait;
             } while (true);
         }
 
         private IEnumerator FadeOut() {
-            float alpha;
+            if (Mathf.Approximately(m_FadeOutDuration, 0)) {
+                SetAlpha(0);
+                yield break;
+            }
+            float alpha = m_Text.color.a;
+            float speed = alpha / m_FadeOutDuration;
             do {
-                alpha = m_Text.color.a - m_FadeOutSpeed * Time.deltaTime;
+                alpha = Mathf.MoveTowards(alpha, 0, speed * Time.deltaTime);
                 SetAlpha(Mathf.Clamp01(alpha));
                 yield return null;
             } while (alpha > 0);
@@ -58,6 +63,7 @@ namespace MyGameApplication {
         }
 
         public void ShowDialogue(string content, Color? color = null, float? intervalTime = null) {
+            if (string.IsNullOrEmpty(content)) return;
             m_Text.color = color ?? Color.white;
             if (m_Coroutine != null) {
                 StopCoroutine(m_Coroutine);

@@ -10,12 +10,5 @@ namespace MyGameApplication.Manager {
             ItemManager itemManager = ItemManager.Instance;
             DontDestroyOnLoad(gameObject);
         }
-
-        private void Update() {
-            //Test();
-        }
-
-        private void Test() {
-        }
     }
 }

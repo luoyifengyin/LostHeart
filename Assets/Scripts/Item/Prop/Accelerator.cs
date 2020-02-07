@@ -61,7 +61,7 @@ namespace MyGameApplication.Item {
                 if (m_CarAudio) {
                     audioTime += Time.deltaTime;
                     m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier *
-                        (1 + (audioTime / audioDuration) * (m_AccelPitchMultiplier - 1));
+                        Mathf.Lerp(1, m_AccelPitchMultiplier, audioTime / audioDuration);
                 }
                 yield return null;
             }
@@ -86,12 +86,11 @@ namespace MyGameApplication.Item {
         private IEnumerator Decelerating() {
             float audioDuration = Mathf.Min(m_AccelDuration / 5, m_AcceleratingTime);
             float audioTime = audioDuration;
-            yield return null;
             while (audioTime > 0) {
+                yield return null;
                 audioTime -= Time.deltaTime;
                 m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier *
-                    (1 + (audioTime / audioDuration) * (m_AccelPitchMultiplier - 1));
-                yield return null;
+                    Mathf.Lerp(1, m_AccelPitchMultiplier, audioTime / audioDuration);
             }
             m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
             m_DecelCoroutine = null;

@@ -107,6 +107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PickedItemId: 0
-  m_IsSelfItem: 0
   m_PickedCnt: 1
+  m_IsSelfItem: 0
   m_FreshTime: 5

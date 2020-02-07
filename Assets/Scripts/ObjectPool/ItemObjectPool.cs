@@ -15,7 +15,7 @@ namespace MyGameApplication.ObjectPool {
         private Dictionary<int, GameObject> m_Prefabs = new Dictionary<int, GameObject>();
         private Dictionary<int, ObjectChache> m_UnusedCaches = new Dictionary<int, ObjectChache>();
         private Dictionary<int, HashSet<GameObject>> m_UsingCaches = new Dictionary<int, HashSet<GameObject>>();
-        private Dictionary<int, int> m_ObjCapacitys = new Dictionary<int, int>();                   //对象容量
+        private Dictionary<int, int> m_ObjCapacitys = new Dictionary<int, int>();                   //对象池容量
         //private static Dictionary<int, int> objOverflowCnts = new Dictionary<int, int>();         //对象溢出数量
 
         public static ItemObjectPool Instance {
@@ -65,7 +65,7 @@ namespace MyGameApplication.ObjectPool {
             var itemManager = ItemManager.Instance;
             var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
             var prefab = Resources.Load<GameObject>(path);
-            prefab.name = "Item_" + id;
+            //prefab.name = "Item_" + id;
             return prefab;
         }
         internal GameObject GetPrefab(int id) {
@@ -76,10 +76,8 @@ namespace MyGameApplication.ObjectPool {
         public GameObject Get(int id) {
             var cache = GetUnusedCache(id);
             GameObject retObj;
-            if (!cache.IsEmpty) {
-                if (cache.TryTake(out retObj)) {
-                    retObj.SetActive(true);
-                }
+            if (!cache.IsEmpty && cache.TryTake(out retObj)) {
+                retObj.SetActive(true);
             }
             //else if (cache.Count == 1 && objOverflowCnts[id] > 0) {
             //    GameObject obj;

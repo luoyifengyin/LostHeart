@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.Item {
-    public class CarItemBarControl : MonoBehaviour {
-        private static CarItemBarControl _instance;
+    public class CarItemBar : MonoBehaviour {
+        private static CarItemBar _instance;
 
         private int m_ItemCapacity;
         private Image[] m_ItemImgs;
         private Queue<int> m_ItemQueue = new Queue<int>();
         private Sprite m_Mask;
 
-        public static CarItemBarControl Instance {
+        public static CarItemBar Instance {
             get {
-                return _instance ?? (_instance = FindObjectOfType<CarItemBarControl>());
+                return _instance ?? (_instance = FindObjectOfType<CarItemBar>());
             }
         }
 
@@ -49,7 +49,7 @@ namespace MyGameApplication.Item {
         }
 
         private void Update() {
-            bool use = Input.GetButtonDown("Fire1");
+            bool use = CrossPlatformInputManager.GetButtonDown("Fire1");
             if (use && m_ItemQueue.Count > 0) UseItem();
         }
     }
