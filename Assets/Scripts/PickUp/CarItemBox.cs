@@ -39,5 +39,9 @@ namespace MyGameApplication.PickUp {
         private void Appear() {
             gameObject.SetActive(true);
         }
+
+        private void OnMouseOver() {
+            print("coin");
+        }
     }
 }

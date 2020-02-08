@@ -49,6 +49,7 @@ namespace MyGameApplication.UI.ItemBar {
         }
 
         public void OnSelected() {
+            print("on selected");
             if (ItemId > 0) {
                 detail.SetItem(ItemId, m_Img.sprite, m_NameText.text);
             }
