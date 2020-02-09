@@ -13,9 +13,12 @@ namespace MyGameApplication.UI.ItemBar {
 
         private void Awake() {
             m_Grids.AddRange(m_GridPanel.transform.GetComponentsInChildren<Grid>());
-            gameObject.SetActive(false);
             col = m_GridPanel.constraintCount;
             row = 2;
+        }
+
+        private void Start() {
+            gameObject.SetActive(false);
         }
 
         public void Refresh() {
