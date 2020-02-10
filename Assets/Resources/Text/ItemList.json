@@ -1,4 +1,4 @@
-{
+ï»¿{
   "setting": {
     "prefabRootPath": "Prefabs/Items/",
     "spriteRootPath": "Sprites/Items/"
@@ -8,7 +8,7 @@
     {
       "id": 1,
       "type": "Prop",
-      "name": "¼ÓËÙÆ÷",
+      "name": "åŠ é€Ÿå™¨",
       "description": "",
       "uiPath": "Accelerator",
       "objectPoolCapacity": 2

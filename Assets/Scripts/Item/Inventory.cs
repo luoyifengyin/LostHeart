@@ -24,6 +24,7 @@ namespace MyGameApplication.Item {
         public int GetCntById(int id) {
             var itemType = ItemManager.Instance.GetItemTypeById(id);
             var items = GetItemsByType(itemType);
+            if (!items.ContainsKey(id)) items.Add(id, 0);
             return items[id];
         }
     }

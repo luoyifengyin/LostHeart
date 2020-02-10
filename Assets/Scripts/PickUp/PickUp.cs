@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyGameApplication.Item;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -7,6 +8,7 @@ namespace MyGameApplication.PickUp {
     public class PickUp : BasePickUp {
         [SerializeField] protected string m_ButtonName;
         [SerializeField] protected KeyCode m_Key;
+        [SerializeField] protected bool m_WhetherPickIfOverflow;
         [SerializeField] protected string[] m_CanPickByTags = { "Player" };
 
         private void Awake() {
@@ -21,8 +23,18 @@ namespace MyGameApplication.PickUp {
             }
             if (touch) {
                 if ((string.IsNullOrEmpty(m_ButtonName) || CrossPlatformInputManager.GetButtonDown(m_ButtonName))
-                        && (m_Key == KeyCode.None || Input.GetKeyDown(m_Key)))
-                    PickUpItem();
+                        && (m_Key == KeyCode.None || Input.GetKeyDown(m_Key))) {
+                    var bag = PlayerBag.Instance;
+                    int cnt = bag.GetCntById(m_PickedItemId);
+                    int capacity = bag.GetCapacityById(m_PickedItemId);
+                    if (cnt >= capacity && !m_WhetherPickIfOverflow) {
+                        OnNonPicked();
+                    }
+                    else {
+                        PickUpItem();
+                        if (m_PickedCnt > capacity - cnt) OnOverflow(m_PickedCnt - (capacity - cnt));
+                    }
+                }
             }
         }
 
@@ -37,5 +49,9 @@ namespace MyGameApplication.PickUp {
             base.OnPicked();
             if (!IsSelfItem) Destroy(gameObject);
         }
+
+        protected virtual void OnNonPicked() { }
+
+        protected virtual void OnOverflow(int cnt) { }
     }
 }

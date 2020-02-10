@@ -22,7 +22,7 @@ namespace MyGameApplication.PickUp {
                 BaseItem item = null;
                 if (itemObj) item = itemObj.GetComponent<BaseItem>();
                 if (item && item is Prop && ((Prop)item).isCarItem()) {
-                    CarItemBarControl.Instance.AddProp(itemId);
+                    CarItemBar.Instance.AddProp(itemId);
                     OnPicked();
                 }
                 else {
@@ -38,6 +38,10 @@ namespace MyGameApplication.PickUp {
         }
         private void Appear() {
             gameObject.SetActive(true);
+        }
+
+        private void OnMouseOver() {
+            print("coin");
         }
     }
 }
