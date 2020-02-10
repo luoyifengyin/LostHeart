@@ -12,6 +12,7 @@ namespace MyGameApplication.Second
 
         private int m_NowTime = 0;//陷阱存在时间
         private bool m_IsDestroy=false;//陷阱是否去除
+        private string m_LeapName = "Cube";
         void Start()
         {
             turn();//陷阱方向初始化
@@ -26,9 +27,9 @@ namespace MyGameApplication.Second
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.name=="Cube")
+            if (other.gameObject.tag=="Player")
             {
-                AdultLead.s_Heal--;
+                GameObject.Find(m_LeapName).GetComponent<AdultLead>().m_Heal--;
                 Destroy(this.gameObject);
             }
 
