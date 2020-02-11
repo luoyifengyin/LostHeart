@@ -4,60 +4,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
-{
-    public Texture texture;
-    public float fadeDuration;
-    [SerializeField] private string m_StartingSceneName = "CarRacing";
+namespace MyGameApplication.Manager {
+    public class SceneController : MonoBehaviour {
+        private static SceneController _instance;
+        public Fader fader;
+        public float fadeDuration = 1f;
+        [SerializeField] private string startingSceneName;
 
-    private Rect rect;
-    private bool isFading;
+        [HideInInspector] public event Action onBeforeSceneUnload;
+        [HideInInspector] public event Action onAfterSceneLoad;
 
-    [HideInInspector] public Action beforeSceneUnload;
-    [HideInInspector] public Action afterSceneLoad;
+        public bool IsLoadedByPersistentScene {
+            get { return !string.IsNullOrEmpty(startingSceneName); }
+        }
+        public bool IsLoading { get; private set; }
 
-    private void SetAlpha(float alpha) {
-        Color color = GUI.color;
-        GUI.color = new Color(color.r, color.g, color.b, alpha);
-    }
-
-    private void Awake() {
-        rect = new Rect(0, 0, Screen.width, Screen.height);
-    }
-
-    // Start is called before the first frame update
-    IEnumerator Start()
-    {
-        SetAlpha(1f);
-        SceneManager.LoadSceneAsync(m_StartingSceneName, LoadSceneMode.Additive);
-        yield break;
-    }
-
-    private IEnumerator Loading(string sceneName) {
-        yield return StartCoroutine(Fade(1f));
-        beforeSceneUnload?.Invoke();
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        yield return StartCoroutine(LoadScene(sceneName));
-        afterSceneLoad?.Invoke();
-        yield return StartCoroutine(Fade(0f));
-    }
-
-    private IEnumerator LoadScene(string sceneName) {
-        yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
-        SceneManager.SetActiveScene(newScene);
-    }
-
-    private IEnumerator Fade(float finalAlpha) {
-        isFading = true;
-
-        float speed = Mathf.Abs(GUI.color.a - finalAlpha) / fadeDuration;
-        while(!Mathf.Approximately(GUI.color.a, finalAlpha)) {
-            SetAlpha(Mathf.MoveTowards(GUI.color.a, finalAlpha, speed * Time.deltaTime));
-            yield return null;
+        public static SceneController Instance {
+            get {
+                return _instance ?? (_instance = FindObjectOfType<SceneController>());
+            }
         }
 
-        isFading = false;
+        private void Awake() {
+            if (!fader) fader = FindObjectOfType<Fader>();
+        }
+
+        IEnumerator Start() {
+            if (!string.IsNullOrEmpty(startingSceneName)) {
+                IsLoading = true;
+                fader.Alpha = 1f;
+                yield return StartCoroutine(LoadNextScene(startingSceneName));
+                IsLoading = false;
+            }
+            else onAfterSceneLoad();
+        }
+
+        public static void LoadScene(string sceneName) {
+            Instance.SwitchScene(sceneName);
+        }
+
+        public void SwitchScene(string sceneName) {
+            if (!IsLoading) StartCoroutine(Loading(sceneName));
+        }
+
+        private IEnumerator Loading(string sceneName) {
+            IsLoading = true;
+            yield return StartCoroutine(UnloadCurrentScene());
+            yield return StartCoroutine(LoadNextScene(sceneName));
+            IsLoading = false;
+        }
+
+        private IEnumerator UnloadCurrentScene() {
+            yield return fader.Fade(1f, fadeDuration);
+            onBeforeSceneUnload?.Invoke();
+            print(SceneManager.sceneCount);
+            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            print(SceneManager.sceneCount);
+        }
+
+        private IEnumerator LoadNextScene(string sceneName) {
+            print(SceneManager.sceneCount);
+            yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+            SceneManager.SetActiveScene(newScene);
+            onAfterSceneLoad?.Invoke();
+            yield return fader.Fade(0f, fadeDuration);
+        }
     }
 }

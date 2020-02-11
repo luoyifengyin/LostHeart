@@ -18,7 +18,7 @@ namespace MyGameApplication.Car {
         [SerializeField] private float m_ForwardTorque = 2500;                              //前进车轮扭矩
         [SerializeField] private float m_BackwardTorque = 500;                              //后退车轮扭矩
         [SerializeField] private float m_TractionStep = 10;                                 //牵引力递进量
-                                                                                            //[SerializeField] private float m_MaxSpeed = 100;                                    //最大速度
+        //[SerializeField] private float m_MaxSpeed = 100;                                    //最大速度
         [SerializeField] private float m_BrakeTorque = float.MaxValue;                      //刹车扭矩
         [SerializeField] private float m_DownForce = 100;                                   //增大抓地力
         [SerializeField] private bool m_UseAntiRollBar = false;                             //是否使用平衡杆
@@ -76,7 +76,7 @@ namespace MyGameApplication.Car {
         }
 
         private int GetDirection() {
-            if (Mathf.Abs(CurrentSpeed) < 1e-4) return 0;
+            if (Mathf.Abs(CurrentSpeed) < Mathf.Epsilon) return 0;
             if (Vector3.Angle(transform.forward, m_Rb.velocity) < 90f)
                 return 1;
             else return -1;
