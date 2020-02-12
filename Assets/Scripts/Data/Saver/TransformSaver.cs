@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace MyGameApplication.Data {
+namespace MyGameApplication.Data.Saver {
     public class TransformSaver : Saver {
         [SerializeField] private Transform transformToSave = null;
-        public bool saveRotation = true;
-        public bool saveScale = false;
+        public bool saveRotation = true;    //是否保存rotation
+        public bool saveScale = false;      //是否保存scale
 
-        private string positionKey;
-        private string rotationKey;
-        private string scaleKey;
+        protected string positionKey;
+        protected string rotationKey;
+        protected string scaleKey;
 
         protected override void Awake() {
             if (!transformToSave) transformToSave = transform;

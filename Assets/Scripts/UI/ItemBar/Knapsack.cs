@@ -11,7 +11,7 @@ namespace MyGameApplication.UI.ItemBar {
         private List<Grid> m_Grids = new List<Grid>();
         private int row, col;
 
-        private bool m_RefreshFlag = false; //是否需要刷新UI的标记，初始为false避免了OnEnable在Grid的Awake之前刷新UI
+        private bool m_RefreshFlag = false; //激活时是否需要刷新UI的标记，初始为false避免了OnEnable在Grid的Awake之前刷新UI
 
         private void Awake() {
             m_Grids.AddRange(m_GridPanel.transform.GetComponentsInChildren<Grid>());

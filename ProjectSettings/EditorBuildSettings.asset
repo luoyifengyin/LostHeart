@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Persistence.unity
-    guid: 060ca3fe01c5d484e810c4c168792ae4
+    path: Assets/Scenes/MainMenu.unity
+    guid: 4c4e20fb4d919834981b26bca02fc28c
   - enabled: 1
     path: Assets/Scenes/CarRacing.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Second.unity
     guid: 1907e6f13ffea68498fd793c052fc16f
+  - enabled: 1
+    path: Assets/Scenes/Maze.unity
+    guid: 8cf884b363f085e46b68c9b9a31d4650
   m_configObjects: {}

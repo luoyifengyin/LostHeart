@@ -1,4 +1,6 @@
-﻿using MyGameApplication.Data;
+﻿#define __DEBUG__
+using MyGameApplication.Data;
+using MyGameApplication.Data.Saver;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +10,10 @@ using UnityEngine;
 
 namespace MyGameApplication.Manager {
     public class GameManager : MonoBehaviour {
-#if UNITY_EDITOR
-        public static readonly bool _DEBUG_ = true;
-#endif
         public static GameManager _instance;
 
         [SerializeField] private string saveFileName = "save.archive";
-        private PersistentData gameData;
+        private PersistentSaveData gameData;
         private string saveFullPath;
         public event Action onSaveSuccess;
 
@@ -27,10 +26,10 @@ namespace MyGameApplication.Manager {
         private void Awake() {
             DontDestroyOnLoad(gameObject);
             saveFullPath = Application.persistentDataPath + "/" + saveFileName;
-            gameData = PersistentData.Instance;
+            gameData = PersistentSaveData.Instance;
         }
 
-        //保存游戏
+        //保存游戏（存档）
         public void SaveGame() {
             var savers = FindObjectsOfType<Saver>();
             foreach (var saver in savers) {
@@ -56,7 +55,7 @@ namespace MyGameApplication.Manager {
             FileStream fs = new FileStream(saveFullPath, FileMode.Open);
             StreamReader sr = new StreamReader(fs, Encoding.UTF8);
             string json = sr.ReadToEnd();
-            gameData = JsonUtility.FromJson<PersistentData>(json);
+            gameData = JsonUtility.FromJson<PersistentSaveData>(json);
         }
 
         //是否存在存档文件
@@ -64,11 +63,17 @@ namespace MyGameApplication.Manager {
             return Directory.Exists(saveFullPath);
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR && __DEBUG__
+        private string[] sceneNames = { "CarRacing", "Second", "Maze" };
+        private int curSceneIndex = -1;
         private void OnGUI() {
-            if (!_DEBUG_) return;
             if (GUI.Button(new Rect(0, 0, 100, 50), "Switch Scene")) {
-                SceneController.LoadScene("Second");
+                if (curSceneIndex == -1) {
+                    curSceneIndex = Array.FindIndex(sceneNames,
+                        str => str == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                }
+                curSceneIndex = (curSceneIndex + 1) % sceneNames.Length;
+                SceneController.LoadScene(sceneNames[curSceneIndex]);
             }
             else if (GUI.Button(new Rect(0, 50, 100, 50), "Save Game")) {
                 SaveGame();

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Item {
     public class PlayerBag : Inventory {
@@ -12,6 +13,12 @@ namespace MyGameApplication.Item {
             get {
                 return _instance ?? (_instance = FindObjectOfType<PlayerBag>());
             }
+        }
+
+        private void Awake() {
+            SceneManager.sceneLoaded += (scene, mode) => {
+                if (!m_Knapsack) m_Knapsack = FindObjectOfType<Knapsack>();
+            };
         }
 
         public override void AddItem(int id, int cnt = 1) {
