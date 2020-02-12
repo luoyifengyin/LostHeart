@@ -9,7 +9,7 @@ namespace MyGameApplication.Manager {
         private static SceneController _instance;
         public Fader fader;
         public float fadeDuration = 1f;
-        [SerializeField] private string startingSceneName;
+        [SerializeField] private string startingSceneName = null;
 
         [HideInInspector] public event Action onBeforeSceneUnload;
         [HideInInspector] public event Action onAfterSceneLoad;
@@ -33,10 +33,10 @@ namespace MyGameApplication.Manager {
             if (!string.IsNullOrEmpty(startingSceneName)) {
                 IsLoading = true;
                 fader.Alpha = 1f;
-                yield return StartCoroutine(LoadNextScene(startingSceneName));
+                yield return StartCoroutine(LoadNextScene(startingSceneName.Trim()));
                 IsLoading = false;
             }
-            else onAfterSceneLoad();
+            else onAfterSceneLoad?.Invoke();
         }
 
         public static void LoadScene(string sceneName) {
@@ -57,14 +57,14 @@ namespace MyGameApplication.Manager {
         private IEnumerator UnloadCurrentScene() {
             yield return fader.Fade(1f, fadeDuration);
             onBeforeSceneUnload?.Invoke();
-            print(SceneManager.sceneCount);
-            SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            print(SceneManager.sceneCount);
+            if (IsLoadedByPersistentScene)
+                SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         }
 
         private IEnumerator LoadNextScene(string sceneName) {
-            print(SceneManager.sceneCount);
-            yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            LoadSceneMode loadSceneMode = LoadSceneMode.Single;
+            if (IsLoadedByPersistentScene) loadSceneMode = LoadSceneMode.Additive;
+            yield return SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
             Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
             SceneManager.SetActiveScene(newScene);
             onAfterSceneLoad?.Invoke();

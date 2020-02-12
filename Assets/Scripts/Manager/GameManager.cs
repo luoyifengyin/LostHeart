@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,27 +11,46 @@ namespace MyGameApplication.Manager {
 #if UNITY_EDITOR
         public static readonly bool _DEBUG_ = true;
 #endif
+        public static GameManager _instance;
 
         [SerializeField] private string saveFileName = "save.archive";
-        public PersistentData gameData;
-
+        private PersistentData gameData;
         private string saveFullPath;
+        public event Action onSaveSuccess;
+
+        public static GameManager Instance {
+            get {
+                return _instance ?? (_instance = FindObjectOfType<GameManager>());
+            }
+        }
 
         private void Awake() {
             DontDestroyOnLoad(gameObject);
             saveFullPath = Application.persistentDataPath + "/" + saveFileName;
+            gameData = PersistentData.Instance;
         }
 
+        //保存游戏
         public void SaveGame() {
+            var savers = FindObjectsOfType<Saver>();
+            foreach (var saver in savers) {
+                if (saver.enabled) saver.Save();
+            }
+            SaveFile();
+            print("save success!");
+        }
+        //把游戏数据保存到磁盘
+        public async void SaveFile() {
             FileStream fs = new FileStream(saveFullPath, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
             string json = JsonUtility.ToJson(gameData);
-            sw.Write(json);
+            await sw.WriteAsync(json);
             sw.Close();
             fs.Close();
-            print("save success!");
+            onSaveSuccess?.Invoke();
         }
 
+        //加载游戏存档
         public void LoadGame() {
             if (!HasSaveArchive()) return;
             FileStream fs = new FileStream(saveFullPath, FileMode.Open);
@@ -39,17 +59,18 @@ namespace MyGameApplication.Manager {
             gameData = JsonUtility.FromJson<PersistentData>(json);
         }
 
+        //是否存在存档文件
         public bool HasSaveArchive() {
             return Directory.Exists(saveFullPath);
         }
 
 #if UNITY_EDITOR
-        private void Update() {
+        private void OnGUI() {
             if (!_DEBUG_) return;
-            if (Input.GetKeyDown(KeyCode.P)) {
+            if (GUI.Button(new Rect(0, 0, 100, 50), "Switch Scene")) {
                 SceneController.LoadScene("Second");
             }
-            else if (Input.GetKeyDown(KeyCode.O)) {
+            else if (GUI.Button(new Rect(0, 50, 100, 50), "Save Game")) {
                 SaveGame();
             }
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Data {
     public class TransformSaver : Saver {
@@ -17,21 +17,22 @@ namespace MyGameApplication.Data {
             if (!transformToSave) transformToSave = transform;
             base.Awake();
             positionKey = key + "Position";
-            rotationKey = key + "rotationKey";
-            scaleKey = key + "scaleKey";
+            rotationKey = key + "Rotation";
+            scaleKey = key + "Scale";
         }
 
-        protected override string GetKey() {
-            return transformToSave.name + transformToSave.GetType().FullName + uniqueIdentifier;
+        protected override string CreateKey() {
+            return SceneManager.GetActiveScene().name +
+                transformToSave.name + transformToSave.GetType().FullName + uniqueIdentifier;
         }
 
-        protected override void Save() {
+        public override void Save() {
             gameData.Save(positionKey, transformToSave.position);
             if (saveRotation) gameData.Save(rotationKey, transformToSave.rotation);
             if (saveScale) gameData.Save(scaleKey, transformToSave.localScale);
         }
 
-        protected override void Load() {
+        public override void Load() {
             Vector3 position = default;
             if (gameData.Load(positionKey, ref position))
                 transformToSave.position = position;

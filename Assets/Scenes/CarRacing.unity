@@ -771,7 +771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueIdentifier: 
-  saveData: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a, type: 2}
+  gameData: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a, type: 2}
+  autoSaveOnSwitchScene: 1
   transformToSave: {fileID: 468596013}
   saveRotation: 1
   saveScale: 0
@@ -2845,7 +2846,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFileName: save.archive
-  gameData: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a, type: 2}
 --- !u!4 &1884916740
 Transform:
   m_ObjectHideFlags: 0
@@ -3548,6 +3548,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Knapsack
+      objectReference: {fileID: 0}
+    - target: {fileID: 807250448823880030, guid: c17e08bd7a1d07f4fb1f33dd08b2ea67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 807250449270291330, guid: c17e08bd7a1d07f4fb1f33dd08b2ea67,
         type: 3}

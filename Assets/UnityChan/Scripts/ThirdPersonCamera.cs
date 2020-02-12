@@ -10,7 +10,7 @@ using System.Collections;
 public class ThirdPersonCamera : MonoBehaviour
 {
 	public float smooth = 3f;		// カメラモーションのスムーズ化用変数
-	[SerializeField] Transform standardPos;			// the usual position for the camera, specified by a transform in the game
+	Transform standardPos;			// the usual position for the camera, specified by a transform in the game
 	Transform frontPos;			// Front Camera locater
 	Transform jumpPos;			// Jump Camera locater
 	
@@ -21,7 +21,7 @@ public class ThirdPersonCamera : MonoBehaviour
 	void Start()
 	{
 		// 各参照の初期化
-		//standardPos = GameObject.Find ("CamPos").transform;
+		standardPos = GameObject.Find ("CamPos").transform;
 		
 		if(GameObject.Find ("FrontPos"))
 			frontPos = GameObject.Find ("FrontPos").transform;
@@ -38,19 +38,19 @@ public class ThirdPersonCamera : MonoBehaviour
 	void FixedUpdate ()	// このカメラ切り替えはFixedUpdate()内でないと正常に動かない
 	{
 		
-		//if(Input.GetButton("Fire1"))	// left Ctlr
-		//{	
-		//	// Change Front Camera
-		//	setCameraPositionFrontView();
-		//}
+		if(Input.GetButton("Fire1"))	// left Ctlr
+		{	
+			// Change Front Camera
+			setCameraPositionFrontView();
+		}
 		
-		//else if(Input.GetButton("Fire2"))	//Alt
-		//{	
-		//	// Change Jump Camera
-		//	setCameraPositionJumpView();
-		//}
+		else if(Input.GetButton("Fire2"))	//Alt
+		{	
+			// Change Jump Camera
+			setCameraPositionJumpView();
+		}
 		
-		//else
+		else
 		{	
 			// return the camera to standard position and direction
 			setCameraPositionNormalView();

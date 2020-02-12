@@ -1,30 +1,34 @@
 ﻿using MyGameApplication.Manager;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Data {
     [ExecuteInEditMode]
     public abstract class Saver : MonoBehaviour {
-        private static string _saveDataPath = "Assets/ScriptableObjects/SaveData/PersistentSaveData.asset";
         [SerializeField] protected string uniqueIdentifier;
-        public SaveData gameData;
+        [SerializeField] protected SaveData gameData;
+        [SerializeField] private bool autoSaveOnSwitchScene = true;
 
         private SceneController sceneController;
         protected string key;
+
+        public bool AutoSaveOnSwitchScene { get { return autoSaveOnSwitchScene; } }
 
         protected virtual void Awake() {
             sceneController = SceneController.Instance;
             //if (!sceneController)
             //    throw new UnityException("SceneController could not be found!");
-            if (!gameData) gameData = AssetDatabase.LoadAssetAtPath<SaveData>(_saveDataPath);
-            key = GetKey();
+            if (!gameData) gameData = PersistentData.Instance;
+            key = CreateKey();
         }
 
         private void OnEnable() {
-            sceneController.onBeforeSceneUnload += Save;
-            sceneController.onAfterSceneLoad += Load;
+            if (autoSaveOnSwitchScene) {
+                sceneController.onBeforeSceneUnload += Save;
+                sceneController.onAfterSceneLoad += Load;
+            }
         }
 
         private void OnDisable() {
@@ -32,12 +36,12 @@ namespace MyGameApplication.Data {
             sceneController.onAfterSceneLoad -= Load;
         }
 
-        protected abstract void Save();
+        public abstract void Save();
 
-        protected abstract void Load();
+        public abstract void Load();
 
-        protected virtual string GetKey() {
-            return key = uniqueIdentifier;
+        protected virtual string CreateKey() {
+            return SceneManager.GetActiveScene().name + gameObject.name + uniqueIdentifier;
         }
     }
 }
