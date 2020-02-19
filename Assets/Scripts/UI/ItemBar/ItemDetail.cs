@@ -23,6 +23,10 @@ namespace MyGameApplication.UI.ItemBar {
 
         public void SetItem(int id, Sprite sprite, string name, string desc = null) {
             ItemId = id;
+            if (id <= 0) {
+                Clear();
+                return;
+            }
             var itemManager = ItemManager.Instance;
             if (string.IsNullOrEmpty(desc)) desc = itemManager.GetItemDescById(id);
             SetItem(sprite, name, desc);

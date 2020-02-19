@@ -11,15 +11,18 @@ namespace MyGameApplication.UI.ItemBar {
         private List<Grid> m_Grids = new List<Grid>();
         private int row, col;
 
+        private ToggleGroup m_ToggleGroup;
         private bool m_RefreshFlag = false; //激活时是否需要刷新UI的标记，初始为false避免了OnEnable在Grid的Awake之前刷新UI
 
         private void Awake() {
-            m_Grids.AddRange(m_GridPanel.transform.GetComponentsInChildren<Grid>());
+            m_ToggleGroup = m_GridPanel.GetComponent<ToggleGroup>();
+            m_Grids.AddRange(m_GridPanel.GetComponentsInChildren<Grid>());
             col = m_GridPanel.constraintCount;
             row = 2;
         }
 
         private void Start() {
+            PlayerBag.Instance.onItemChange += Refresh;
             m_RefreshFlag = true;
             gameObject.SetActive(false);
         }
@@ -35,6 +38,7 @@ namespace MyGameApplication.UI.ItemBar {
             int j = 0;
             foreach(var item in items) {
                 if (item.Value > 0) {
+                    //如果道具格子不足，则新创建一行道具格子
                     if (j > m_Grids.Count) {
                         for (int i = 0; i < col; i++) {
                             var gridObj = Instantiate(m_Grids[0].gameObject);
@@ -53,11 +57,15 @@ namespace MyGameApplication.UI.ItemBar {
             if (bound < col * row) bound = col * row;
             while(j < m_Grids.Count) {
                 if (j >= bound) m_Grids[j].gameObject.SetActive(false);
+                else if (!m_Grids[j].gameObject.activeSelf) m_Grids[j].gameObject.SetActive(true);
                 m_Grids[j++].RemoveItem();
             }
             //默认选择第一个道具格子
             if (m_ItemDetail.ItemId <= 0) {
-                if (m_Grids[0].ItemId > 0) m_Grids[0].OnSelected();
+                if (m_Grids[0].ItemId > 0) {
+                    m_Grids[0].selectable.Select();
+                    m_Grids[0].OnSelected();
+                }
                 else m_ItemDetail.Clear();
             }
             //刷新完毕，把标记置为false
@@ -66,6 +74,10 @@ namespace MyGameApplication.UI.ItemBar {
 
         private void OnEnable() {
             if (m_RefreshFlag) Refresh();
+        }
+
+        private void OnDestroy() {
+            PlayerBag.Instance.onItemChange -= Refresh;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace MyGameApplication.ObjectPool {
         }
 
         private void Awake() {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
         }
 
         public void SetCapacityById(int id, int capacity) {

@@ -24,7 +24,7 @@ namespace MyGameApplication.Manager {
         }
 
         private void Awake() {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.root.gameObject);
             saveFullPath = Application.persistentDataPath + "/" + saveFileName;
             gameData = PersistentSaveData.Instance;
         }
@@ -56,6 +56,7 @@ namespace MyGameApplication.Manager {
             StreamReader sr = new StreamReader(fs, Encoding.UTF8);
             string json = sr.ReadToEnd();
             gameData = JsonUtility.FromJson<PersistentSaveData>(json);
+
         }
 
         //是否存在存档文件

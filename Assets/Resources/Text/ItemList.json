@@ -12,6 +12,13 @@
       "description": "",
       "uiPath": "Accelerator",
       "objectPoolCapacity": 2
+    },
+    {
+      "id": 2,
+      "type": "Prop",
+      "name": "测试",
+      "description": "测试用，若要新增道具，请删除此道具",
+      "uiPath": "Accelerator"
     }
   ],
   "infos": {

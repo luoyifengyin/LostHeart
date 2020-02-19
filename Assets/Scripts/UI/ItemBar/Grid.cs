@@ -11,6 +11,7 @@ namespace MyGameApplication.UI.ItemBar {
         private Text m_NameText;
         private Text m_CntText;
         public ItemDetail detail = null;
+        [HideInInspector] public Selectable selectable;
 
         public int ItemId { get; private set; }
 
@@ -18,9 +19,10 @@ namespace MyGameApplication.UI.ItemBar {
             m_Img = transform.Find("Slot/Image").GetComponent<Image>();
             m_NameText = transform.Find("Name").GetComponent<Text>();
             m_CntText = transform.Find("Slot/Count").GetComponent<Text>();
+            selectable = GetComponent<Selectable>();
         }
 
-        public void SetItem(int id, Sprite sprite = null, string name = null, int cnt = 0) {
+        public void SetItem(int id, Sprite sprite, string name, int cnt) {
             var itemManager = ItemManager.Instance;
             if (!sprite) sprite = itemManager.GetItemSpriteById(id);
             if (string.IsNullOrEmpty(name)) name = itemManager.GetItemNameById(id);
@@ -30,6 +32,7 @@ namespace MyGameApplication.UI.ItemBar {
             m_Img.enabled = true;
             m_NameText.text = name;
             m_CntText.text = cnt.ToString();
+            selectable.interactable = true;
         }
         public void SetItem(int id, int cnt = 0) {
             SetItem(id, null, null, cnt);
@@ -41,6 +44,7 @@ namespace MyGameApplication.UI.ItemBar {
             m_Img.enabled = false;
             m_NameText.text = "";
             m_CntText.text = "";
+            selectable.interactable = false;
         }
 
         public void OnPointerDown(PointerEventData eventData) {
@@ -50,9 +54,8 @@ namespace MyGameApplication.UI.ItemBar {
 
         public void OnSelected() {
             print("on selected");
-            if (ItemId > 0) {
+            if (selectable && selectable.IsInteractable())
                 detail.SetItem(ItemId, m_Img.sprite, m_NameText.text);
-            }
         }
     }
 }
