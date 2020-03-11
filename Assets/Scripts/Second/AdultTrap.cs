@@ -12,7 +12,7 @@ namespace MyGameApplication.Second
 
         private int m_NowTime = 0;//陷阱存在时间
         private bool m_IsDestroy=false;//陷阱是否去除
-        private string m_LeapName = "Cube";
+        private string m_LeapName = "Cube";//主角名字
         void Start()
         {
             turn();//陷阱方向初始化
@@ -36,6 +36,12 @@ namespace MyGameApplication.Second
             if (other.gameObject.tag == "Car")
             {
                 
+                Destroy(this.gameObject);
+            }
+
+            if (other.gameObject.tag == "GameController")
+            {
+
                 Destroy(this.gameObject);
             }
         }

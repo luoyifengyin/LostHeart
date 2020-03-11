@@ -11,8 +11,8 @@ namespace MyGameApplication.Second
         public GameObject m_Camera;//主镜头
         public GameObject m_SecondCamera;//隐藏镜头
         public GameObject m_Lead;//主角隐藏位置
-        public GameObject m_BoxGameObject;
-        public GameObject m_BoxPrefabs;
+        public GameObject m_BoxGameObject;//箱子管理
+        public GameObject m_BoxPrefabs;//箱子预制体
 
         private float x = 0, y = 0;//临时变量
         private float m_X, m_Y;//四个方向键

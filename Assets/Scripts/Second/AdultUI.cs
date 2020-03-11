@@ -8,31 +8,21 @@ namespace MyGameApplication.Second
 {
     public class AdultUI : MonoBehaviour
     {
-        public Canvas m_AdultCanvas;
-        public List<Image> m_HealImages;
-        public List<Image> m_TipImages;
-        public List<GameObject> m_WallGameObject;
-        public Camera m_SecondCamera;
-        public List<bool> m_TipsDisplay;
-        public List<int> m_TipsTime;
-        public GameObject m_Leap;
-        public Text m_BoxText;
+        public Canvas m_AdultCanvas;//场景Canvas
+        public List<Image> m_HealImages;//血量图片
+        public List<Image> m_TipImages;//提示图片
+        public List<GameObject> m_WallGameObject;//提示位置
+        public Camera m_SecondCamera;//第二摄像头
+        public List<bool> m_TipsDisplay;//提示是否显示
+        public List<int> m_TipsTime;//提示显示时间轴
+        public GameObject m_Leap;//主角
+        public Text m_BoxText;//箱子数
 
-        private float m_AdultCanvasWeight=547.0f;
-        private float m_AdultCanvasHigh=217.0f;
+        private float m_AdultCanvasWeight=547.0f;//Canvas宽带
+        private float m_AdultCanvasHigh=217.0f;//Canvas高度
         void Start()
         {
-            for (int i = 0; i < 4; i++)
-            {
-                bool a = false;
-                m_TipsDisplay.Add(a); 
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                int a = 2000;
-                m_TipsTime.Add(a);
-            }
-            Debug.Log(m_TipsDisplay.Count);
+            NewGame();//游戏初始化
         }
 
         
@@ -40,7 +30,7 @@ namespace MyGameApplication.Second
         {
             HealDisplay();//显示生命值
             BoxDisplay();//显示生命值
-            TipDisplay();
+            TipDisplay();//显示提示
         }
 
         void HealDisplay() 
@@ -125,7 +115,21 @@ namespace MyGameApplication.Second
             
         }
 
-        public void OneTipsDisplay(int Tips ,int TipsPosition)//0前1后2左3右
+        void NewGame()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                bool a = false;
+                m_TipsDisplay.Add(a);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                int a = 2000;
+                m_TipsTime.Add(a);
+            }
+        }
+
+        public void OneTipsDisplay(int Tips ,int TipsPosition)//0前1后2左3右,0左1前2右3后
         {
             if(m_TipsDisplay[Tips]==false)
             {
@@ -134,5 +138,8 @@ namespace MyGameApplication.Second
                 m_TipsTime[Tips] = 0;
             }
         }
+
+        public void Onclick()
+        { }
     }
 }

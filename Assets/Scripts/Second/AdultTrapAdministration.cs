@@ -7,7 +7,7 @@ namespace MyGameApplication.Second
 {
     public class AdultTrapAdministration : MonoBehaviour
     {
-        public GameObject m_BoxGameObject;
+        public GameObject m_BoxGameObject;//箱子预制体
         // Start is called before the first frame update
         void Start()
         {

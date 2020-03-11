@@ -9,9 +9,9 @@ namespace MyGameApplication.Second
     {
         public int m_Heal = 3;//主角生命值
         public int m_Box = 0;//主角箱子数
-        public List<GameObject> m_LevelBeginGameObject;
-        public GameObject m_Scene;
-        public GameObject m_Trap;
+        public List<GameObject> m_LevelBeginGameObject;//关卡开始区域
+        public GameObject m_Scene;//场景管理
+        public GameObject m_Trap;//陷阱管理
         // Start is called before the first frame update
         void Start()
         {
@@ -21,7 +21,7 @@ namespace MyGameApplication.Second
 
         void Update()
         {
-            IsDeath();
+            IsDeath();//判断主角是否死亡
 
         }
         void OnTriggerEnter(Collider other)
@@ -60,6 +60,11 @@ namespace MyGameApplication.Second
                 m_Scene.GetComponent<AdultScene>().m_LevelTime[3] = 0;
                 m_Scene.GetComponent<AdultScene>().m_LevelBegin[3] = true;
                 m_LevelBeginGameObject[3].gameObject.SetActive(false);
+            }
+
+            if (other.gameObject.tag == "GameController")
+            {
+                other.transform.Translate(Vector3.back);
             }
         }
 
