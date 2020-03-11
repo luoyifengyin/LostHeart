@@ -20,11 +20,10 @@ namespace MyGameApplication.Item {
         }
 
         private void Awake() {
-            GameObject[] gos = GameObject.FindGameObjectsWithTag("ItemSprite");
-            m_ItemCapacity = gos.Length;
+            m_ItemCapacity = transform.childCount;
             m_ItemImgs = new Image[m_ItemCapacity];
-            for (int i = 0; i < gos.Length; i++) {
-                m_ItemImgs[i] = gos[i].GetComponent<Image>();
+            for (int i = 0; i < m_ItemCapacity; i++) {
+                m_ItemImgs[i] = transform.GetChild(i).Find("Image").GetComponent<Image>();
             }
             m_Mask = m_ItemImgs[0].sprite;
         }

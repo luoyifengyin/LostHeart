@@ -8,12 +8,12 @@ namespace MyGameApplication.Car {
         [SerializeField] private WheelCollider m_WheelR;
         [SerializeField] private float m_AntiRoll = 5000;
 
-        public AntiRollBar setWheels(WheelCollider wheelL, WheelCollider wheelR) {
+        public AntiRollBar SetWheels(WheelCollider wheelL, WheelCollider wheelR) {
             m_WheelL = wheelL;
             m_WheelR = wheelR;
             return this;
         }
-        public AntiRollBar setAntiRoll(float val) {
+        public AntiRollBar SetAntiRoll(float val) {
             m_AntiRoll = val;
             return this;
         }
