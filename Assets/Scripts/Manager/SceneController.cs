@@ -7,12 +7,16 @@ using UnityEngine.SceneManagement;
 namespace MyGameApplication.Manager {
     public class SceneController : MonoBehaviour {
         private static SceneController _instance;
-        public Fader fader;
-        public float fadeDuration = 1f;
+        //public Fader fader;
+        //public float fadeDuration = 1f;
+        public Animator transition;
         [SerializeField] private string startingSceneName = null;
 
         [HideInInspector] public event Action onBeforeSceneUnload;
         [HideInInspector] public event Action onAfterSceneLoad;
+
+        private CustomYieldInstruction waitWhileFadingOut;
+        private CustomYieldInstruction waitWhileFadingIn;
 
         public bool IsLoadedByPersistentScene {
             get { return !string.IsNullOrEmpty(startingSceneName); }
@@ -26,13 +30,23 @@ namespace MyGameApplication.Manager {
         }
 
         private void Awake() {
-            if (!fader) fader = FindObjectOfType<Fader>();
+            //if (!fader) fader = FindObjectOfType<Fader>();
+            waitWhileFadingOut = new WaitUntil(() => {
+                AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
+                //print(info.normalizedTime);
+                return info.normalizedTime > 1.0f && info.IsName("FadeOut");
+            });
+            waitWhileFadingIn = new WaitUntil(() => {
+                AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
+                //print(info.normalizedTime);
+                return info.normalizedTime > 1.0f && info.IsName("FadeIn");
+            });
         }
 
         IEnumerator Start() {
             if (!string.IsNullOrEmpty(startingSceneName)) {
                 IsLoading = true;
-                fader.Alpha = 1f;
+                //fader.Alpha = 1f;
                 yield return StartCoroutine(LoadNextScene(startingSceneName.Trim()));
                 IsLoading = false;
             }
@@ -55,7 +69,10 @@ namespace MyGameApplication.Manager {
         }
 
         private IEnumerator UnloadCurrentScene() {
-            yield return fader.Fade(1f, fadeDuration);
+            //yield return fader.Fade(1f, fadeDuration);
+            transition.SetTrigger("FadeOut");
+            yield return waitWhileFadingOut;
+
             onBeforeSceneUnload?.Invoke();
             if (IsLoadedByPersistentScene)
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
@@ -67,8 +84,11 @@ namespace MyGameApplication.Manager {
             yield return SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
             Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
             SceneManager.SetActiveScene(newScene);
+
             onAfterSceneLoad?.Invoke();
-            yield return fader.Fade(0f, fadeDuration);
+            //yield return fader.Fade(0f, fadeDuration);
+            transition.SetTrigger("FadeIn");
+            yield return waitWhileFadingIn;
         }
     }
 }
