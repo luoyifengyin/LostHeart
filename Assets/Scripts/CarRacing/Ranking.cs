@@ -10,7 +10,7 @@ namespace MyGameApplication.CarRacing {
         [SerializeField] private Text m_RankText = null;
         [SerializeField] private Text m_SuffixText = null;
         [SerializeField] private Text m_TotalText = null;
-        [SerializeField] private GameObject m_NameList = null;
+        [SerializeField] private GameObject m_RankingList = null;
         private Text[] m_Names;
         private Outline[] m_Outlines;
         private int m_Rank;
@@ -32,11 +32,10 @@ namespace MyGameApplication.CarRacing {
         }
 
         private void Awake() {
-            m_Names = m_NameList.GetComponentsInChildren<Text>();
-            m_Outlines = m_NameList.GetComponentsInChildren<Outline>();
+            m_Names = m_RankingList.GetComponentsInChildren<Text>();
+            m_Outlines = m_RankingList.GetComponentsInChildren<Outline>();
             m_TotalText.text = "" + m_Names.Length;
-            m_Rank = m_Names.Length;
-            Refresh();
+            Rank = m_Names.Length;
         }
 
         private void Refresh() {

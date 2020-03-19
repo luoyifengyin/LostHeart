@@ -6,14 +6,10 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.PickUp {
     public class PickUp : BasePickUp {
-        [SerializeField] protected string m_ButtonName;
-        [SerializeField] protected KeyCode m_Key;
+        private const string PICK_UP = "PickUp";
+        [SerializeField] protected bool m_AutoPickUp = true;
         [SerializeField] protected bool m_WhetherPickIfOverflow;
         [SerializeField] protected string[] m_CanPickByTags = { "Player" };
-
-        private void Awake() {
-            m_ButtonName = m_ButtonName.Trim();
-        }
 
         private void CheckPickUp(Collider other) {
             bool touch = false;
@@ -22,18 +18,10 @@ namespace MyGameApplication.PickUp {
                     touch = true;
             }
             if (touch) {
-                if ((string.IsNullOrEmpty(m_ButtonName) || CrossPlatformInputManager.GetButtonDown(m_ButtonName))
-                        && (m_Key == KeyCode.None || Input.GetKeyDown(m_Key))) {
-                    var bag = PlayerBag.Instance;
-                    int cnt = bag.GetCntById(m_PickedItemId);
-                    int capacity = bag.GetCapacityById(m_PickedItemId);
-                    if (cnt >= capacity && !m_WhetherPickIfOverflow) {
-                        OnNonPicked();
-                    }
-                    else {
+                if ((m_AutoPickUp || CrossPlatformInputManager.GetButtonDown(PICK_UP))) {
+                    if (!PlayerBag.Instance.IsFullOfItemById(m_PickedItemId) || m_WhetherPickIfOverflow)
                         PickUpItem();
-                        if (m_PickedCnt > capacity - cnt) OnOverflow(m_PickedCnt - (capacity - cnt));
-                    }
+                    else OnNonPicked();
                 }
             }
         }
@@ -45,13 +33,11 @@ namespace MyGameApplication.PickUp {
             CheckPickUp(collision.collider);
         }
 
-        protected override void OnPicked() {
-            base.OnPicked();
+        protected override void OnPicked(int pickedCnt, int overflowCnt) {
+            base.OnPicked(pickedCnt, overflowCnt);
             if (!IsSelfItem) Destroy(gameObject);
         }
 
         protected virtual void OnNonPicked() { }
-
-        protected virtual void OnOverflow(int cnt) { }
     }
 }

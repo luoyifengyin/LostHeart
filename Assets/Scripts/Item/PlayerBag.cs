@@ -16,19 +16,17 @@ namespace MyGameApplication.Item {
             }
         }
 
-        public override void AddItem(int id, int cnt = 1) {
-            if (cnt == 0) return;
+        public override int AddItem(int id, int cnt = 1) {
+            if (cnt == 0) return 0;
             var itemManager = ItemManager.Instance;
             int preCnt = GetCntById(id);
             int capacity = itemManager.GetItemCapacityById(id);
             if (capacity >= 0) cnt = Mathf.Min(cnt, capacity - preCnt);
             base.AddItem(id, cnt);
-            GameObject go = itemManager.itemList[id].prefab;
-            if (go) {
-                BaseItem item = go.GetComponent<BaseItem>();
-                if (item) item.OnGained(GetCntById(id) - preCnt);
-            }
+            var effect = itemManager.itemList[id].effect;
+            if (effect) effect.OnGained(cnt);
             onItemChange?.Invoke();
+            return cnt;
         }
 
         //获取道具容量

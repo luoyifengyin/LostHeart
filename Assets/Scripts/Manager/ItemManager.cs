@@ -32,9 +32,8 @@ namespace MyGameApplication.Item {
             public int objectPoolInitCnt = 0;           //道具对象池初始化数量
             public int objectPoolCapacity = 100;        //道具对象池容量
             [NonSerialized] private Sprite mSprite;     //道具的精灵图，用于UI显示
-            public GameObject prefab {
-                get { return ItemObjectPool.Instance.GetPrefab(id); }
-            }
+            [NonSerialized] private GameObject mPrefab;
+            [NonSerialized] private BaseItem mEffect;
             public Sprite sprite {
                 get {
                     if (!mSprite) {
@@ -42,6 +41,23 @@ namespace MyGameApplication.Item {
                         mSprite = Resources.Load<Sprite>(path);
                     }
                     return mSprite;
+                }
+            }
+            public GameObject prefab {
+                get {
+                    if (!mPrefab) {
+                        string path = _instance.setting.prefabRootPath + uiPath;
+                        mPrefab = Resources.Load<GameObject>(path);
+                    }
+                    return mPrefab;
+                }
+            }
+            public BaseItem effect {
+                get {
+                    if (!mEffect) {
+                        if (prefab) mEffect = prefab.GetComponent<BaseItem>();
+                    }
+                    return mEffect;
                 }
             }
         }

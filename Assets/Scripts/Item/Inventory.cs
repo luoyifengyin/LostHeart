@@ -13,12 +13,13 @@ namespace MyGameApplication.Item {
             return m_AllItems[type];
         }
 
-        public virtual void AddItem(int id, int cnt = 1) {
+        public virtual int AddItem(int id, int cnt = 1) {
             var itemType = ItemManager.Instance.GetItemTypeById(id);
             var items = GetItemsByType(itemType);
             if (!items.ContainsKey(id)) items.Add(id, 0);
             items[id] += cnt;
             if (items[id] < 0) items[id] = 0;
+            return cnt;
         }
 
         public int GetCntById(int id) {

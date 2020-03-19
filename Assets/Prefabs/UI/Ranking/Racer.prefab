@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8091503160116331057}
   - component: {fileID: 4215232452525188672}
   m_Layer: 5
-  m_Name: Ranking
+  m_Name: Racer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

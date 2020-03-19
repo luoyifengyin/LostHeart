@@ -77,7 +77,7 @@ namespace MyGameApplication.UI.ItemBar {
         }
 
         private void OnDestroy() {
-            PlayerBag.Instance.onItemChange -= Refresh;
+            if (PlayerBag.Instance) PlayerBag.Instance.onItemChange -= Refresh;
         }
     }
 }

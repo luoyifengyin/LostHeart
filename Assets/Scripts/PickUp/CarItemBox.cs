@@ -7,23 +7,15 @@ namespace MyGameApplication.PickUp {
     public class CarItemBox : BasePickUp {
         [SerializeField] private float m_FreshTime = 5;
 
-        // Update is called once per frame
-        void Update() {
-            //transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
-            transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
-        }
-
         private void OnTriggerEnter(Collider other) {
             GameObject go = other.gameObject;
             if (go.CompareTag("Car")) {
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
-                GameObject itemObj = itemManager.itemList[itemId].prefab;
-                BaseItem item = null;
-                if (itemObj) item = itemObj.GetComponent<BaseItem>();
-                if (item && item is Prop && ((Prop)item).isCarItem()) {
+                var itemEffect = itemManager.itemList[itemId].effect;
+                if (itemEffect && itemEffect is Prop && ((Prop)itemEffect).isCarItem()) {
                     CarItemBar.Instance.AddProp(itemId);
-                    OnPicked();
+                    OnPicked(1);
                 }
                 else {
                     PickUpItem(itemId);
@@ -31,8 +23,8 @@ namespace MyGameApplication.PickUp {
             }
         }
 
-        protected override void OnPicked() {
-            base.OnPicked();
+        protected override void OnPicked(int pickedCnt = 1, int overflowCnt = 0) {
+            base.OnPicked(pickedCnt, overflowCnt);
             gameObject.SetActive(false);
             Invoke("Appear", m_FreshTime);
         }

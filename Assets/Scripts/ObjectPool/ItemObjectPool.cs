@@ -61,15 +61,9 @@ namespace MyGameApplication.ObjectPool {
             return m_UsingCaches[id];
         }
 
-        private GameObject Create(int id) {
-            var itemManager = ItemManager.Instance;
-            var path = itemManager.setting.prefabRootPath + itemManager.itemList[id].uiPath;
-            var prefab = Resources.Load<GameObject>(path);
-            //prefab.name = "Item_" + id;
-            return prefab;
-        }
-        internal GameObject GetPrefab(int id) {
-            if (!m_Prefabs.ContainsKey(id)) m_Prefabs.Add(id, Create(id));
+        private GameObject GetPrefab(int id) {
+            if (!m_Prefabs.ContainsKey(id))
+                m_Prefabs.Add(id, ItemManager.Instance.itemList[id].prefab);
             return m_Prefabs[id];
         }
 
@@ -113,8 +107,12 @@ namespace MyGameApplication.ObjectPool {
         }
 
         public void ClearPoolById(int id) {
-            m_UnusedCaches.Remove(id);
-            m_UsingCaches.Remove(id);
+            var unusedCache = GetUnusedCache(id);
+            foreach(var obj in unusedCache) Destroy(obj);
+            //m_UnusedCaches.Remove(id);
+            var usingCache = GetUsingCache(id);
+            foreach(var obj in usingCache)  Destroy(obj);
+            //m_UsingCaches.Remove(id);
         }
     }
 }
