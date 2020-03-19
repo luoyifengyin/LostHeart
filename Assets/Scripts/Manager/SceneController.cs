@@ -33,24 +33,27 @@ namespace MyGameApplication.Manager {
             //if (!fader) fader = FindObjectOfType<Fader>();
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                //print(info.normalizedTime);
+                //print("fadingOut: " + info.normalizedTime);
                 return info.normalizedTime > 1.0f && info.IsName("FadeOut");
             });
             waitWhileFadingIn = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                //print(info.normalizedTime);
+                //print("fadingIn: " + info.normalizedTime);
                 return info.normalizedTime > 1.0f && info.IsName("FadeIn");
             });
         }
 
         IEnumerator Start() {
+            IsLoading = true;
             if (!string.IsNullOrEmpty(startingSceneName)) {
-                IsLoading = true;
                 //fader.Alpha = 1f;
                 yield return StartCoroutine(LoadNextScene(startingSceneName.Trim()));
-                IsLoading = false;
             }
-            else onAfterSceneLoad?.Invoke();
+            else {
+                onAfterSceneLoad?.Invoke();
+                yield return waitWhileFadingIn;
+            }
+            IsLoading = false;
         }
 
         public static void LoadScene(string sceneName) {
@@ -87,6 +90,7 @@ namespace MyGameApplication.Manager {
 
             onAfterSceneLoad?.Invoke();
             //yield return fader.Fade(0f, fadeDuration);
+            //yield return new WaitForSeconds(1);
             transition.SetTrigger("FadeIn");
             yield return waitWhileFadingIn;
         }

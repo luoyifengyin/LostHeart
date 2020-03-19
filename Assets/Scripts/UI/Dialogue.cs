@@ -5,19 +5,29 @@ using UnityEngine.UI;
 
 namespace MyGameApplication.UI {
     public class Dialogue : MonoBehaviour {
-        private Text m_Text;
-        [SerializeField] private float m_InputIntervalTime = 0.05f;
-        [SerializeField] private float m_FadeOutDuration = 1f;
+        private static Dialogue _mainInstance;
+        public float showDuaration = 3f;            //对话显示时间
+        public float inputIntervalTime = 0.05f;     //打字效果（文字输入）的间隔时间
+        public float fadeOutDuration = 1f;          //对话淡出时间
         private string m_Words;
         private Coroutine m_Coroutine;
 
+        public static Dialogue main {
+            get {
+                return _mainInstance ??
+                    (_mainInstance = GameObject.FindGameObjectWithTag("MainDialogue").GetComponent<Dialogue>());
+            }
+        }
+
+        public Text text { get; private set; }
+
         private void SetAlpha(float alpha) {
-            Color color = m_Text.color;
-            m_Text.color = new Color(color.r, color.b, color.g, alpha);
+            Color color = text.color;
+            text.color = new Color(color.r, color.b, color.g, alpha);
         }
 
         private void Awake() {
-            m_Text = GetComponent<Text>();
+            text = GetComponent<Text>();
         }
 
         // Start is called before the first frame update
@@ -33,12 +43,14 @@ namespace MyGameApplication.UI {
             WaitForSeconds wait = new WaitForSeconds(intervalTime);
             do {
                 int curPos;
-                if (Mathf.Approximately(m_InputIntervalTime, 0)) curPos = len;
+                if (Mathf.Approximately(intervalTime, 0)) curPos = len;
                 else curPos = Mathf.CeilToInt(Mathf.Lerp(0, len, (Time.time - stTime) / totTime));
                 curPos = Mathf.Min(curPos, len);
-                m_Text.text = m_Words.Substring(0, curPos);
+                text.text = m_Words.Substring(0, curPos);
                 if (curPos >= len) {
-                    Invoke("HideDialogue", 3);
+                    //Invoke("HideDialogue", showDuaration);
+                    yield return new WaitForSeconds(showDuaration);
+                    HideDialogue();
                     m_Coroutine = null;
                     yield break;
                 }
@@ -46,13 +58,13 @@ namespace MyGameApplication.UI {
             } while (true);
         }
 
-        private IEnumerator FadeOut() {
-            if (Mathf.Approximately(m_FadeOutDuration, 0)) {
+        private IEnumerator FadeOut(float duration) {
+            if (Mathf.Approximately(duration, 0)) {
                 SetAlpha(0);
                 yield break;
             }
-            float alpha = m_Text.color.a;
-            float speed = alpha / m_FadeOutDuration;
+            float alpha = text.color.a;
+            float speed = alpha / duration;
             do {
                 alpha = Mathf.MoveTowards(alpha, 0, speed * Time.deltaTime);
                 SetAlpha(Mathf.Clamp01(alpha));
@@ -64,16 +76,16 @@ namespace MyGameApplication.UI {
 
         public void ShowDialogue(string content, Color? color = null, float? intervalTime = null) {
             if (string.IsNullOrEmpty(content)) return;
-            m_Text.color = color ?? Color.white;
+            text.color = color ?? Color.white;
             if (m_Coroutine != null) {
                 StopCoroutine(m_Coroutine);
                 m_Coroutine = null;
             }
             m_Words = content;
-            m_Coroutine = StartCoroutine(FadeIn(intervalTime ?? m_InputIntervalTime));
+            m_Coroutine = StartCoroutine(FadeIn(intervalTime ?? inputIntervalTime));
         }
-        private void HideDialogue() {
-            m_Coroutine = StartCoroutine(FadeOut());
+        public void HideDialogue(float fadeDuration = -1) {
+            m_Coroutine = StartCoroutine(FadeOut(fadeDuration >= 0 ? fadeDuration : fadeOutDuration));
         }
     }
 }
