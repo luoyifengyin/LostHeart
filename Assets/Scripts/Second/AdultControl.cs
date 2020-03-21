@@ -7,6 +7,7 @@ namespace MyGameApplication.Second
     
     public class AdultControl : MonoBehaviour
     {
+        public GameObject m_Audio;
         public float Speed = 0.1f;//主角速度
         public GameObject m_Camera;//主镜头
         public GameObject m_SecondCamera;//隐藏镜头
@@ -20,6 +21,7 @@ namespace MyGameApplication.Second
         private bool m_MouseLeftButtonUp;//鼠标左键
         private bool m_MouseLeft;//鼠标左键
         private float m_MouseMove;//鼠标移动
+        private float m_MouseMove2;//鼠标移动
         private bool m_MouseRightButtonDown;//鼠标右键
         private float m_CameraRotate=0;//镜头旋转度
         private float m_CameraRotateDown = 30.0f;//镜头偏转度
@@ -51,9 +53,11 @@ namespace MyGameApplication.Second
             m_MouseLeftButtonUp = Input.GetMouseButtonUp(0);
             m_MouseRightButtonDown = Input.GetMouseButton(1);
 
-            if(m_MouseLeftButtonDown==true && m_MouseLeft==false && this.GetComponent<AdultLead>().m_Box>0)
+            
+
+            if(m_MouseLeftButtonDown==true && m_MouseLeft==false && this.GetComponent<AdultLead>().m_Box>0 && this.GetComponent<AdultLead>().m_Stage!=2)
             {
-                Debug.Log("asd");
+                //Debug.Log("asd");
                 m_MouseLeft = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -64,7 +68,8 @@ namespace MyGameApplication.Second
                         this.GetComponent<AdultLead>().m_Box--;
                         GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
                         goClone.transform.parent = m_BoxGameObject.gameObject.transform;
-                        goClone.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                        goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
+                        m_Audio.GetComponent<AdultSoundEffects>().Box();
                     }
                 }
             }
@@ -78,7 +83,17 @@ namespace MyGameApplication.Second
             if (m_MouseRightButtonDown == true)
             {
                 m_MouseMove=Input.GetAxis("Mouse X");
+                m_MouseMove2 = Input.GetAxis("Mouse Y");
                 m_CameraRotate = m_CameraRotate + m_MouseMove;
+                m_CameraRotateDown = m_CameraRotateDown - m_MouseMove2;
+                if(m_CameraRotateDown>90.0f)
+                {
+                    m_CameraRotateDown = 90.0f;
+                }
+                if (m_CameraRotateDown <0.0f)
+                {
+                    m_CameraRotateDown = 0.0f;
+                }
             }
 
             

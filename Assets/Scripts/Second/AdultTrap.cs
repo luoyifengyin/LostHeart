@@ -6,6 +6,7 @@ namespace MyGameApplication.Second
 {
     public class AdultTrap : MonoBehaviour
     {
+        public GameObject m_Audio;
         public int m_RemoveTime = 10;//陷阱消失时间
         public float m_Speed = 0.1f;//陷阱速度
         public int m_Direction = -1;//陷阱方向 0->前，1->后，2->左，3->右，4->上，5->下
@@ -16,6 +17,7 @@ namespace MyGameApplication.Second
         void Start()
         {
             turn();//陷阱方向初始化
+            m_Audio = GameObject.Find("SoundEffects");
         }
 
         
@@ -31,6 +33,7 @@ namespace MyGameApplication.Second
             {
                 GameObject.Find(m_LeapName).GetComponent<AdultLead>().m_Heal--;
                 Destroy(this.gameObject);
+                m_Audio.GetComponent<AdultSoundEffects>().Health();
             }
 
             if (other.gameObject.tag == "Car")
