@@ -1,6 +1,6 @@
-﻿#define __DEBUG__
-using MyGameApplication.Data;
+﻿using MyGameApplication.Data;
 using MyGameApplication.Data.Saver;
+using MyGameApplication.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,22 +64,23 @@ namespace MyGameApplication.Manager {
             return Directory.Exists(saveFullPath);
         }
 
-#if UNITY_EDITOR && __DEBUG__
-        private string[] sceneNames = { "CarRacing", "Second", "Maze" };
-        private int curSceneIndex = -1;
-        private void OnGUI() {
-            if (GUI.Button(new Rect(0, 0, 100, 50), "Switch Scene")) {
-                if (curSceneIndex == -1) {
-                    curSceneIndex = Array.FindIndex(sceneNames,
-                        str => str == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-                }
-                curSceneIndex = (curSceneIndex + 1) % sceneNames.Length;
-                SceneController.LoadScene(sceneNames[curSceneIndex]);
+        public void StartGame() {
+            if (HasSaveArchive()) {
+                // do something...
             }
-            else if (GUI.Button(new Rect(0, 50, 100, 50), "Save Game")) {
-                SaveGame();
-            }
+            SceneController.LoadScene("CarRacing");
         }
+
+        public void Exit() {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
 #endif
+        }
+
+        public void Setting() {
+            print("setting");
+        }
     }
 }

@@ -16,8 +16,8 @@ namespace MyGameApplication.CarRacing {
         private int m_Rank;
         [SerializeField] private string m_EnemyName = "Enemy Car";
         [SerializeField] private string m_PlayerName = "你";
-        [SerializeField] private Color m_PlayerNameColor;
-        [SerializeField] private Color m_EnemyNameColor;
+        [SerializeField] private Color m_PlayerNameColor = default;
+        [SerializeField] private Color m_EnemyNameColor = default;
 
         public static Ranking Instance {
             get { return _instance ?? (_instance = FindObjectOfType<Ranking>()); }

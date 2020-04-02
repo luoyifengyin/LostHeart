@@ -49,7 +49,7 @@ namespace MyGameApplication.Car {
                 for (int i = 0; i < 2; i++) {
                     gameObject.AddComponent<AntiRollBar>()
                         .SetWheels(m_WheelColliders[i << 1], m_WheelColliders[i << 1 | 1])
-                        .SetAntiRoll(m_WheelColliders[i << 1].suspensionSpring.spring / 2);
+                        .SetAntiRoll(m_WheelColliders[i << 1].suspensionSpring.spring);
                 }
             }
         }
