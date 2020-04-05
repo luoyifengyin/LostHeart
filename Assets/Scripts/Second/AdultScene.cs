@@ -147,7 +147,7 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 25; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 60.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 55.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -158,7 +158,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 2);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -169,7 +169,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 3);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, -30.0f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, -28.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -180,7 +180,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 0);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -194,7 +194,7 @@ namespace MyGameApplication.Second
             m_LevelTime[0]++;
         }
 
-        void LevelTwo()
+        void LevelTwo()//左-37右43上151下69
         {
             float m = 0.0f;
             if (m_LevelTime[1] == 120)
@@ -203,14 +203,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(1, 5);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 156.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 151.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 140.0f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 6);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -222,14 +222,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 7);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 66.0f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 69.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 140.0f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 4);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -241,14 +241,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(1, 5);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 156.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 151.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 7);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 66.0f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 69.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -260,14 +260,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 6);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m = 140.0f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 4);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -280,7 +280,7 @@ namespace MyGameApplication.Second
             }
             m_LevelTime[1]++;
         }
-        void LevelThree()
+        void LevelThree()//左-37右43上248下165
         {
             float m = -27.5f;
             if (m_LevelTime[2] == 200)
@@ -289,14 +289,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 235.8f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -304,14 +304,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 205.8f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -324,14 +324,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 205.8f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -339,14 +339,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 235.8f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -359,7 +359,7 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 25; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
 
@@ -368,7 +368,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -376,7 +376,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -389,7 +389,7 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 25; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
 
@@ -398,7 +398,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -406,7 +406,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -418,7 +418,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -426,7 +426,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -435,14 +435,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -455,14 +455,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -475,14 +475,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -494,7 +494,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -502,7 +502,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m = 2.5f;
@@ -510,14 +510,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -530,14 +530,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -550,14 +550,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -569,7 +569,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 10);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 45.8f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
 
@@ -577,7 +577,7 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 8);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m = 2.5f;
@@ -585,14 +585,14 @@ namespace MyGameApplication.Second
                 for (int i = 0; i < 13; i++)
                 {
 
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 246.0f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 248.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 11);
                 for (int i = 0; i < 12; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 162.6f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 165.0f);
                     m = m + m_PositionInterval;
                 }
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
@@ -605,7 +605,7 @@ namespace MyGameApplication.Second
             }
             m_LevelTime[2]++;
         }
-        void LevelFour()
+        void LevelFour()//左-37右43上341下260
         {
             float m = -27.5f;
             if (m_LevelTime[3] == 300)
@@ -615,14 +615,14 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(0, 12);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -41.3f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval;
                 }
                 m = -27.5f;
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(1, 13);
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 345.8f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 341.0f);
                     m = m + m_PositionInterval;
                 }
             }
@@ -635,13 +635,13 @@ namespace MyGameApplication.Second
             }
             if (m_LevelTime[3] == m_TemporaryVariableInt[0] && m_LevelTime[3] < 925)
             {
-                SetTrap(500, 0.2f, 1, m_TemporaryVariableFloat[0], 2.5f, 345.8f);
+                SetTrap(500, 0.2f, 1, m_TemporaryVariableFloat[0], 2.5f, 341.0f);
                 m_TemporaryVariableFloat[0] = m_TemporaryVariableFloat[0] + m_PositionInterval;
                 m_TemporaryVariableInt[0] = m_TemporaryVariableInt[0] + m_TimeInterval;
             }
             if (m_LevelTime[3] == m_TemporaryVariableInt[1] && m_LevelTime[3] < 1250)
             {
-                SetTrap(500, 0.2f, 1, m_TemporaryVariableFloat[1], 2.5f, 345.8f);
+                SetTrap(500, 0.2f, 1, m_TemporaryVariableFloat[1], 2.5f, 341.0f);
                 m_TemporaryVariableFloat[1] = m_TemporaryVariableFloat[1] - m_PositionInterval;
                 m_TemporaryVariableInt[1] = m_TemporaryVariableInt[1] + m_TimeInterval;
             }
@@ -654,8 +654,8 @@ namespace MyGameApplication.Second
             }
             if (m_LevelTime[3] == m_TemporaryVariableInt[2] && m_LevelTime[3] < 1775)
             {
-                SetTrap(500, 0.2f, 3, -43.0f, 2.5f, m_TemporaryVariableFloat[2]);
-                SetTrap(500, 0.2f, 2, 46.5f, 2.5f, m_TemporaryVariableFloat[2]);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m_TemporaryVariableFloat[2]);
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m_TemporaryVariableFloat[2]);
                 m_TemporaryVariableFloat[2] = m_TemporaryVariableFloat[2] - m_PositionInterval;
                 m_TemporaryVariableInt[2] = m_TemporaryVariableInt[2] + m_TimeInterval;
                 //Debug.Log("ASd");
@@ -668,8 +668,8 @@ namespace MyGameApplication.Second
             }
             if (m_LevelTime[3] == m_TemporaryVariableInt[3] && m_LevelTime[3] < 1925)
             {
-                SetTrap(500, 0.2f, 0, m_TemporaryVariableFloat[3], 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 0, m_TemporaryVariableFloat[4], 2.5f, 258.0f);
+                SetTrap(500, 0.2f, 0, m_TemporaryVariableFloat[3], 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 0, m_TemporaryVariableFloat[4], 2.5f, 260.0f);
                 m_TemporaryVariableFloat[3] = m_TemporaryVariableFloat[3] + m_PositionInterval;
                 m_TemporaryVariableFloat[4] = m_TemporaryVariableFloat[4] - m_PositionInterval;
                 m_TemporaryVariableInt[3] = m_TemporaryVariableInt[3] + m_TimeInterval;
@@ -684,52 +684,52 @@ namespace MyGameApplication.Second
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(2, 14);
                 m_Canvas.GetComponent<AdultUI>().OneTipsDisplay(3, 15);
                 m_Audio.GetComponent<AdultSoundEffects>().ShotSoundEffects();
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2200)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2300)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2400)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2500)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2600)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
             if (m_LevelTime[3] == 2700)
             {
-                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 258.0f);
-                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 344.0f);
-                SetTrap(500, 0.2f, 3, -42.7f, 2.5f, Random.Range(269.7f, 331.7f));
-                SetTrap(500, 0.2f, 2, 48.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 0, Random.Range(-27.7f, 33.0f), 2.5f, 260.0f);
+                SetTrap(500, 0.2f, 1, Random.Range(-27.7f, 33.0f), 2.5f, 341.0f);
+                SetTrap(500, 0.2f, 3, -37.0f, 2.5f, Random.Range(269.7f, 331.7f));
+                SetTrap(500, 0.2f, 2, 43.0f, 2.5f, Random.Range(269.7f, 331.7f));
             }
 
             if (m_LevelTime[3] == 3000)
@@ -742,25 +742,25 @@ namespace MyGameApplication.Second
                 m = -27.5f;
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 1, m, 2.5f, 345.8f);
+                    SetTrap(500, 0.2f, 1, m, 2.5f, 341.0f);
                     m = m + m_PositionInterval;
                 }
                 m = -27.5f;
                 for (int i = 0; i < 25; i++)
                 {
-                    SetTrap(500, 0.2f, 0, m, 2.5f, 258.0f);
+                    SetTrap(500, 0.2f, 0, m, 2.5f, 260.0f);
                     m = m + m_PositionInterval;
                 }
                 m = 331.7f;
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 3, -42.7f, 2.5f, m);
+                    SetTrap(500, 0.2f, 3, -37.0f, 2.5f, m);
                     m = m - m_PositionInterval * 2;
                 }
                 m = 269.7f;
                 for (int i = 0; i < 13; i++)
                 {
-                    SetTrap(500, 0.2f, 2, 48.0f, 2.5f, m);
+                    SetTrap(500, 0.2f, 2, 43.0f, 2.5f, m);
                     m = m + m_PositionInterval * 2;
                 }
             }
