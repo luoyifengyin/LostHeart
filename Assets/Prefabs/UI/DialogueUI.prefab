@@ -90,8 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23175450a5af0f04a8000079dd3ed8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Auto: 1
   showDuaration: 3
-  inputIntervalTime: 0.05
+  typeIntervalTime: 0.05
   fadeOutDuration: 1
 --- !u!1 &4718889393231801553
 GameObject:
