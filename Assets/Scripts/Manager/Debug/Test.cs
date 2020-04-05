@@ -1,5 +1,4 @@
-﻿#define __TEST_MODE__
-#if UNITY_EDITOR && __TEST_MODE__
+﻿#if UNITY_EDITOR
 using MyGameApplication.UI;
 using System.Collections;
 using System.Collections.Generic;

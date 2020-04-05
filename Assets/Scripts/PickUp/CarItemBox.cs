@@ -1,4 +1,6 @@
-﻿using MyGameApplication.Item;
+﻿using MyGameApplication.Car;
+using MyGameApplication.Item;
+using MyGameApplication.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +12,10 @@ namespace MyGameApplication.PickUp {
         private void OnTriggerEnter(Collider other) {
             GameObject go = other.gameObject;
             if (go.CompareTag("Car")) {
+                if (!go.transform.FindGameObjectInParentWithTag("Player")) {
+                    OnPicked();
+                    return;
+                }
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
                 var itemEffect = itemManager.itemList[itemId].effect;

@@ -13,7 +13,7 @@ namespace MyGameApplication.CarRacing {
         [SerializeField] private string m_PhaseName = null;
 
         private void OnTriggerEnter(Collider other) {
-            if (other.CompareTag("Car") && other.transform.GetComponentInParent<CarUserControl>()) {
+            if (other.CompareTag("Car") && other.transform.FindGameObjectInParentWithTag("Player")) {
                 if (s_Order < m_Order) {
                     s_Order = m_Order;
                     m_Car.gameObject.SetActive(true);

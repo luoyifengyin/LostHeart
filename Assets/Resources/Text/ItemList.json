@@ -1,7 +1,7 @@
 ﻿{
   "setting": {
-    "prefabRootPath": "Prefabs/Items/",
-    "spriteRootPath": "Sprites/Items/"
+    "prefabRootPath": "Items/Prefabs/",
+    "spriteRootPath": "Items/Sprites/"
   },
   "itemList": [
     {},
