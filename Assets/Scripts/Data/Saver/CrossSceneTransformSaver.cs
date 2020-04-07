@@ -14,13 +14,5 @@ namespace MyGameApplication.Data.Saver {
             CreateKey();
             base.Load();
         }
-
-        protected override string CreateKey() {
-            key = base.CreateKey();
-            positionKey = key + "Position";
-            rotationKey = key + "Rotation";
-            scaleKey = key + "Scale";
-            return key;
-        }
     }
 }

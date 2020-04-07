@@ -13,17 +13,18 @@ namespace MyGameApplication.Data.Saver {
         protected string rotationKey;
         protected string scaleKey;
 
-        protected override void Awake() {
-            if (!transformToSave) transformToSave = transform;
+        private new void Awake() {
             base.Awake();
-            positionKey = key + "Position";
-            rotationKey = key + "Rotation";
-            scaleKey = key + "Scale";
+            if (!transformToSave) transformToSave = transform;
         }
 
         protected override string CreateKey() {
-            return SceneManager.GetActiveScene().name +
+            key = SceneManager.GetActiveScene().name +
                 transformToSave.name + transformToSave.GetType().FullName + uniqueIdentifier;
+            positionKey = key + "Position";
+            rotationKey = key + "Rotation";
+            scaleKey = key + "Scale";
+            return key;
         }
 
         public override void Save() {

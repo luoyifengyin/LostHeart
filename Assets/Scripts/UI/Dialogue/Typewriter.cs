@@ -1,48 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.UI {
-    public class Dialogue : MonoBehaviour {
-        private static Dialogue _mainInstance;
-        [SerializeField] private bool m_Auto = false;
-        public float showDuaration = 3f;            //对话显示时间
+    public abstract class Typewriter : MonoBehaviour, ITalk {
+        public Text text;
         public float typeIntervalTime = 0.05f;      //打字效果（文字输入）的间隔时间
-        public float fadeOutDuration = 1f;          //对话淡出时间
         private string m_Content;
-        private Func<bool> m_DialogueControl;
-        private WaitWhile m_Wait;
         private Coroutine m_Coroutine;
 
-        public static Dialogue main {
-            get {
-                return _mainInstance ??
-                    (_mainInstance = GameObject.FindGameObjectWithTag("MainDialogue").GetComponent<Dialogue>());
-            }
-        }
-
-        public Text text { get; private set; }
-
-        public bool auto {
-            get { return m_Auto; }
-            set { m_Auto = value; }
-        }
-
         private void Awake() {
-            text = GetComponent<Text>();
-            m_DialogueControl = () => CrossPlatformInputManager.GetButtonDown("Fire1")
-                    || CrossPlatformInputManager.GetButtonDown("Submit");
-            m_Wait = new WaitWhile(m_DialogueControl);
-        }
-
-        // Start is called before the first frame update
-        void Start() {
-            text.CrossFadeAlpha(0f, 0f, true);
+            if (!text) text = GetComponentInChildren<Text>();
         }
 
         private class RichTextChecker {
@@ -159,7 +130,7 @@ namespace MyGameApplication.UI {
                 preText.Append(content.Substring(prePos, curPos + curMatchedTagLenTot - prePos));
                 prePos = curPos + curMatchedTagLenTot;
                 StringBuilder sb = new StringBuilder(preText.ToString());
-                foreach(var tag in matchingTagStack) {
+                foreach (var tag in matchingTagStack) {
                     sb.Append(tag.closeTag);
                 }
                 text.text = sb.ToString();
@@ -167,22 +138,22 @@ namespace MyGameApplication.UI {
         }
 
         private RichTextChecker m_RichTextChecker = new RichTextChecker();
+        private bool m_DisplayImmediately = false;
 
-        private IEnumerator Typewrite(float intervalTime) {
-            text.CrossFadeAlpha(1f, 0f, true);
-
+        private IEnumerator Typewrite() {
+            m_DisplayImmediately = false;
             m_RichTextChecker.CheckRichText(m_Content);
 
             int len = m_RichTextChecker.PureText.Length;
-            float totTime = intervalTime * (len - 1);
             float stTime = Time.time;
             do {
                 int curPos;
-                if (Mathf.Approximately(totTime, 0)) curPos = len;
-                else curPos = Mathf.FloorToInt(Mathf.Lerp(0, len, (Time.time - stTime) / totTime)) + 1;
+                if (Mathf.Approximately(typeIntervalTime, 0)) curPos = len;
+                else curPos = Mathf.FloorToInt((Time.time - stTime) / typeIntervalTime) + 1;
                 curPos = Mathf.Min(curPos, len);
 
-                if (!auto && m_DialogueControl()) {
+                if (m_DisplayImmediately) {
+                    m_DisplayImmediately = false;
                     curPos = len;
                 }
 
@@ -193,7 +164,7 @@ namespace MyGameApplication.UI {
             } while (true);
         }
 
-        public Coroutine ShowDialogue(string content, Color? color = null, float? intervalTime = null) {
+        public Coroutine ShowDialogue(string content, Color? color = null) {
             if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(content = content.Trim())) return null;
             text.color = color ?? Color.white;
             if (m_Coroutine != null) {
@@ -201,21 +172,34 @@ namespace MyGameApplication.UI {
                 m_Coroutine = null;
             }
             m_Content = content;
-            return m_Coroutine = StartCoroutine(Display(intervalTime ?? typeIntervalTime));
+            return m_Coroutine = StartCoroutine(Display());
         }
 
-        private IEnumerator Display(float intervalTime) {
-            yield return StartCoroutine(Typewrite(intervalTime));
-            if (auto) yield return new WaitForSecondsRealtime(showDuaration);
-            else yield return m_Wait;
-            yield return HideDialogue();
+        public virtual Coroutine ShowDialogue(string content) {
+            return ShowDialogue(content, Color.white);
+        }
+
+        private IEnumerator Display() {
+            yield return OnShow();
+            yield return StartCoroutine(Typewrite());
+            yield return OnWait();
+            yield return OnHide();
             m_Coroutine = null;
         }
 
-        public IEnumerator HideDialogue(float fadeDuration = -1) {
-            fadeDuration = fadeDuration >= 0 ? fadeDuration : fadeOutDuration;
-            text.CrossFadeAlpha(0f, fadeDuration, true);
-            yield return new WaitForSecondsRealtime(fadeDuration);
+        public virtual Coroutine HideDialogue() {
+            if (m_Coroutine != null) StopCoroutine(m_Coroutine);
+            return m_Coroutine = StartCoroutine(OnHide());
+        }
+
+        protected abstract IEnumerator OnShow();
+
+        protected abstract IEnumerator OnWait();
+
+        protected abstract IEnumerator OnHide();
+
+        public void DisplayImmediately() {
+            m_DisplayImmediately = true;
         }
     }
 }

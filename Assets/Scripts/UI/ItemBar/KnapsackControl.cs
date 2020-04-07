@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.UI {
-    public class UIController : MonoBehaviour {
+    public class KnapsackControl : MonoBehaviour {
         [SerializeField] private Knapsack m_Knapsack = null;
 
         private void Awake() {

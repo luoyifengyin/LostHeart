@@ -8232,7 +8232,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 414}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &768186652
 MonoBehaviour:
@@ -9988,7 +9988,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!64 &967195780
 MeshCollider:
@@ -14502,6 +14502,10 @@ PrefabInstance:
     - target: {fileID: 1646596920117602, guid: 2e2ed77b6686b13478c958cacf9a77c3, type: 3}
       propertyPath: m_Name
       value: FantasyHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646596920117602, guid: 2e2ed77b6686b13478c958cacf9a77c3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4266714643848270, guid: 2e2ed77b6686b13478c958cacf9a77c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19885,8 +19889,8 @@ RectTransform:
   m_Father: {fileID: 1676562943}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.18, y: 0.11}
-  m_AnchorMax: {x: 0.36, y: 0.68}
+  m_AnchorMin: {x: 0.16, y: 0.11}
+  m_AnchorMax: {x: 0.38, y: 0.68}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -19908,7 +19912,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -20
+  m_Spacing: -30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1

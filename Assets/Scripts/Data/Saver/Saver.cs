@@ -16,7 +16,7 @@ namespace MyGameApplication.Data.Saver {
 
         public bool AutoSaveOnSwitchScene { get { return autoSaveOnSwitchScene; } }
 
-        protected virtual void Awake() {
+        protected void Awake() {
             sceneController = SceneController.Instance;
             //if (!sceneController)
             //    throw new UnityException("SceneController could not be found!");

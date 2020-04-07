@@ -73,7 +73,7 @@ namespace MyGameApplication.Manager {
 
         private IEnumerator UnloadCurrentScene() {
             //yield return fader.Fade(1f, fadeDuration);
-            transition.SetTrigger("FadeOut");
+            transition.SetTrigger("Start");
             yield return waitWhileFadingOut;
 
             onBeforeSceneUnload?.Invoke();
@@ -91,7 +91,7 @@ namespace MyGameApplication.Manager {
             onAfterSceneLoad?.Invoke();
             //yield return fader.Fade(0f, fadeDuration);
             //yield return new WaitForSeconds(1);
-            transition.SetTrigger("FadeIn");
+            transition.SetTrigger("End");
             yield return waitWhileFadingIn;
         }
     }

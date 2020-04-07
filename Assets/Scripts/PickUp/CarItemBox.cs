@@ -12,7 +12,7 @@ namespace MyGameApplication.PickUp {
         private void OnTriggerEnter(Collider other) {
             GameObject go = other.gameObject;
             if (go.CompareTag("Car")) {
-                if (!go.transform.FindGameObjectInParentWithTag("Player")) {
+                if (!go.GetGameObjectInParentWithTag("Player")) {
                     OnPicked();
                     return;
                 }
