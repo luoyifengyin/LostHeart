@@ -12,13 +12,16 @@ namespace MyGameApplication.Manager.Debug {
             Dialogue.Subtitle.ShowDialogue(content);
             Dialogue.DialogBox.HideDialogue();
             yield return Dialogue.DialogBox.ShowDialogue(content);
+            print("show " + Time.frameCount);
             yield return Dialogue.DialogBox.ShowDialogue("abcde");
+            print("show " + Time.frameCount);
             yield return Dialogue.DialogBox.ShowDialogue("12345");
+            print("show " + Time.frameCount);
             Dialogue.DialogBox.HideDialogue();
             yield return Dialogue.DialogBox.ShowDialogue(content);
             yield return Dialogue.DialogBox.ShowDialogue("abcde");
             yield return Dialogue.DialogBox.ShowDialogue("12345");
-            Dialogue.DialogBox.HideDialogue();
+            //Dialogue.DialogBox.HideDialogue();
         }
     }
 }

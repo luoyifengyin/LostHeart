@@ -10,9 +10,8 @@ namespace MyGameApplication.PickUp {
         [SerializeField] private float m_FreshTime = 5;
 
         private void OnTriggerEnter(Collider other) {
-            GameObject go = other.gameObject;
-            if (go.CompareTag("Car")) {
-                if (!go.GetGameObjectInParentWithTag("Player")) {
+            if (other.CompareTag("Car")) {
+                if (!other.gameObject.GetGameObjectInParentWithTag("Player")) {
                     OnPicked();
                     return;
                 }

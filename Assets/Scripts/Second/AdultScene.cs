@@ -786,7 +786,6 @@ namespace MyGameApplication.Second
             yield return Dialogue.DialogBox.ShowDialogue("我是来打倒你，通过这扇门的！");
             yield return Dialogue.DialogBox.ShowDialogue("哈哈，小鬼，就凭你着瘦骨嶙峋的身子也想打倒我？！我看，你还不够塞牙缝呢！", new Color(1.0f, 0, 0));
             yield return Dialogue.DialogBox.ShowDialogue("我对你没有兴趣，如果你能找来我喜欢的东西的话，也许我还能考虑一下让你通过。", new Color(1.0f, 0, 0));
-            yield return Dialogue.DialogBox.HideDialogue();
         }
     }
 }

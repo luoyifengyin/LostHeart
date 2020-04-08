@@ -6,21 +6,20 @@ using UnityEngine;
 
 namespace MyGameApplication.CarRacing {
     public class ReachGoal : MonoBehaviour {
-        private static int s_Order = 0;
+        private static RankCalculator m_RankCal;
 
-        [SerializeField] private int m_Order = 0;
-        [SerializeField] private CarController m_Car = null;
-        [SerializeField] private string m_PhaseName = null;
+        private void Awake() {
+            if (!m_RankCal) m_RankCal = FindObjectOfType<RankCalculator>();
+        }
 
-        private void OnTriggerEnter(Collider other) {
-            if (other.CompareTag("Car") && other.transform.GetGameObjectInParentWithTag("Player")) {
-                if (s_Order < m_Order) {
-                    s_Order = m_Order;
-                    m_Car.gameObject.SetActive(true);
-                    Ranking.Instance.SetPlayerName(m_PhaseName);
+        private void OnTriggerStay(Collider other) {
+            if (other.CompareTag("Car")) {
+                Vector3 pos = transform.InverseTransformPoint(other.transform.position);
+                if (pos.z > 0) {
+                    m_RankCal.racers[other.gameObject].segmentation++;
                 }
-                else if (m_Order < 0) {
-                    SceneController.LoadScene("Second");
+                else {
+                    m_RankCal.racers[other.gameObject].segmentation--;
                 }
             }
         }
