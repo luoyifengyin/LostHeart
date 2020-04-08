@@ -779,6 +779,7 @@ namespace MyGameApplication.Second
         }
         void LevelFive()
         {
+<<<<<<< HEAD
             if(m_LevelTime[4] == 10)
             {
                 Dialogue.main.ShowDialogue("小鬼，你是谁，你来做什么！？", new Color(1.0f, 0, 0));
@@ -800,6 +801,17 @@ namespace MyGameApplication.Second
                 m_LevelBegin[4] = false;
             }
             m_LevelTime[4]++;
+=======
+            if (!m_End) StartCoroutine(Talking());
+            m_End = true;
+        }
+
+        IEnumerator Talking() {
+            yield return Dialogue.DialogBox.ShowDialogue("小鬼，你是谁，你来做什么！？", new Color(1.0f, 0, 0));
+            yield return Dialogue.DialogBox.ShowDialogue("我是来打倒你，通过这扇门的！");
+            yield return Dialogue.DialogBox.ShowDialogue("哈哈，小鬼，就凭你着瘦骨嶙峋的身子也想打倒我？！我看，你还不够塞牙缝呢！", new Color(1.0f, 0, 0));
+            yield return Dialogue.DialogBox.ShowDialogue("我对你没有兴趣，如果你能找来我喜欢的东西的话，也许我还能考虑一下让你通过。", new Color(1.0f, 0, 0));
+>>>>>>> 2ba167bd0656b14dc1d9af9c250c0392dd09c933
         }
     }
 }

@@ -32,7 +32,6 @@ namespace MyGameApplication.UI {
         }
 
         protected override IEnumerator OnShow() {
-            //print("dialogue on shown");
             //if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Close")) {
                 text.text = "";
                 m_Animator.SetBool(OPEN_HASH, true);
@@ -46,13 +45,8 @@ namespace MyGameApplication.UI {
         }
 
         protected override IEnumerator OnHide() {
-            yield break;
-        }
-
-        public override Coroutine HideDialogue() {
-            //print("hide dialogue");
             m_Animator.SetBool(OPEN_HASH, false);
-            return StartCoroutine(m_WaitClose);
+            yield break;
         }
 
         private void Update() {
