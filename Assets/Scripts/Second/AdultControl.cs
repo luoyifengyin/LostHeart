@@ -8,7 +8,7 @@ namespace MyGameApplication.Second
     public class AdultControl : MonoBehaviour
     {
         public GameObject m_Audio;
-        public float Speed = 0.1f;//主角速度
+        public float Speed = 10.0f;//主角速度
         public GameObject m_Camera;//主镜头
         public GameObject m_SecondCamera;//隐藏镜头
         public GameObject m_Lead;//主角隐藏位置
@@ -90,7 +90,7 @@ namespace MyGameApplication.Second
             }
             if (x != 0 || y != 0)
             { 
-                this.transform.Translate(new Vector3(0, 0, Speed));
+                this.transform.Translate(new Vector3(0, 0, Speed*Time.deltaTime));
             }
             x = 0;
             y = 0;

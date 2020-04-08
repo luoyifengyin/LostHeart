@@ -35,7 +35,7 @@ namespace MyGameApplication.Second
         {
             if (other.gameObject.tag=="Player")
             {
-                //GameObject.Find(m_LeapName).GetComponent<AdultLead>().m_Heal--;
+                GameObject.Find(m_LeapName).GetComponent<AdultLead>().m_Heal--;
                 Destroy(this.gameObject);
                 m_Audio.GetComponent<AdultSoundEffects>().Health();
             }
@@ -55,7 +55,8 @@ namespace MyGameApplication.Second
 
         void Move()
         {
-            this.transform.Translate(new Vector3(0, 0, m_Speed ));
+            //this.transform.Translate(new Vector3(0, 0, m_Speed ));
+            this.transform.Translate(new Vector3(0, 0, m_Speed*Time.deltaTime));
         }
 
 
