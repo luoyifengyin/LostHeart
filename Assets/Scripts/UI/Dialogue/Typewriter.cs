@@ -9,7 +9,7 @@ namespace MyGameApplication.UI {
     public abstract class Typewriter : MonoBehaviour, ITalk {
         public Text text;
         public float typeIntervalTime = 0.05f;      //打字效果（文字输入）的间隔时间
-        private string m_Content;
+        protected string m_Content;
         private Coroutine m_Coroutine;
 
         private void Awake() {
@@ -120,7 +120,7 @@ namespace MyGameApplication.UI {
                         curMatchedTagLenTot += tagList[curMatchIdx].tag.Length;
                     }
                     else {
-                        //否则，弹出标签
+                        //如果遇到结束标签，弹出标签
                         matchingTagStack.Pop();
                         curMatchedTagLenTot += tagList[curMatchIdx].tag.Length;
                     }

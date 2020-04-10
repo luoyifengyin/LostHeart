@@ -1,5 +1,6 @@
 ﻿using MyGameApplication.Data;
 using MyGameApplication.Data.Saver;
+using MyGameApplication.Item;
 using MyGameApplication.UI;
 using System;
 using System.Collections;
@@ -10,21 +11,16 @@ using UnityEngine;
 
 namespace MyGameApplication.Manager {
     public class GameManager : MonoBehaviour {
-        public static GameManager _instance;
+        public static GameManager Instance { get; private set; }
 
         [SerializeField] private string saveFileName = "save.archive";
         private PersistentSaveData gameData;
         private string saveFullPath;
         public event Action onSaveSuccess;
 
-        public static GameManager Instance {
-            get {
-                return _instance ?? (_instance = FindObjectOfType<GameManager>());
-            }
-        }
-
         private void Awake() {
             DontDestroyOnLoad(transform.root.gameObject);
+            Instance = this;
             saveFullPath = Application.persistentDataPath + "/" + saveFileName;
             gameData = PersistentSaveData.Instance;
         }
@@ -49,7 +45,7 @@ namespace MyGameApplication.Manager {
             onSaveSuccess?.Invoke();
         }
 
-        //加载游戏存档
+        //读取游戏存档
         public void LoadGame() {
             if (!HasSaveArchive()) return;
             FileStream fs = new FileStream(saveFullPath, FileMode.Open);

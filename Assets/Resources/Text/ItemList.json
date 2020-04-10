@@ -10,7 +10,7 @@
       "type": "Prop",
       "name": "加速器",
       "description": "",
-      "uiPath": "Accelerator",
+      "assetPath": "Accelerator",
       "objectPoolCapacity": 2
     },
     {
@@ -18,7 +18,7 @@
       "type": "Prop",
       "name": "测试",
       "description": "测试用，若要新增道具，请删除此道具",
-      "uiPath": "Accelerator"
+      "assetPath": "Accelerator"
     }
   ],
   "infos": {

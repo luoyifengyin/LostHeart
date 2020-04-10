@@ -72,6 +72,7 @@ namespace MyGameApplication.Item {
             //print("accel");
             m_CarRb.drag /= 2f;
             m_Car.ForwardTorque *= 2f;
+            m_AcceleratingTime = 0;
             m_AccelCoroutine = StartCoroutine(Accelerating());
         }
 

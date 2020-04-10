@@ -50,8 +50,9 @@ namespace MyGameApplication.UI {
         }
 
         private void Update() {
-            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Open") && m_DialogueControl())
+            if (m_Animator.GetCurrentAnimatorStateInfo(0).IsName("Open") && m_DialogueControl()) {
                 DisplayImmediately();
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MyGameApplication.CarRacing {
         private GameObject m_PlayerCar = null;
         public Dictionary<GameObject, Order> racers = new Dictionary<GameObject, Order>();
         //[SerializeField] private GameObject[] m_Goals;
-        [SerializeField] private Transform[] m_Destinations;
+        [SerializeField] private Transform[] m_Destinations = null;
 
         private Ranking m_Ranking;
 

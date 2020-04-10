@@ -9,7 +9,7 @@ namespace MyGameApplication.Manager.Debug {
         IEnumerator Start() {
             yield return new WaitForSeconds(1);
             string content = "你好，世界！<color=red>123<color=blue>456</color>789</color>你好，世界！";
-            Dialogue.Subtitle.ShowDialogue(content);
+            //Dialogue.Subtitle.ShowDialogue(content);
             Dialogue.DialogBox.HideDialogue();
             yield return Dialogue.DialogBox.ShowDialogue(content);
             print("show " + Time.frameCount);

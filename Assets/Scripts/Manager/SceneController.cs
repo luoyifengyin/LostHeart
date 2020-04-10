@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Manager {
     public class SceneController : MonoBehaviour {
-        private static SceneController _instance;
+        public static SceneController Instance { get; private set; }
+
         //public Fader fader;
         //public float fadeDuration = 1f;
         public Animator transition;
@@ -23,13 +24,8 @@ namespace MyGameApplication.Manager {
         }
         public bool IsLoading { get; private set; }
 
-        public static SceneController Instance {
-            get {
-                return _instance ?? (_instance = FindObjectOfType<SceneController>());
-            }
-        }
-
         private void Awake() {
+            Instance = this;
             //if (!fader) fader = FindObjectOfType<Fader>();
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);

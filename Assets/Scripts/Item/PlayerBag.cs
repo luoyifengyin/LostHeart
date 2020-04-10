@@ -7,13 +7,12 @@ using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Item {
     public class PlayerBag : Inventory {
-        private static PlayerBag _instance;
+        public static PlayerBag Instance { get; private set; }
+
         public event Action onItemChange;
 
-        public static PlayerBag Instance {
-            get {
-                return _instance ?? (_instance = FindObjectOfType<PlayerBag>());
-            }
+        private void Awake() {
+            Instance = this;
         }
 
         public override int AddItem(int id, int cnt = 1) {

@@ -28,16 +28,17 @@ namespace MyGameApplication.Item {
             public string name;                         //道具名称
             public string description;                  //道具描述
             public int capacity = -1;                   //道具容量（-1代表无上限）
-            public string uiPath;                       //道具资源路径（必需）
+            public string assetPath;                    //道具资源路径（必需）
             public int objectPoolInitCnt = 0;           //道具对象池初始化数量
             public int objectPoolCapacity = 100;        //道具对象池容量
             [NonSerialized] private Sprite mSprite;     //道具的精灵图，用于UI显示
             [NonSerialized] private GameObject mPrefab;
+            [NonSerialized] private bool mPrefabLoaded = false;
             [NonSerialized] private BaseItem mEffect;
             public Sprite sprite {
                 get {
                     if (!mSprite) {
-                        string path = _instance.setting.spriteRootPath + uiPath;
+                        string path = _instance.setting.spriteRootPath + assetPath;
                         mSprite = Resources.Load<Sprite>(path);
                     }
                     return mSprite;
@@ -45,9 +46,10 @@ namespace MyGameApplication.Item {
             }
             public GameObject prefab {
                 get {
-                    if (!mPrefab) {
-                        string path = _instance.setting.prefabRootPath + uiPath;
+                    if (!mPrefab && !mPrefabLoaded) {
+                        string path = _instance.setting.prefabRootPath + assetPath;
                         mPrefab = Resources.Load<GameObject>(path);
+                        mPrefabLoaded = true;
                     }
                     return mPrefab;
                 }
@@ -90,7 +92,7 @@ namespace MyGameApplication.Item {
                 int capacity = _instance.itemList[i].objectPoolCapacity;
                 objectPool.SetCapacityById(i, capacity);
                 int initCnt = _instance.itemList[i].objectPoolInitCnt;
-                objectPool.CreateSpecifiedObjectById(i, initCnt);
+                objectPool.CreateSpecifiedObjectsById(i, initCnt);
             }
             return _instance;
         }
@@ -98,6 +100,7 @@ namespace MyGameApplication.Item {
         //道具gameObject的生成和释放，必须使用ItemManager的接口，通过对象池进行管理，必须成对使用，需要手动释放，否则会造成内存泄漏
         public GameObject CreateItemObjectById(int id) {
             GameObject obj = ItemObjectPool.Instance.Get(id);
+            if (!obj) return null;
             //obj.SetActive(false);
             BaseItem item = obj.GetComponent<BaseItem>();
             if (item) item.ItemId = id;
