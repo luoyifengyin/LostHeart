@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MyGameApplication.Car;
+using MyGameApplication.Manager;
+using MyGameApplication.Item;
 
 namespace MyGameApplication.Item {
-    public class Accelerator : Prop {
+    public class P1 : PropEffect {
         [SerializeField] private float m_AccelForce = 0;
         [SerializeField] private float m_AccelPitchMultiplier = 1.25f;
         [SerializeField] private float m_AccelDuration = 5;
@@ -17,11 +19,7 @@ namespace MyGameApplication.Item {
         private float m_AcceleratingTime = 0;
         private Coroutine m_AccelCoroutine;
         private Coroutine m_DecelCoroutine;
-        public static Accelerator progressing;
-
-        public override bool isCarItem() {
-            return true;
-        }
+        private static P1 s_Progressing;
 
         public bool IsAccelerating { get { return m_AccelCoroutine != null; } }
         public bool IsDecelerating { get { return m_DecelCoroutine != null; } }
@@ -35,18 +33,18 @@ namespace MyGameApplication.Item {
             return false;
         }
 
-        protected override void Operation() {
+        public override void Operation() {
             if (m_Car.AccelInput > 0) {
-                if (progressing) progressing.Stop();
+                if (s_Progressing != null) s_Progressing.Stop();
                 m_CarRb = m_Car.GetComponent<Rigidbody>();
                 m_CarAudio = m_Car.GetComponent<CarAudio>();
                 m_OriginalDrag = m_CarRb.drag;
                 m_OriginalForwardTorque = m_Car.ForwardTorque;
                 m_OriginalHighPitchMultiplier = m_CarAudio.highPitchMultiplier;
                 Accelerate();
-                progressing = this;
+                s_Progressing = this;
             }
-            else Release();
+            //else Release();
         }
 
         private IEnumerator Accelerating() {
@@ -95,8 +93,8 @@ namespace MyGameApplication.Item {
             }
             m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
             m_DecelCoroutine = null;
-            progressing = null;
-            Release();
+            s_Progressing = null;
+            //Release();
         }
 
         private void Decelerate() {
@@ -107,13 +105,13 @@ namespace MyGameApplication.Item {
         }
 
         public override void Stop() {
-            base.Stop();
+            Expire();
             if (m_DecelCoroutine != null) {
                 StopCoroutine(m_DecelCoroutine);
                 m_DecelCoroutine = null;
                 m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
-                progressing = null;
-                Release();
+                s_Progressing = null;
+                //Release();
             }
         }
     }

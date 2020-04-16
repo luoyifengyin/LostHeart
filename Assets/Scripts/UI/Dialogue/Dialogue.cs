@@ -13,7 +13,7 @@ namespace MyGameApplication.UI {
 
         private static DialogBox m_DialogBox;
 
-        [Obsolete("Dialogue.main 已经被弃用，请使用 Dialogue.Subtitle 代替")]
+        [Obsolete("Dialogue.main has been deprecated. Use Dialogue.Subtitle instead.")]
         public static Subtitle main {
             get {
                 return m_Subtitle ?? (m_Subtitle = GameObject.FindObjectOfType<Subtitle>());
@@ -30,6 +30,11 @@ namespace MyGameApplication.UI {
             get {
                 return m_DialogBox ?? (m_DialogBox = GameObject.FindObjectOfType<DialogBox>());
             }
+        }
+
+        [RuntimeInitializeOnLoadMethod]
+        static void AfterSceneLoad() {
+            _ = Subtitle; _ = DialogBox;
         }
     }
 }

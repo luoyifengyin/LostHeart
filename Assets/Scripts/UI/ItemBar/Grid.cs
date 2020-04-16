@@ -14,6 +14,7 @@ namespace MyGameApplication.UI.ItemBar {
         [HideInInspector] public Selectable selectable;
 
         public int ItemId { get; private set; }
+        public ItemType ItemType { get; set; }
 
         private void Awake() {
             m_Img = transform.Find("Slot/Image").GetComponent<Image>();
@@ -22,20 +23,21 @@ namespace MyGameApplication.UI.ItemBar {
             selectable = GetComponent<Selectable>();
         }
 
-        public void SetItem(int id, Sprite sprite, string name, int cnt) {
+        public void SetItem(int id, ItemType type, Sprite sprite, string name, int cnt) {
             var itemManager = ItemManager.Instance;
-            if (!sprite) sprite = itemManager.GetItemSpriteById(id);
-            if (string.IsNullOrEmpty(name)) name = itemManager.GetItemNameById(id);
-            if (cnt <= 0) cnt = PlayerBag.Instance.GetCntById(id);
+            if (!sprite) sprite = itemManager.GetItemSprite(id, type);
+            if (string.IsNullOrEmpty(name)) name = itemManager.GetItemName(id, type);
+            if (cnt <= 0) cnt = PlayerBag.Instance.GetCntByIdAndType(id);
             ItemId = id;
+            ItemType = type;
             m_Img.sprite = sprite;
             m_Img.enabled = true;
             m_NameText.text = name;
             m_CntText.text = cnt.ToString();
             selectable.interactable = true;
         }
-        public void SetItem(int id, int cnt = 0) {
-            SetItem(id, null, null, cnt);
+        public void SetItem(int id, ItemType type, int cnt = 0) {
+            SetItem(id, type, null, null, cnt);
         }
 
         public void RemoveItem() {
@@ -55,7 +57,7 @@ namespace MyGameApplication.UI.ItemBar {
         public void OnSelected() {
             print("on selected");
             if (selectable && selectable.IsInteractable())
-                detail.SetItem(ItemId, m_Img.sprite, m_NameText.text);
+                detail.SetItem(ItemId, ItemType, m_Img.sprite, m_NameText.text);
         }
     }
 }

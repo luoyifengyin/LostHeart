@@ -21,14 +21,14 @@ namespace MyGameApplication.UI.ItemBar {
             m_DescText.text = desc;
         }
 
-        public void SetItem(int id, Sprite sprite, string name, string desc = null) {
+        public void SetItem(int id, ItemType type, Sprite sprite, string name, string desc = null) {
             ItemId = id;
             if (id <= 0) {
                 Clear();
                 return;
             }
             var itemManager = ItemManager.Instance;
-            if (string.IsNullOrEmpty(desc)) desc = itemManager.GetItemDescById(id);
+            if (string.IsNullOrEmpty(desc)) desc = itemManager.GetItemDesc(id, type);
             SetItem(sprite, name, desc);
         }
 

@@ -1,24 +1,19 @@
 ﻿{
-  "setting": {
-    "prefabRootPath": "Items/Prefabs/",
-    "spriteRootPath": "Items/Sprites/"
-  },
-  "itemList": [
+  "propList": [
     {},
     {
       "id": 1,
       "type": "Prop",
       "name": "加速器",
       "description": "",
-      "assetPath": "Accelerator",
+      "isCarItem": true,
       "objectPoolCapacity": 2
     },
     {
       "id": 2,
       "type": "Prop",
       "name": "测试",
-      "description": "测试用，若要新增道具，请删除此道具",
-      "assetPath": "Accelerator"
+      "description": "测试用，若要新增道具，请删除此道具"
     }
   ],
   "infos": {

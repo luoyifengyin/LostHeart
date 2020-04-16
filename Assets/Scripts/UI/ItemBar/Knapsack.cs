@@ -47,7 +47,7 @@ namespace MyGameApplication.UI.ItemBar {
                         }
                     }
                     if (!m_Grids[j].gameObject.activeSelf) m_Grids[j].gameObject.SetActive(true);
-                    m_Grids[j++].SetItem(item.Key, item.Value);
+                    m_Grids[j++].SetItem(item.Key, ItemType.Prop, item.Value);
                 }
             }
             //把其他道具格子清空，并清除多余的格子

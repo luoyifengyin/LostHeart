@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using MyGameApplication.Item;
 using MyGameApplication.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,6 +23,12 @@ namespace MyGameApplication.Manager.Debug {
             yield return Dialogue.DialogBox.ShowDialogue("abcde");
             yield return Dialogue.DialogBox.ShowDialogue("12345");
             //Dialogue.DialogBox.HideDialogue();
+
+            test();
+        }
+
+        void test() {
+            PlayerBag.Instance.AddItem(1);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace MyGameApplication.ObjectPool {
 
         private GameObject CreateObject(int id) {
             if (!m_Prefabs.ContainsKey(id))
-                m_Prefabs.Add(id, ItemManager.Instance.itemList[id].prefab);
+                m_Prefabs.Add(id, ItemManager.Instance.propList[id].prefab);
             if (!m_Prefabs[id]) return null;
             var obj = Instantiate(m_Prefabs[id]);
             obj.transform.SetParent(transform);
@@ -63,8 +63,7 @@ namespace MyGameApplication.ObjectPool {
 
         public GameObject Get(int id) {
             var cache = GetUnusedCache(id);
-            GameObject retObj;
-            if (!cache.IsEmpty && cache.TryTake(out retObj)) {
+            if (!cache.IsEmpty && cache.TryTake(out GameObject retObj)) {
                 retObj.SetActive(true);
             }
             //else if (cache.Count == 1 && objOverflowCnts[id] > 0) {

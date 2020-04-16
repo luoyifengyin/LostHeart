@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Helper {
     public class ItemDataLoader : MonoBehaviour {
-        private void LoadItemData() {
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        static void LoadItemData() {
             _ = ItemManager.Instance;
         }
 
-        private void Start() {
-            LoadItemData();
-        }
+        //private void Start() {
+        //    LoadItemData();
+        //}
     }
 }

@@ -19,7 +19,7 @@ namespace MyGameApplication.PickUp {
             }
             if (touch) {
                 if ((m_AutoPickUp || CrossPlatformInputManager.GetButtonDown(PICK_UP))) {
-                    if (!PlayerBag.Instance.IsFullOfItemById(m_PickedItemId) || m_WhetherPickIfOverflow)
+                    if (!PlayerBag.Instance.IsFullOfItemByIdAndType(m_PickedItemId) || m_WhetherPickIfOverflow)
                         PickUpItem();
                     else OnNonPicked();
                 }
@@ -35,7 +35,6 @@ namespace MyGameApplication.PickUp {
 
         protected override void OnPicked(int pickedCnt, int overflowCnt) {
             base.OnPicked(pickedCnt, overflowCnt);
-            if (!IsSelfItem) Destroy(gameObject);
         }
 
         protected virtual void OnNonPicked() { }

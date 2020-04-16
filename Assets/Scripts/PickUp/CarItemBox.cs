@@ -17,8 +17,7 @@ namespace MyGameApplication.PickUp {
                 }
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
-                var itemEffect = itemManager.itemList[itemId].effect;
-                if (itemEffect && itemEffect is Prop && ((Prop)itemEffect).isCarItem()) {
+                if (itemManager.propList[itemId].isCarItem) {
                     CarItemBar.Instance.AddProp(itemId);
                     OnPicked(1);
                 }

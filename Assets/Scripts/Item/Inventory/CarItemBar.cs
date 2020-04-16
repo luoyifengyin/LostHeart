@@ -32,7 +32,7 @@ namespace MyGameApplication.Item {
             if (m_ItemQueue.Count < m_ItemCapacity) {
                 int idx = m_ItemQueue.Count;
                 m_ItemQueue.Enqueue(id);
-                Sprite sprite = ItemManager.Instance.GetItemSpriteById(id);
+                Sprite sprite = ItemManager.Instance.GetItemSprite(id, ItemType.Prop);
                 m_ItemImgs[idx].sprite = sprite;
             }
         }
@@ -40,7 +40,7 @@ namespace MyGameApplication.Item {
         private void UseItem() {
             //print("use item");
             int id = m_ItemQueue.Dequeue();
-            ItemManager.Instance.UseItemEffectById(id);
+            ItemManager.Instance.UsePropEffect(id);
             for (int i = 0; i < m_ItemCapacity - 1; i++) {
                 m_ItemImgs[i].sprite = m_ItemImgs[i + 1].sprite;
             }

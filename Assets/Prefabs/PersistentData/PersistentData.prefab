@@ -174,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3186373865215721600}
   m_Layer: 0
-  m_Name: PersistentUI
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,6 +311,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3186373865215721600}
     m_Modifications:
+    - target: {fileID: 1263406111185955712, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3105603737209540927, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
         type: 3}
       propertyPath: m_LocalPosition.x
