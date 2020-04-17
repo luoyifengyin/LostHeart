@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Item;
+using MyGameApplication.Item.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,7 +76,7 @@ namespace MyGameApplication.UI.ItemBar {
         }
 
         private void OnDestroy() {
-            if (PlayerBag.Instance) PlayerBag.Instance.onItemChange -= Refresh;
+            if (PlayerBag.Instance != null) PlayerBag.Instance.onItemChange -= Refresh;
         }
     }
 }

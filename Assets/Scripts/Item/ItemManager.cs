@@ -38,7 +38,7 @@ namespace MyGameApplication.Item {
             _instance = JsonUtility.FromJson<ItemManager>(textAsset.text);
             _instance.items.Add(ItemType.Prop, _instance.propList);
             //ItemObjectPool objectPool = ItemObjectPool.Instance;
-            var itemEffectObj = new GameObject("Item Effect");
+            var itemEffectObj = new GameObject("Item Effects");
             GameObject.DontDestroyOnLoad(itemEffectObj);
             for(int i = 1;i < _instance.propList.Length; i++) {
                 var prop = _instance.propList[i];
@@ -93,7 +93,7 @@ namespace MyGameApplication.Item {
         }
 
         public void UsePropEffect(int id) {
-            propList[id].effect.Payload();
+            if (propList[id].effect) propList[id].effect.Payload();
         }
 
         private int GetRandomItemIdByArray(ItemInfo.InfoBean[] arr, int[] preSum) {

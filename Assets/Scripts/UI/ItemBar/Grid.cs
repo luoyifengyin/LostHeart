@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using MyGameApplication.Item.Inventory;
 
 namespace MyGameApplication.UI.ItemBar {
     public class Grid : MonoBehaviour, IPointerDownHandler {

@@ -1,5 +1,6 @@
 ﻿using MyGameApplication.Car;
 using MyGameApplication.Item;
+using MyGameApplication.Item.Inventory;
 using MyGameApplication.Manager;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,18 +13,17 @@ namespace MyGameApplication.PickUp {
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Car")) {
                 if (!other.gameObject.GetGameObjectInParentWithTag("Player")) {
-                    OnPicked();
+                    OnPicked(0);
                     return;
                 }
                 ItemManager itemManager = ItemManager.Instance;
                 int itemId = itemManager.GetRandomCarItemId();
-                if (itemManager.propList[itemId].isCarItem) {
-                    CarItemBar.Instance.AddProp(itemId);
-                    OnPicked(1);
-                }
-                else {
-                    PickUpItem(itemId);
-                }
+
+                if (itemManager.propList[itemId].isCarItem)
+                    m_Inventory = CarItemBar.Instance;
+                else m_Inventory = PlayerBag.Instance;
+
+                PickUpItem(itemId);
             }
         }
 
@@ -34,10 +34,6 @@ namespace MyGameApplication.PickUp {
         }
         private void Appear() {
             gameObject.SetActive(true);
-        }
-
-        private void OnMouseOver() {
-            print("coin");
         }
     }
 }

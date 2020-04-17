@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.UI {
-    public class Dialogue {
+    public static class Dialogue {
         private static Subtitle m_Subtitle;
 
         private static DialogBox m_DialogBox;

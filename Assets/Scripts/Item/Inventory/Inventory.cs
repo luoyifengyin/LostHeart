@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyGameApplication.Item {
-    public class Inventory : MonoBehaviour {
+namespace MyGameApplication.Item.Inventory {
+    public class Inventory : IInventory {
         private Dictionary<ItemType, Dictionary<int, int>> m_AllItems = new Dictionary<ItemType, Dictionary<int, int>>();
 
         public Dictionary<int, int> GetItemsByType(ItemType type) {

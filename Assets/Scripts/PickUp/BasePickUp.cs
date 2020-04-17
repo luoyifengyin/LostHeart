@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Item;
+using MyGameApplication.Item.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,18 @@ namespace MyGameApplication.PickUp {
         [SerializeField] protected int m_PickedItemId;          //玩家将会获得的道具id
         [SerializeField] protected int m_PickedCnt = 1;         //玩家将会获得的道具数量
 
+        protected IInventory m_Inventory;
+
+        private void Awake() {
+            m_Inventory = PlayerBag.Instance;
+        }
+
         //捡起道具
         public void PickUpItem(int id = 0, ItemType? type = null, int? cnt = null) {
             if (id <= 0) id = m_PickedItemId;
             ItemType itemType = type ?? m_PickedItemType;
             int count = cnt ?? m_PickedCnt;
-            int pickedCnt = PlayerBag.Instance.AddItem(id, itemType, count);
+            int pickedCnt = m_Inventory.AddItem(id, itemType, count);
             OnPicked(pickedCnt, count - pickedCnt);
         }
 

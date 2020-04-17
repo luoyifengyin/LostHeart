@@ -27,12 +27,5 @@ namespace MyGameApplication.Item {
         //public int objectPoolCapacity = 100;        //道具对象池容量
         [NonSerialized] public Sprite sprite;       //道具的精灵图，用于UI显示
         [NonSerialized] public GameObject prefab;
-
-        //当玩家获得（失去）该道具时触发
-        public virtual void OnGained(int cnt) { }
-
-        //protected void Release() {
-        //    ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
-        //}
     }
 }

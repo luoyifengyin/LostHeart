@@ -4,22 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-namespace MyGameApplication.Item {
-    public class CarItemBar : MonoBehaviour {
-        private static CarItemBar _instance;
+namespace MyGameApplication.Item.Inventory {
+    public class CarItemBar : MonoBehaviour, IInventory {
+        public static CarItemBar Instance { get; private set; }
 
         private int m_ItemCapacity;
         private Image[] m_ItemImgs;
         private Queue<int> m_ItemQueue = new Queue<int>();
         private Sprite m_Mask;
 
-        public static CarItemBar Instance {
-            get {
-                return _instance ?? (_instance = FindObjectOfType<CarItemBar>());
-            }
-        }
-
         private void Awake() {
+            Instance = this;
             m_ItemCapacity = transform.childCount;
             m_ItemImgs = new Image[m_ItemCapacity];
             for (int i = 0; i < m_ItemCapacity; i++) {
@@ -28,13 +23,18 @@ namespace MyGameApplication.Item {
             m_Mask = m_ItemImgs[0].sprite;
         }
 
-        public void AddProp(int id) {
+        public int AddItem(int id, ItemType type = ItemType.Prop, int cnt = 1) {
+            return AddProp(id);
+        }
+        public int AddProp(int id) {
             if (m_ItemQueue.Count < m_ItemCapacity) {
                 int idx = m_ItemQueue.Count;
                 m_ItemQueue.Enqueue(id);
                 Sprite sprite = ItemManager.Instance.GetItemSprite(id, ItemType.Prop);
                 m_ItemImgs[idx].sprite = sprite;
+                return 1;
             }
+            return 0;
         }
 
         private void UseItem() {

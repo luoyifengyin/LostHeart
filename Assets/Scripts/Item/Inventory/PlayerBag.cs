@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace MyGameApplication.Item {
+namespace MyGameApplication.Item.Inventory {
     public class PlayerBag : Inventory {
-        public static PlayerBag Instance { get; private set; }
+        private static PlayerBag _instance;
 
-        private void Awake() {
-            Instance = this;
+        public static PlayerBag Instance {
+            get => _instance ?? (_instance = new PlayerBag());
         }
 
         public event Action onItemChange;
@@ -22,8 +22,6 @@ namespace MyGameApplication.Item {
             int capacity = itemManager.GetItemCapacity(id, type);
             if (capacity >= 0) cnt = Mathf.Min(cnt, capacity - preCnt);
             base.AddItem(id, type, cnt);
-            //var effect = itemManager.propList[id].effect;
-            //if (effect != null) effect.OnGained(cnt);
             onItemChange?.Invoke();
             return cnt;
         }
@@ -38,8 +36,8 @@ namespace MyGameApplication.Item {
         }
 
         //该道具是否已满
-        public bool IsFullOfItemByIdAndType(int id) {
-            return GetCntByIdAndType(id) >= GetCapacityByIdAndType(id);
+        public bool IsFullOfItemByIdAndType(int id, ItemType type = ItemType.Prop) {
+            return GetCntByIdAndType(id, type) >= GetCapacityByIdAndType(id, type);
         }
     }
 }

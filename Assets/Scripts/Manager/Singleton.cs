@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGameApplication {
-    public class Singleton<T> where T : new() {
+    public class Singleton<T> {
         protected static T _instance;
         private static object s_Lock = new object();
 
@@ -12,14 +12,14 @@ namespace MyGameApplication {
             get {
                 if (_instance == null) {
                     lock (s_Lock) {
-                        if (_instance == null) _instance = new T();
+                        if (_instance == null) _instance = Activator.CreateInstance<T>();
                     }
                 }
                 return _instance;
             }
         }
 
-        public static void print(object message) {
+        protected static void print(object message) {
             Debug.Log(message);
         }
     }

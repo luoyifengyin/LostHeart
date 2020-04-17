@@ -24,5 +24,9 @@ namespace MyGameApplication.Item {
                 Operation();
             }
         }
+
+        //protected void Release() {
+        //    ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
+        //}
     }
 }
