@@ -17,9 +17,8 @@ namespace MyGameApplication.Item.Inventory {
 
         public override int AddItem(int id, ItemType type = ItemType.Prop, int cnt = 1) {
             if (cnt == 0) return 0;
-            var itemManager = ItemManager.Instance;
             int preCnt = GetCntByIdAndType(id, type);
-            int capacity = itemManager.GetItemCapacity(id, type);
+            int capacity = ItemManager.Instance.GetItemCapacity(id, type);
             if (capacity >= 0) cnt = Mathf.Min(cnt, capacity - preCnt);
             base.AddItem(id, type, cnt);
             onItemChange?.Invoke();

@@ -7,41 +7,44 @@ using Object = UnityEngine.Object;
 
 namespace MyGameApplication.ObjectPool {
     public class ObjectPool : MonoBehaviour {
-        private ConcurrentBag<Object> m_UnuseCache = new ConcurrentBag<Object>();
-        public Func<Object> createObject;
+        private ConcurrentBag<object> m_UnuseCache = new ConcurrentBag<object>();
 
-        private bool m_IsGameObject = false;
+        public Func<object> createObject;                   //对象的生成方法
 
-        public int Capacity { get; set; } = -1;
+        public int Capacity { get; set; } = -1;             //对象池容量
+        public int Count { get => m_UnuseCache.Count; }     //池里剩下的对象数量
 
-        public int Count { get => m_UnuseCache.Count; }
-
-        private T Create<T>() where T : Object, new() {
-            T obj;
-            if (createObject != null) obj = createObject() as T;
-            else obj = new T();
+        private Object CloneObject(Object obj) {
+            obj = Object.Instantiate(obj);
+            if (obj is GameObject) {
+                var go = obj as GameObject;
+                go.transform.parent = gameObject.transform;
+                go.SetActive(true);
+            }
             return obj;
         }
+        private T Create<T>() where T : class, new() {
+            if (m_UnuseCache.TryPeek(out object obj) && obj is Object) {
+                obj = CloneObject(obj as Object);
+            }
+            else if (createObject != null) obj = createObject();
+            else obj = new T();
+            return obj as T;
+        }
 
-        public void CreateSpecifiedObjects<T>(int cnt) where T : Object, new() {
+        //生成指定数量的对象
+        public void CreateSpecifiedObjects<T>(int cnt) where T : class, new() {
             for (int i = 0; i < cnt; i++) {
-                Object obj = Create<T>();
-                if (obj == null) throw new Exception();
-                m_UnuseCache.Add(obj);
+                Put(Create<T>());
             }
         }
 
-        public T Get<T>() where T : Object, new() {
-            Object obj;
+        //从对象池中获取对象
+        public T Get<T>() where T : class, new() {
+            object obj;
             if (!m_UnuseCache.IsEmpty) {
-                if (Count == 1 && m_IsGameObject){
-                    m_UnuseCache.TryPeek(out obj);
-                    obj = Object.Instantiate(obj);
-                    if (obj is GameObject) {
-                        var go = obj as GameObject;
-                        go.transform.parent = gameObject.transform;
-                        go.SetActive(true);
-                    }
+                if (Count == 1 && m_UnuseCache.TryPeek(out obj) && obj is Object) {
+                    obj = CloneObject(obj as Object);
                 }
                 else {
                     m_UnuseCache.TryTake(out obj);
@@ -56,19 +59,19 @@ namespace MyGameApplication.ObjectPool {
             return obj as T;
         }
 
-        public bool Put(Object obj) {
+        //把对象放回对象池
+        public bool Put<T>(T obj) where T : class {
             if (Capacity < 0 || m_UnuseCache.Count < Capacity) {
                 m_UnuseCache.Add(obj);
                 if (obj is GameObject) {
                     var go = obj as GameObject;
                     go.transform.parent = gameObject.transform;
                     go.SetActive(false);
-                    m_IsGameObject = true;
                 }
                 return true;
             }
-            else {
-                Object.Destroy(obj);
+            else if (obj is Object) {
+                Object.Destroy(obj as Object);
             }
             return false;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace MyGameApplication.ObjectPool {
+    //用键值对管理对象池，一个键对应一个对象池，可以根据需要存取的对象的不同而使用不同的key进行存取
     public class ObjectPoolManager : Singleton<ObjectPoolManager> {
         private Dictionary<string, ObjectPool> m_ObjectPools = new Dictionary<string, ObjectPool>();
         private readonly GameObject m_Pool;
@@ -18,25 +19,35 @@ namespace MyGameApplication.ObjectPool {
             }
         }
 
-        public void AddCreateFunc(string key, Func<Object> func) {
-            GetPool(key).createObject = func;
-        }
-
-        private ObjectPool GetPool(string key) {
+        //根据键值获取对象池
+        public ObjectPool GetPool(string key) {
             if (!m_ObjectPools.ContainsKey(key))
                 m_ObjectPools.Add(key, m_Pool.AddComponent<ObjectPool>());
             return m_ObjectPools[key];
         }
 
-        public TObject Get<TObject>(string key) where TObject : Object, new() {
+        public void SetCreateFunc(string key, Func<object> func) {
+            GetPool(key).createObject = func;
+        }
+
+        //根据键值生成指定数量的相应对象
+        public void CreateSpecifiedObjects<T>(string key, int cnt) where T : class, new() {
+            GetPool(key).CreateSpecifiedObjects<T>(cnt);
+        }
+        public void CreateSpecifiedObjects(string key, Object obj, int cnt) {
+            if (cnt <= 0) return;
             var pool = GetPool(key);
-            var obj = pool.Get<TObject>();
+            pool.Put(obj);
+            pool.CreateSpecifiedObjects<Object>(cnt - 1);
+        }
+
+        public TObject Get<TObject>(string key) where TObject : class, new() {
+            var obj = GetPool(key).Get<TObject>();
             return obj;
         }
 
-        public void Put(string key, Object obj) {
-            var pool = GetPool(key);
-            pool.Put(obj);
+        public void Put(string key, object obj) {
+            GetPool(key).Put(obj);
         }
     }
 }

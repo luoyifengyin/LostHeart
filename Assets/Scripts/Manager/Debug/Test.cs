@@ -3,9 +3,11 @@ using MyGameApplication.Item;
 using MyGameApplication.Item.Inventory;
 using MyGameApplication.ObjectPool;
 using MyGameApplication.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace MyGameApplication.Manager.Debug {
     public class Test : MonoBehaviour {
@@ -14,7 +16,7 @@ namespace MyGameApplication.Manager.Debug {
             ObjectPoolTest();
             ObjectPoolTest2();
 
-            //yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
             string content = "你好，世界！<color=red>123<color=blue>456</color>789</color>你好，世界！";
             //Dialogue.Subtitle.ShowDialogue(content);
             Dialogue.DialogBox.HideDialogue();
@@ -35,6 +37,8 @@ namespace MyGameApplication.Manager.Debug {
             PlayerBag.Instance.AddItem(1);
             PlayerBag.Instance.AddItem(2);
             PlayerBag.Instance.AddItem(1);
+
+            gameObject.AddComponent<MonoTest>();
         }
 
         void ObjectPoolTest() {
@@ -46,14 +50,40 @@ namespace MyGameApplication.Manager.Debug {
             ObjectPoolManager.Instance.Get<GameObject>("gameObject");
             ObjectPoolManager.Instance.Get<GameObject>("gameObject");
         }
+
+
         void ObjectPoolTest2() {
-            Object obj = new Object();
+            TestObject obj = new TestObject();
+            if (obj != null) print("obj not null");
+            else print("obj is null");
+            obj.num = 10;
+            print(obj.num);
             ObjectPoolManager.Instance.Put("test", obj);
-            obj = new Object();
+
+            obj = new TestObject {
+                num = 11
+            };
+            print(obj.num);
             ObjectPoolManager.Instance.Put("test", obj);
-            ObjectPoolManager.Instance.Get<Object>("test");
-            ObjectPoolManager.Instance.Get<Object>("test");
-            ObjectPoolManager.Instance.Get<Object>("test");
+            //ObjectPoolManager.Instance.Put("test", 1);
+
+            obj = ObjectPoolManager.Instance.Get<TestObject>("test");
+            print(obj.num);
+            print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
+            print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
+        }
+    }
+
+    public class TestObject {
+        public int num = 1;
+        public TestObject() {
+            num = 1;
+        }
+    }
+
+    public class MonoTest : MonoBehaviour {
+        private void Start() {
+            print("another test start");
         }
     }
 }
