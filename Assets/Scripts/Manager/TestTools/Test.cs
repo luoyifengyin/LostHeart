@@ -9,14 +9,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MyGameApplication.Manager.Debug {
+namespace MyGameApplication.Manager.TestTools {
     public class Test : MonoBehaviour {
-        IEnumerator Start() {
-            test();
-            ObjectPoolTest();
-            ObjectPoolTest2();
-
-            yield return new WaitForSeconds(1);
+        [ContextMenu("对话测试")]
+        void DialogueTest() {
+            Dialogue.DialogBox.StartCoroutine(Dialog());
+        }
+        private IEnumerator Dialog() {
             string content = "你好，世界！<color=red>123<color=blue>456</color>789</color>你好，世界！";
             //Dialogue.Subtitle.ShowDialogue(content);
             Dialogue.DialogBox.HideDialogue();
@@ -33,14 +32,14 @@ namespace MyGameApplication.Manager.Debug {
             //Dialogue.DialogBox.HideDialogue();
         }
 
-        void test() {
+        [ContextMenu("道具测试")]
+        void ItemTest() {
             PlayerBag.Instance.AddItem(1);
             PlayerBag.Instance.AddItem(2);
             PlayerBag.Instance.AddItem(1);
-
-            gameObject.AddComponent<MonoTest>();
         }
 
+        [ContextMenu("对象池测试(GameObject)")]
         void ObjectPoolTest() {
             GameObject obj = new GameObject();
             ObjectPoolManager.Instance.Put("gameObject", obj);
@@ -51,7 +50,7 @@ namespace MyGameApplication.Manager.Debug {
             ObjectPoolManager.Instance.Get<GameObject>("gameObject");
         }
 
-
+        [ContextMenu("对象池测试(自定义类)")]
         void ObjectPoolTest2() {
             TestObject obj = new TestObject();
             if (obj != null) print("obj not null");
@@ -72,12 +71,24 @@ namespace MyGameApplication.Manager.Debug {
             print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
             print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
         }
+
+        [ContextMenu("协程测试")]
+        void CoroutineTest() {
+            TestObject obj = new TestObject();
+            obj.testCoroutine();
+        }
     }
 
-    public class TestObject {
+    class TestObject {
         public int num = 1;
-        public TestObject() {
-            num = 1;
+        public void testCoroutine() {
+            Dialogue.DialogBox.StartCoroutine(test());
+        }
+        IEnumerator test() {
+            for (int i = 0; i < 100; i++) {
+                Debug.Log(i);
+                yield return null;
+            }
         }
     }
 

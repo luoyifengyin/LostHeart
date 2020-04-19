@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace MyGameApplication.CarRacing {
     public class Ranking : MonoBehaviour {
-        private static Ranking _instance;
         private static readonly string[] SUFFIXES = { "th", "st", "nd", "rd" };
         [SerializeField] private Text m_RankText = null;
         [SerializeField] private Text m_SuffixText = null;
@@ -19,9 +18,7 @@ namespace MyGameApplication.CarRacing {
         [SerializeField] private Color m_PlayerNameColor = default;
         [SerializeField] private Color m_EnemyNameColor = default;
 
-        public static Ranking Instance {
-            get { return _instance ?? (_instance = FindObjectOfType<Ranking>()); }
-        }
+        public static Ranking Instance { get; private set; }
 
         public int Rank {
             get { return m_Rank; }
@@ -32,6 +29,7 @@ namespace MyGameApplication.CarRacing {
         }
 
         private void Awake() {
+            Instance = this;
             m_Names = m_RankingList.GetComponentsInChildren<Text>();
             m_Outlines = m_RankingList.GetComponentsInChildren<Outline>();
             m_TotalText.text = "" + m_Names.Length;

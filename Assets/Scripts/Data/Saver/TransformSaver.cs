@@ -14,8 +14,8 @@ namespace MyGameApplication.Data.Saver {
         protected string scaleKey;
 
         private new void Awake() {
-            base.Awake();
             if (!transformToSave) transformToSave = transform;
+            base.Awake();
         }
 
         protected override string CreateKey() {

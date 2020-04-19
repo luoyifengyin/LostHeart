@@ -23,20 +23,48 @@ namespace MyGameApplication.Data.Saver {
         }
 
         private new void Awake() {
+            if (!activeToSave) activeToSave = gameObject;
             base.Awake();
-            sceneController.onBeforeSceneUnload += Save;
+
+#if UNITY_EDITOR
+            if (!sceneController) return;
+#endif
+            if (AutoSaveOnSwitchScene && activeToSave == gameObject) {
+                sceneController.onBeforeSceneUnload += Save;
+            }
         }
 
-        private void OnEnable() {
-            sceneController.onAfterSceneLoad += Load;
+        private new void OnEnable() {
+#if UNITY_EDITOR
+            if (!sceneController) return;
+#endif
+            if (AutoSaveOnSwitchScene) {
+                sceneController.onAfterSceneLoad += Load;
+                if (activeToSave != gameObject) {
+                    sceneController.onAfterSceneLoad += Save;
+                }
+            }
         }
 
-        private void OnDisable() {
-            sceneController.onAfterSceneLoad -= Load;
+        private new void OnDisable() {
+#if UNITY_EDITOR
+            if (!sceneController) return;
+#endif
+            if (AutoSaveOnSwitchScene) {
+                sceneController.onAfterSceneLoad -= Load;
+                if (activeToSave != gameObject) {
+                    sceneController.onAfterSceneLoad -= Save;
+                }
+            }
         }
 
         private void OnDestroy() {
-            sceneController.onBeforeSceneUnload -= Save;
+#if UNITY_EDITOR
+            if (!sceneController) return;
+#endif
+            if (AutoSaveOnSwitchScene && activeToSave == gameObject) {
+                sceneController.onBeforeSceneUnload -= Save;
+            }
         }
     }
 }

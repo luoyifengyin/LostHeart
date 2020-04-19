@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace MyGameApplication.Item {
-    public abstract class PropEffect : MonoBehaviour {
+    public abstract class PropEffect {
         //使用条件
         public virtual bool Condition() {
             return true;
@@ -24,9 +24,5 @@ namespace MyGameApplication.Item {
                 Operation();
             }
         }
-
-        //protected void Release() {
-        //    ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
-        //}
     }
 }

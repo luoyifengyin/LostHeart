@@ -24,10 +24,6 @@ namespace MyGameApplication.Car {
         [SerializeField] private bool m_UseAntiRollBar = false;                             //是否使用平衡杆
         private Rigidbody m_Rb;
         private float m_CurTorque = 0;
-        private float m_OriginalDrag;
-        private float m_OriginalForwardTorque;
-        private CarAudio m_CarAudio;
-        private float m_OriginalHighPitchMultiplier;
 
         public float CurrentSpeed { get { return m_Rb.velocity.magnitude; } }
         public float AccelInput { get; private set; }
@@ -35,8 +31,8 @@ namespace MyGameApplication.Car {
         public float SteerAngle { get; private set; }
         public WheelCollider[] WheelColliders { get { return m_WheelColliders; } }
         public float ForwardTorque {
-            get { return m_ForwardTorque; }
-            set { m_ForwardTorque = value; }
+            get => m_ForwardTorque;
+            set => m_ForwardTorque = value;
         }
 
         private void Awake() {
@@ -58,10 +54,6 @@ namespace MyGameApplication.Car {
         void Start() {
             m_Rb = GetComponent<Rigidbody>();
             m_WheelColliders[0].attachedRigidbody.centerOfMass += m_CenterOfMassOffset;
-            m_OriginalDrag = m_Rb.drag;
-            m_OriginalForwardTorque = m_ForwardTorque;
-            m_CarAudio = GetComponent<CarAudio>();
-            if (m_CarAudio) m_OriginalHighPitchMultiplier = m_CarAudio.highPitchMultiplier;
         }
 
         // Update is called once per frame

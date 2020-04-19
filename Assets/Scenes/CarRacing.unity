@@ -1000,24 +1000,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 400473169}
   m_CullTransparentMesh: 0
---- !u!114 &426341725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 468596011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d7af6685bfd214b9c6918444f7a742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uniqueIdentifier: 
-  gameData: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a, type: 2}
-  autoSaveOnSwitchScene: 1
-  transformToSave: {fileID: 468596013}
-  saveRotation: 1
-  saveScale: 0
 --- !u!1 &427703830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,12 +1154,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439817476}
   m_CullTransparentMesh: 0
---- !u!1 &468596011 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8918420942347050448, guid: fef7d0e0151d4c34fabf32c321b7ddb1,
-    type: 3}
-  m_PrefabInstance: {fileID: 8918420942748526843}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &468596013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8918420942347050454, guid: fef7d0e0151d4c34fabf32c321b7ddb1,
@@ -4888,15 +4864,54 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: gameData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: transformToSave
+      value: 
+      objectReference: {fileID: 468596013}
+    - target: {fileID: 0}
+      propertyPath: gameData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: transformToSave
+      value: 
+      objectReference: {fileID: 468596013}
+    - target: {fileID: 0}
+      propertyPath: gameData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: transformToSave
+      value: 
+      objectReference: {fileID: 468596013}
+    - target: {fileID: 0}
+      propertyPath: transformToSave
+      value: 
+      objectReference: {fileID: 468596013}
+    - target: {fileID: 0}
+      propertyPath: gameData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: transformToSave
+      value: 
+      objectReference: {fileID: 468596013}
     - target: {fileID: 8918420942347050448, guid: fef7d0e0151d4c34fabf32c321b7ddb1,
         type: 3}
       propertyPath: m_Name
       value: Car
-      objectReference: {fileID: 0}
-    - target: {fileID: 8918420942347050448, guid: fef7d0e0151d4c34fabf32c321b7ddb1,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8918420942347050454, guid: fef7d0e0151d4c34fabf32c321b7ddb1,
         type: 3}

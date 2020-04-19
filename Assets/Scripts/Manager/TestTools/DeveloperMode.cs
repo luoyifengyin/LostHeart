@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyGameApplication.Manager.Debug {
+namespace MyGameApplication.Manager.TestTools {
     public class DeveloperMode : MonoBehaviour {
 #if !UNITY_EDITOR
         private void Awake() {

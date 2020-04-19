@@ -9,10 +9,10 @@ namespace MyGameApplication.ObjectPool {
     public class ObjectPool : MonoBehaviour {
         private ConcurrentBag<object> m_UnuseCache = new ConcurrentBag<object>();
 
-        public Func<object> createObject;                   //对象的生成方法
+        public Func<object> createObject;               //对象的生成方法
 
-        public int Capacity { get; set; } = -1;             //对象池容量
-        public int Count { get => m_UnuseCache.Count; }     //池里剩下的对象数量
+        public int Capacity { get; set; } = -1;         //对象池容量（-1代表无上限）
+        public int Count => m_UnuseCache.Count;         //池里剩下的对象数量
 
         private Object CloneObject(Object obj) {
             obj = Object.Instantiate(obj);

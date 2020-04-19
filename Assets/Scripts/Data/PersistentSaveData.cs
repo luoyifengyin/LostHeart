@@ -9,11 +9,11 @@ namespace MyGameApplication.Data {
         private static readonly string SAVE_DATA_PATH =
             "Assets/ScriptableObjects/SaveData/PersistentSaveData.asset";
 
-        public static PersistentSaveData Instance { get; private set; }
+        private static PersistentSaveData _instance;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        static void BeforeSceneLoad() {
-            Instance = AssetDatabase.LoadAssetAtPath<PersistentSaveData>(SAVE_DATA_PATH);
+        public static PersistentSaveData Instance {
+            get => _instance != null ? _instance : (_instance =
+                AssetDatabase.LoadAssetAtPath<PersistentSaveData>(SAVE_DATA_PATH));
         }
     }
 }

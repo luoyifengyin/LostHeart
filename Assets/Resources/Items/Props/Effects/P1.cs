@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyGameApplication.Car;
 using MyGameApplication.Manager;
-using MyGameApplication.Item;
 
-namespace MyGameApplication.Item {
+namespace MyGameApplication.Item.Effect {
     public class P1 : PropEffect {
         [SerializeField] private float m_AccelForce = 0;
         [SerializeField] private float m_AccelPitchMultiplier = 1.25f;
@@ -71,12 +70,12 @@ namespace MyGameApplication.Item {
             m_CarRb.drag /= 2f;
             m_Car.ForwardTorque *= 2f;
             m_AcceleratingTime = 0;
-            m_AccelCoroutine = StartCoroutine(Accelerating());
+            m_AccelCoroutine = CoroutineFactory.Start(Accelerating());
         }
 
         public override void Expire() {
             if (m_AccelCoroutine != null) {
-                StopCoroutine(m_AccelCoroutine);
+                CoroutineFactory.Stop(m_AccelCoroutine);
                 m_AccelCoroutine = null;
                 Decelerate();
             }
@@ -101,13 +100,13 @@ namespace MyGameApplication.Item {
             //print("decel");
             m_CarRb.drag = m_OriginalDrag;
             m_Car.ForwardTorque = m_OriginalForwardTorque;
-            if (m_CarAudio) m_DecelCoroutine = StartCoroutine(Decelerating());
+            if (m_CarAudio) m_DecelCoroutine = CoroutineFactory.Start(Decelerating());
         }
 
         public override void Stop() {
             Expire();
             if (m_DecelCoroutine != null) {
-                StopCoroutine(m_DecelCoroutine);
+                CoroutineFactory.Stop(m_DecelCoroutine);
                 m_DecelCoroutine = null;
                 m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
                 s_Progressing = null;
