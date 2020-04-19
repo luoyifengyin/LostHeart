@@ -36,10 +36,7 @@ namespace MyGameApplication.ObjectPool {
         }
         //根据键值生成指定数量的相应的gameObject
         public void CreateSpecifiedObjects(string key, Object obj, int cnt) {
-            if (cnt <= 0) return;
-            var pool = GetPool(key);
-            pool.Put(obj);
-            pool.CreateSpecifiedObjects<Object>(cnt - 1);
+            GetPool(key).CreateSpecifiedObjects(obj, cnt);
         }
 
         public TObject Get<TObject>(string key) where TObject : class, new() {
