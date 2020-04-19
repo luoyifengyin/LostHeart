@@ -50,6 +50,11 @@ namespace MyGameApplication.Manager.TestTools {
             ObjectPoolManager.Instance.Get<GameObject>("gameObject");
         }
 
+        [ContextMenu("生成指定数量的gameObject")]
+        void CreatePoolGameObjects() {
+            ObjectPoolManager.Instance.CreateSpecifiedObjects("gameObject", new GameObject(), 10);
+        }
+
         [ContextMenu("对象池测试(自定义类)")]
         void ObjectPoolTest2() {
             TestObject obj = new TestObject();

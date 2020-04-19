@@ -30,10 +30,11 @@ namespace MyGameApplication.ObjectPool {
             GetPool(key).createObject = func;
         }
 
-        //根据键值生成指定数量的相应对象
+        //根据键值生成指定数量的相应对象，非GameObject对象使用这个方法
         public void CreateSpecifiedObjects<T>(string key, int cnt) where T : class, new() {
             GetPool(key).CreateSpecifiedObjects<T>(cnt);
         }
+        //根据键值生成指定数量的相应的gameObject
         public void CreateSpecifiedObjects(string key, Object obj, int cnt) {
             if (cnt <= 0) return;
             var pool = GetPool(key);

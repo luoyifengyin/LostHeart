@@ -38,6 +38,11 @@ namespace MyGameApplication.ObjectPool {
                 Put(Create<T>());
             }
         }
+        public void CreateSpecifiedObjects(Object obj, int cnt) {
+            if (cnt <= 0) return;
+            Put(obj);
+            CreateSpecifiedObjects<Object>(cnt - 1);
+        }
 
         //从对象池中获取对象
         public T Get<T>() where T : class, new() {
