@@ -12,7 +12,8 @@ using Object = UnityEngine.Object;
 
 namespace MyGameApplication.Editor.TestTools {
     class Test : AbstractTest {
-        [MenuItem("Test/对话测试", true)]
+        [MenuItem("Test/对话测试/字幕", true)]
+        [MenuItem("Test/对话测试/对话框", true)]
         [MenuItem("Test/道具测试", true)]
         [MenuItem("Test/协程测试", true)]
         static bool IsAbleToTest() {
@@ -57,21 +58,7 @@ namespace MyGameApplication.Editor.TestTools {
 
         [MenuItem("Test/协程测试", false, 20)]
         static void CoroutineTest() {
-            TestObject obj = new TestObject();
-            obj.testCoroutine();
-        }
-    }
-
-    class TestObject {
-        public int num = 1;
-        public void testCoroutine() {
-            Dialogue.DialogBox.StartCoroutine(test());
-        }
-        IEnumerator test() {
-            for (int i = 0; i < 100; i++) {
-                Debug.Log(i);
-                yield return null;
-            }
+            
         }
     }
 

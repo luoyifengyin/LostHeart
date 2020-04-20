@@ -33,7 +33,6 @@ namespace MyGameApplication.Manager {
                 if (saver.enabled) saver.Save();
             }
             SaveFile();
-            print("save success!");
         }
         //把游戏数据保存到磁盘
         public async void SaveFile() {
@@ -44,6 +43,7 @@ namespace MyGameApplication.Manager {
             sw.Close();
             fs.Close();
             OnSaveSuccess?.Invoke();
+            print("save success!");
         }
 
         //读取游戏存档
@@ -58,7 +58,7 @@ namespace MyGameApplication.Manager {
 
         //是否存在存档文件
         public bool HasSaveArchive() {
-            return Directory.Exists(saveFullPath);
+            return File.Exists(saveFullPath);
         }
 
         public void StartGame() {

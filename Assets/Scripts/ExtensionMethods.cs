@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,17 @@ namespace MyGameApplication {
 
         public static GameObject GetGameObjectInParentWithTag(this GameObject go, string tag) {
             return go.transform.GetGameObjectInParentWithTag(tag);
+        }
+
+        public static void Swap(this Array arr, int idxA, int idxB) {
+            object c = arr.GetValue(idxA);
+            arr.SetValue(arr.GetValue(idxB), idxA);
+            arr.SetValue(c, idxB);
+        }
+        public static void Swap<T>(this List<T> list, int idxA, int idxB) {
+            T c = list[idxA];
+            list[idxA] = list[idxB];
+            list[idxB] = c;
         }
     }
 }

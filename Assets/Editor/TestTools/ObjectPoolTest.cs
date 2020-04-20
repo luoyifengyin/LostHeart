@@ -1,5 +1,7 @@
-﻿using MyGameApplication.ObjectPool;
+﻿using MyGameApplication.Manager;
+using MyGameApplication.ObjectPool;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,12 +63,24 @@ namespace MyGameApplication.Editor.TestTools {
             };
             print(obj.num);
             ObjectPoolManager.Instance.Put("test", obj);
-            //ObjectPoolManager.Instance.Put("test", 1);
 
             obj = ObjectPoolManager.Instance.Get<TestObject>("test");
             print(obj.num);
             print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
             print(ObjectPoolManager.Instance.Get<TestObject>("test").num);
+        }
+    }
+
+    class TestObject {
+        public int num = 1;
+        public void testCoroutine() {
+            CoroutineFactory.Start(test());
+        }
+        IEnumerator test() {
+            for (int i = 0; i < 100; i++) {
+                Debug.Log(i);
+                yield return null;
+            }
         }
     }
 }

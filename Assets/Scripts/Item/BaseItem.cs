@@ -23,8 +23,6 @@ namespace MyGameApplication.Item {
         public string name;                         //道具名称（必需）
         public string description;                  //道具描述
         public int capacity = -1;                   //道具容量（-1代表无上限）
-        //public int objectPoolInitCnt = 0;           //道具对象池初始化数量
-        //public int objectPoolCapacity = 100;        //道具对象池容量
         [NonSerialized] public Sprite sprite;       //道具的精灵图，用于UI显示
         [NonSerialized] public GameObject prefab;
     }
