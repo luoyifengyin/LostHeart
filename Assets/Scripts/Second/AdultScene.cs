@@ -105,11 +105,15 @@ namespace MyGameApplication.Second
             m_TemporaryVariableFloat[3] = -27.5f;
             m_TemporaryVariableInt[4] = 1775;
             m_TemporaryVariableFloat[4] = 32.5f;
+            GameObject goClone = GameObject.Instantiate(m_TrapGameObject);
+            ObjectPoolManager.Instance.CreateSpecifiedObjects("Trap", goClone, 100);
         }
 
         void SetTrap(int RemoveTime, float Speed, int Direction, float x, float y, float z)//陷阱方向 0->前，1->后，2->左，3->右，4->上，5->下
         {
-            GameObject goClone = GameObject.Instantiate(m_TrapGameObject);
+            
+            GameObject goClone =ObjectPoolManager.Instance.Get<GameObject>("Trap");
+            //GameObject goClone = GameObject.Instantiate(m_TrapGameObject);
             goClone.transform.parent = m_Trap.gameObject.transform;
             goClone.GetComponent<AdultTrap>().Fix(RemoveTime, Speed, Direction, x, y, z);
         }

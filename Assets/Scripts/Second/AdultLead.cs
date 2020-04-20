@@ -100,8 +100,12 @@ namespace MyGameApplication.Second
                     Destroy(m_Moster.gameObject);
                 }
             }
+            if (other.gameObject == m_LevelBeginGameObject[5])
+            {
+                Manager.SceneController.LoadScene("Maze");
+            }
 
-            if(other.gameObject.tag=="Car" && m_Stage==2)
+                if (other.gameObject.tag=="Car" && m_Stage==2)
             {
                 m_Box++;
                 Dialogue.main.ShowDialogue("[获得道具 小熊]", new Color(0, 0, 1.0f));
