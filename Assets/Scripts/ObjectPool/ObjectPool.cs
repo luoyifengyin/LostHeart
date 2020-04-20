@@ -9,25 +9,31 @@ namespace MyGameApplication.ObjectPool {
     public class ObjectPool : MonoBehaviour {
         private ConcurrentBag<object> m_UnuseCache = new ConcurrentBag<object>();
 
-        public Func<object> createObject;               //对象的生成方法
+        private Func<object> m_CreateObjectFunc;
+        public Func<object> CreateObjectFunc {
+            get => m_CreateObjectFunc;
+            set => m_CreateObjectFunc = () => {
+                object obj = value();
+                if (obj is GameObject)
+                    (obj as GameObject).transform.parent = transform;
+                return obj;
+            };
+        }
 
         public int Capacity { get; set; } = -1;         //对象池容量（-1代表无上限）
         public int Count => m_UnuseCache.Count;         //池里剩下的对象数量
 
         private Object CloneObject(Object obj) {
-            obj = Object.Instantiate(obj);
-            if (obj is GameObject) {
-                var go = obj as GameObject;
-                go.transform.parent = gameObject.transform;
-                go.SetActive(true);
-            }
-            return obj;
+            Object newObj = Object.Instantiate(obj, transform);
+            newObj.name = obj.name;
+            return newObj;
         }
         private T Create<T>() where T : class, new() {
-            if (m_UnuseCache.TryPeek(out object obj) && obj is Object) {
+            object obj;
+            if (CreateObjectFunc != null) obj = CreateObjectFunc();
+            else if (m_UnuseCache.TryPeek(out obj) && obj is Object) {
                 obj = CloneObject(obj as Object);
             }
-            else if (createObject != null) obj = createObject();
             else obj = new T();
             return obj as T;
         }
@@ -48,18 +54,18 @@ namespace MyGameApplication.ObjectPool {
         public T Get<T>() where T : class, new() {
             object obj;
             if (!m_UnuseCache.IsEmpty) {
-                if (Count == 1 && m_UnuseCache.TryPeek(out obj) && obj is Object) {
+                if (CreateObjectFunc == null && Count == 1 && m_UnuseCache.TryPeek(out obj) && obj is Object) {
                     obj = CloneObject(obj as Object);
                 }
                 else {
                     m_UnuseCache.TryTake(out obj);
-                    if (obj is GameObject) {
-                        (obj as GameObject).SetActive(true);
-                    }
                 }
             }
             else {
                 obj = Create<T>();
+            }
+            if (obj is GameObject) {
+                (obj as GameObject).SetActive(true);
             }
             return obj as T;
         }
@@ -70,7 +76,7 @@ namespace MyGameApplication.ObjectPool {
                 m_UnuseCache.Add(obj);
                 if (obj is GameObject) {
                     var go = obj as GameObject;
-                    go.transform.parent = gameObject.transform;
+                    go.transform.parent = transform;
                     go.SetActive(false);
                 }
                 return true;
