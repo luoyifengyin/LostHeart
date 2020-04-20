@@ -16,7 +16,8 @@ namespace MyGameApplication.Manager {
         [SerializeField] private string saveFileName = "save.archive";
         private PersistentSaveData gameData;
         private string saveFullPath;
-        public event Action onSaveSuccess;
+
+        public event Action OnSaveSuccess;
 
         private void Awake() {
             DontDestroyOnLoad(transform.root.gameObject);
@@ -42,7 +43,7 @@ namespace MyGameApplication.Manager {
             await sw.WriteAsync(json);
             sw.Close();
             fs.Close();
-            onSaveSuccess?.Invoke();
+            OnSaveSuccess?.Invoke();
         }
 
         //读取游戏存档

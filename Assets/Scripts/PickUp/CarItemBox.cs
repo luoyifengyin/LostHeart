@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MyGameApplication.PickUp {
     public class CarItemBox : BasePickUp {
-        [SerializeField] private float m_FreshTime = 5;
+        [SerializeField] private float m_RefreshTime = 5;
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Car")) {
@@ -30,7 +30,7 @@ namespace MyGameApplication.PickUp {
         protected override void OnPicked(int pickedCnt = 1, int overflowCnt = 0) {
             base.OnPicked(pickedCnt, overflowCnt);
             gameObject.SetActive(false);
-            Invoke("Appear", m_FreshTime);
+            Invoke("Appear", m_RefreshTime);
         }
         private void Appear() {
             gameObject.SetActive(true);
