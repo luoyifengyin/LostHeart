@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MyGameApplication.ObjectPool;
 namespace MyGameApplication.Second
 {
     public class AdultTrap : MonoBehaviour
@@ -36,20 +36,22 @@ namespace MyGameApplication.Second
             if (other.gameObject.tag=="Player")
             {
                 GameObject.Find(m_LeapName).GetComponent<AdultLead>().m_Heal--;
-                Destroy(this.gameObject);
+                ObjectPoolManager.Instance.Put("Trap", this.gameObject);
+                //Destroy(this.gameObject);
                 m_Audio.GetComponent<AdultSoundEffects>().Health();
             }
 
             if (other.gameObject.tag == "Car")
             {
-                
-                Destroy(this.gameObject);
+                ObjectPoolManager.Instance.Put("Trap", this.gameObject);
+                //Destroy(this.gameObject);
             }
 
             if (other.gameObject.tag == "GameController")
             {
 
-                Destroy(this.gameObject);
+                ObjectPoolManager.Instance.Put("Trap", this.gameObject);
+                //Destroy(this.gameObject);
             }
         }
 

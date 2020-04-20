@@ -6,6 +6,7 @@ using MyGameApplication.Second;
 
 namespace MyGameApplication.Second
 {
+
     public class AdultUI : MonoBehaviour
     {
         public Canvas m_AdultCanvas;//场景Canvas
@@ -23,6 +24,7 @@ namespace MyGameApplication.Second
         void Start()
         {
             NewGame();//游戏初始化
+
         }
 
         
@@ -141,5 +143,8 @@ namespace MyGameApplication.Second
 
         public void Onclick()
         { }
+
+        
+
     }
 }
