@@ -55,6 +55,15 @@ namespace MyGameApplication.Manager.TestTools {
             ObjectPoolManager.Instance.CreateSpecifiedObjects("gameObject", new GameObject(), 10);
         }
 
+        [SerializeField] private GameObject m_Prefab;
+
+        [ContextMenu("对象池测试(Prefab)")]
+        void ObjectPoolPrefabTest() {
+            ObjectPoolManager.Instance.SetCreateFunc("prefab", () => Instantiate(m_Prefab));
+            ObjectPoolManager.Instance.Get<GameObject>("prefab");
+            ObjectPoolManager.Instance.CreateSpecifiedObjects<GameObject>("prefab", 10);
+        }
+
         [ContextMenu("对象池测试(自定义类)")]
         void ObjectPoolTest2() {
             TestObject obj = new TestObject();

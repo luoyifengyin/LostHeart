@@ -12,7 +12,7 @@ namespace MyGameApplication.ObjectPool {
         public ObjectPoolManager() {
             m_Pool = GameObject.FindGameObjectWithTag("ObjectPool");
             if (!m_Pool) {
-                m_Pool = new GameObject("ObjectPool") {
+                m_Pool = new GameObject("ObjectPools") {
                     tag = "ObjectPool"
                 };
                 GameObject.DontDestroyOnLoad(m_Pool);
@@ -21,13 +21,16 @@ namespace MyGameApplication.ObjectPool {
 
         //根据键值获取对象池
         public ObjectPool GetPool(string key) {
-            if (!m_ObjectPools.ContainsKey(key))
-                m_ObjectPools.Add(key, m_Pool.AddComponent<ObjectPool>());
+            if (!m_ObjectPools.ContainsKey(key)) {
+                GameObject goPool = new GameObject(key + " Pool");
+                goPool.transform.parent = m_Pool.transform;
+                m_ObjectPools.Add(key, goPool.AddComponent<ObjectPool>());
+            }
             return m_ObjectPools[key];
         }
 
         public void SetCreateFunc(string key, Func<object> func) {
-            GetPool(key).createObject = func;
+            GetPool(key).CreateObjectFunc = func;
         }
 
         //根据键值生成指定数量的相应对象，非GameObject对象使用这个方法
