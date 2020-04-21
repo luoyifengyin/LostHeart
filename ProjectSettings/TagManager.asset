@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Car
   - ObjectPool
+  - Fire
+  - Racer
   layers:
   - Default
   - TransparentFX

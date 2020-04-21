@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MyGameApplication.CarRacing {
     [RequireComponent(typeof(Ranking))]
     public class RankCalculator : MonoBehaviour {
-        private List<GameObject> m_RacerList = new List<GameObject>();
+        private List<GameObject> m_RacerList = null;
         private GameObject m_PlayerCar = null;
         public Dictionary<GameObject, Order> racers = new Dictionary<GameObject, Order>();
         //[SerializeField] private GameObject[] m_Goals;
@@ -32,10 +32,12 @@ namespace MyGameApplication.CarRacing {
 
         private void Awake() {
             m_Ranking = GetComponent<Ranking>();
-            m_PlayerCar = GameObject.FindGameObjectWithTag("Player");
-            m_RacerList.Add(m_PlayerCar);
-            m_RacerList.AddRange(GameObject.FindGameObjectsWithTag("Racer"));
-            for(int i = 0;i < m_RacerList.Count; i++) {
+            m_RacerList = m_Ranking.racerRankList;
+        }
+
+        private void Start() {
+            m_PlayerCar = m_RacerList[0];
+            for (int i = 0; i < m_RacerList.Count; i++) {
                 racers.Add(m_RacerList[i], new Order(i, default));
             }
         }
@@ -52,14 +54,20 @@ namespace MyGameApplication.CarRacing {
             }
         }
 
+        //private void CalRank() {
+        //    int cnt = 0;
+        //    foreach(var i in racers) {
+        //        if (i.Key == m_PlayerCar) continue;
+        //        if (i.Value < racers[m_PlayerCar])
+        //            cnt++;
+        //    }
+        //    if (m_Ranking.Rank != cnt + 1) m_Ranking.Rank = cnt + 1;
+        //}
         private void CalRank() {
-            int cnt = 0;
-            foreach(var i in racers) {
-                if (i.Key == m_PlayerCar) continue;
-                if (i.Value < racers[m_PlayerCar])
-                    cnt++;
-            }
-            if (m_Ranking.Rank != cnt + 1) m_Ranking.Rank = cnt + 1;
+            m_RacerList.Sort((x, y) => {
+                return racers[x] < racers[y] ? -1 : 1;
+            });
+            m_Ranking.Refresh();
         }
     }
 }

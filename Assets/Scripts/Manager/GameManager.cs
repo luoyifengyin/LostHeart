@@ -16,7 +16,8 @@ namespace MyGameApplication.Manager {
         [SerializeField] private string saveFileName = "save.archive";
         private PersistentSaveData gameData;
         private string saveFullPath;
-        public event Action onSaveSuccess;
+
+        public event Action OnSaveSuccess;
 
         private void Awake() {
             DontDestroyOnLoad(transform.root.gameObject);
@@ -32,7 +33,6 @@ namespace MyGameApplication.Manager {
                 if (saver.enabled) saver.Save();
             }
             SaveFile();
-            print("save success!");
         }
         //把游戏数据保存到磁盘
         public async void SaveFile() {
@@ -42,7 +42,8 @@ namespace MyGameApplication.Manager {
             await sw.WriteAsync(json);
             sw.Close();
             fs.Close();
-            onSaveSuccess?.Invoke();
+            OnSaveSuccess?.Invoke();
+            print("save success!");
         }
 
         //读取游戏存档
@@ -57,7 +58,7 @@ namespace MyGameApplication.Manager {
 
         //是否存在存档文件
         public bool HasSaveArchive() {
-            return Directory.Exists(saveFullPath);
+            return File.Exists(saveFullPath);
         }
 
         public void StartGame() {

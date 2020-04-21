@@ -11,7 +11,7 @@ namespace MyGameApplication.ObjectPool {
 
         private Func<object> m_CreateObjectFunc;
         public Func<object> CreateObjectFunc {
-            get => m_CreateObjectFunc;
+            private get => m_CreateObjectFunc;
             set => m_CreateObjectFunc = () => {
                 object obj = value();
                 if (obj is GameObject)
