@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MyGameApplication.Manager;
+using System.Collections;
+using UnityEngine;
 
 namespace MyGameApplication.Item {
     public abstract class PropEffect {
@@ -23,6 +25,17 @@ namespace MyGameApplication.Item {
             if (Condition()) {
                 Operation();
             }
+        }
+
+        protected Coroutine StartCoroutine(IEnumerator routine) {
+            return CoroutineFactory.Start(routine);
+        }
+
+        protected void StopCoroutine(Coroutine routine) {
+            CoroutineFactory.Stop(routine);
+        }
+        protected void StopCoroutine(IEnumerator routine) {
+            CoroutineFactory.Stop(routine);
         }
     }
 }

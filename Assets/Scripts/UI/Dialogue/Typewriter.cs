@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyGameApplication.MainMenu;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -6,14 +7,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace MyGameApplication.UI {
-    public abstract class Typewriter : MonoBehaviour, ITalk {
-        public Text text;
+    public class Typewriter {
+        private Text m_Text;
         public float typeIntervalTime = 0.05f;      //打字效果（文字输入）的间隔时间
-        protected string m_Content;
+        private string m_Content;
         private Coroutine m_Coroutine;
 
-        private void Awake() {
-            if (!text) text = GetComponentInChildren<Text>();
+        public Typewriter(Text text) {
+            m_Text = text;
         }
 
         private class RichTextChecker {
@@ -157,46 +158,20 @@ namespace MyGameApplication.UI {
                     curPos = len;
                 }
 
-                m_RichTextChecker.ShowText(text, curPos);
+                m_RichTextChecker.ShowText(m_Text, curPos);
 
                 if (curPos >= len) yield break;
                 yield return null;
             } while (true);
         }
 
-        public Coroutine ShowDialogue(string content, Color? color = null) {
-            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(content = content.Trim())) return null;
-            text.color = color ?? Color.white;
-            if (m_Coroutine != null) {
-                StopCoroutine(m_Coroutine);
-                m_Coroutine = null;
-            }
+        public Coroutine Typewrite(string content) {
+            if (m_Coroutine != null) m_Text.StopCoroutine(m_Coroutine);
+            typeIntervalTime = Setting.Instance.TextTypeIntervalTime;
+            Debug.Log("typeIntervalTime" + typeIntervalTime);
             m_Content = content;
-            return m_Coroutine = StartCoroutine(Display());
+            return m_Coroutine = m_Text.StartCoroutine(Typewrite());
         }
-
-        public virtual Coroutine ShowDialogue(string content) {
-            return ShowDialogue(content, Color.white);
-        }
-
-        private IEnumerator Display() {
-            yield return OnShow();
-            yield return StartCoroutine(Typewrite());
-            yield return OnWait();
-            yield return OnHide();
-            m_Coroutine = null;
-        }
-
-        public virtual Coroutine HideDialogue() {
-            if (m_Coroutine != null) StopCoroutine(m_Coroutine);
-            return m_Coroutine = StartCoroutine(OnHide());
-        }
-
-        protected abstract IEnumerator OnShow();
-
-        protected abstract IEnumerator OnWait();
-
-        protected abstract IEnumerator OnHide();
 
         public void DisplayImmediately() {
             m_DisplayImmediately = true;

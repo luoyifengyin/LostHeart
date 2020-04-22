@@ -43,7 +43,6 @@ namespace MyGameApplication.Item.Effect {
                 Accelerate();
                 s_Progressing = this;
             }
-            //else Release();
         }
 
         private IEnumerator Accelerating() {
@@ -70,12 +69,12 @@ namespace MyGameApplication.Item.Effect {
             m_CarRb.drag /= 2f;
             m_Car.ForwardTorque *= 2f;
             m_AcceleratingTime = 0;
-            m_AccelCoroutine = CoroutineFactory.Start(Accelerating());
+            m_AccelCoroutine = StartCoroutine(Accelerating());
         }
 
         public override void Expire() {
             if (m_AccelCoroutine != null) {
-                CoroutineFactory.Stop(m_AccelCoroutine);
+                StopCoroutine(m_AccelCoroutine);
                 m_AccelCoroutine = null;
                 Decelerate();
             }
@@ -93,24 +92,22 @@ namespace MyGameApplication.Item.Effect {
             m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
             m_DecelCoroutine = null;
             s_Progressing = null;
-            //Release();
         }
 
         private void Decelerate() {
             //print("decel");
             m_CarRb.drag = m_OriginalDrag;
             m_Car.ForwardTorque = m_OriginalForwardTorque;
-            if (m_CarAudio) m_DecelCoroutine = CoroutineFactory.Start(Decelerating());
+            if (m_CarAudio) m_DecelCoroutine = StartCoroutine(Decelerating());
         }
 
         public override void Stop() {
             Expire();
             if (m_DecelCoroutine != null) {
-                CoroutineFactory.Stop(m_DecelCoroutine);
+                StopCoroutine(m_DecelCoroutine);
                 m_DecelCoroutine = null;
                 m_CarAudio.highPitchMultiplier = m_OriginalHighPitchMultiplier;
                 s_Progressing = null;
-                //Release();
             }
         }
     }
