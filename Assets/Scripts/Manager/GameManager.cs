@@ -1,6 +1,7 @@
-﻿#define __DEBUG__
-using MyGameApplication.Data;
+﻿using MyGameApplication.Data;
 using MyGameApplication.Data.Saver;
+using MyGameApplication.Item;
+using MyGameApplication.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,21 +11,17 @@ using UnityEngine;
 
 namespace MyGameApplication.Manager {
     public class GameManager : MonoBehaviour {
-        public static GameManager _instance;
+        public static GameManager Instance { get; private set; }
 
         [SerializeField] private string saveFileName = "save.archive";
         private PersistentSaveData gameData;
         private string saveFullPath;
-        public event Action onSaveSuccess;
 
-        public static GameManager Instance {
-            get {
-                return _instance ?? (_instance = FindObjectOfType<GameManager>());
-            }
-        }
+        public event Action OnSaveSuccess;
 
         private void Awake() {
             DontDestroyOnLoad(transform.root.gameObject);
+            Instance = this;
             saveFullPath = Application.persistentDataPath + "/" + saveFileName;
             gameData = PersistentSaveData.Instance;
         }
@@ -36,7 +33,6 @@ namespace MyGameApplication.Manager {
                 if (saver.enabled) saver.Save();
             }
             SaveFile();
-            print("save success!");
         }
         //把游戏数据保存到磁盘
         public async void SaveFile() {
@@ -46,10 +42,11 @@ namespace MyGameApplication.Manager {
             await sw.WriteAsync(json);
             sw.Close();
             fs.Close();
-            onSaveSuccess?.Invoke();
+            OnSaveSuccess?.Invoke();
+            print("save success!");
         }
 
-        //加载游戏存档
+        //读取游戏存档
         public void LoadGame() {
             if (!HasSaveArchive()) return;
             FileStream fs = new FileStream(saveFullPath, FileMode.Open);
@@ -61,25 +58,26 @@ namespace MyGameApplication.Manager {
 
         //是否存在存档文件
         public bool HasSaveArchive() {
-            return Directory.Exists(saveFullPath);
+            return File.Exists(saveFullPath);
         }
 
-#if UNITY_EDITOR && __DEBUG__
-        private string[] sceneNames = { "CarRacing", "Second", "Maze" };
-        private int curSceneIndex = -1;
-        private void OnGUI() {
-            if (GUI.Button(new Rect(0, 0, 100, 50), "Switch Scene")) {
-                if (curSceneIndex == -1) {
-                    curSceneIndex = Array.FindIndex(sceneNames,
-                        str => str == UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-                }
-                curSceneIndex = (curSceneIndex + 1) % sceneNames.Length;
-                SceneController.LoadScene(sceneNames[curSceneIndex]);
+        public void StartGame() {
+            if (HasSaveArchive()) {
+                // do something...
             }
-            else if (GUI.Button(new Rect(0, 50, 100, 50), "Save Game")) {
-                SaveGame();
-            }
+            SceneController.LoadScene("CarRacing");
         }
+
+        public void Exit() {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
 #endif
+        }
+
+        public void Setting() {
+            print("setting");
+        }
     }
 }

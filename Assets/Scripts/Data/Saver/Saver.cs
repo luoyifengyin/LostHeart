@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Data.Saver {
-    [ExecuteInEditMode]
+    [ExecuteAlways]
     public abstract class Saver : MonoBehaviour {
         [SerializeField] protected string uniqueIdentifier;
         [SerializeField] protected SaveData gameData;
@@ -14,9 +14,9 @@ namespace MyGameApplication.Data.Saver {
         protected SceneController sceneController;
         protected string key;
 
-        public bool AutoSaveOnSwitchScene { get { return autoSaveOnSwitchScene; } }
+        public bool AutoSaveOnSwitchScene => autoSaveOnSwitchScene;
 
-        protected virtual void Awake() {
+        protected void Awake() {
             sceneController = SceneController.Instance;
             //if (!sceneController)
             //    throw new UnityException("SceneController could not be found!");
@@ -24,7 +24,7 @@ namespace MyGameApplication.Data.Saver {
             key = CreateKey();
         }
 
-        private void OnEnable() {
+        protected void OnEnable() {
 #if UNITY_EDITOR
             if (!sceneController) return;
 #endif
@@ -34,12 +34,14 @@ namespace MyGameApplication.Data.Saver {
             }
         }
 
-        private void OnDisable() {
+        protected void OnDisable() {
 #if UNITY_EDITOR
             if (!sceneController) return;
 #endif
-            sceneController.onBeforeSceneUnload -= Save;
-            sceneController.onAfterSceneLoad -= Load;
+            if (autoSaveOnSwitchScene) {
+                sceneController.onBeforeSceneUnload -= Save;
+                sceneController.onAfterSceneLoad -= Load;
+            }
         }
 
         public abstract void Save();

@@ -1,45 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGameApplication.Item {
-    public abstract class BaseItem : MonoBehaviour {
-        private static int s_Uid = 0;
+    public enum ItemType {
+        Prop,
+    }
 
-        public int Uid { get; private set; }    //道具的唯一标识id，所有道具都拥有不同的uid
-        public int ItemId { get; set; }         //道具id，跟ItemList.json文件中的id一致
+    [Serializable]
+    public abstract class BaseItem {
+        //private static int s_Uid = 0;
 
-        private void Awake() {
-            Uid = ++s_Uid;
-        }
+        //public int Uid { get; private set; }    //道具的唯一标识id，所有道具都拥有不同的uid
 
-        //当玩家获得（失去）该道具时触发
-        public virtual void OnGained(int cnt) { }
+        //private void Awake() {
+        //    Uid = ++s_Uid;
+        //}
 
-        //使用条件
-        public virtual bool Condition() {
-            return true;
-        }
-
-        //道具效果
-        protected virtual void Operation() { }
-
-        //使用道具
-        public void Payload() {
-            if (!Condition()) return;
-            Operation();
-        }
-
-        //道具效果失效时调用
-        public virtual void Expire() { }
-
-        //中断该道具的所有效果和特效
-        public virtual void Stop() {
-            Expire();
-        }
-
-        protected void Release() {
-            ItemManager.Instance.ReleaseItemObjectById(ItemId, gameObject);
-        }
+        public int id;                              //道具id（必需）
+        public ItemType type;                       //道具类型
+        public string name;                         //道具名称（必需）
+        public string description;                  //道具描述
+        public int capacity = -1;                   //道具容量（-1代表无上限）
+        [NonSerialized] public Sprite sprite;       //道具的精灵图，用于UI显示
+        [NonSerialized] public GameObject prefab;
     }
 }

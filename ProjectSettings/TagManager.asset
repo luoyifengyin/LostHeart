@@ -5,7 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Car
-  - MainDialogue
+  - ObjectPool
+  - Fire
+  - Racer
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Terrian
   - 
   - 
   - 

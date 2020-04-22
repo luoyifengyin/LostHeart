@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Item;
+using MyGameApplication.Item.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,9 @@ namespace MyGameApplication.UI.ItemBar {
         private List<Grid> m_Grids = new List<Grid>();
         private int row, col;
 
-        private ToggleGroup m_ToggleGroup;
         private bool m_RefreshFlag = false; //激活时是否需要刷新UI的标记，初始为false避免了OnEnable在Grid的Awake之前刷新UI
 
         private void Awake() {
-            m_ToggleGroup = m_GridPanel.GetComponent<ToggleGroup>();
             m_Grids.AddRange(m_GridPanel.GetComponentsInChildren<Grid>());
             col = m_GridPanel.constraintCount;
             row = 2;
@@ -49,7 +48,7 @@ namespace MyGameApplication.UI.ItemBar {
                         }
                     }
                     if (!m_Grids[j].gameObject.activeSelf) m_Grids[j].gameObject.SetActive(true);
-                    m_Grids[j++].SetItem(item.Key, item.Value);
+                    m_Grids[j++].SetItem(item.Key, ItemType.Prop, item.Value);
                 }
             }
             //把其他道具格子清空，并清除多余的格子
@@ -77,7 +76,7 @@ namespace MyGameApplication.UI.ItemBar {
         }
 
         private void OnDestroy() {
-            if (PlayerBag.Instance) PlayerBag.Instance.onItemChange -= Refresh;
+            if (PlayerBag.Instance != null) PlayerBag.Instance.onItemChange -= Refresh;
         }
     }
 }

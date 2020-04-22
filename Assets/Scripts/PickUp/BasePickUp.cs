@@ -1,34 +1,27 @@
 ﻿using MyGameApplication.Item;
+using MyGameApplication.Item.Inventory;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGameApplication.PickUp {
     public abstract class BasePickUp : MonoBehaviour {
+        [SerializeField] protected ItemType m_PickedItemType = ItemType.Prop;//玩家将会获得的道具类型
         [SerializeField] protected int m_PickedItemId;          //玩家将会获得的道具id
         [SerializeField] protected int m_PickedCnt = 1;         //玩家将会获得的道具数量
-        [SerializeField] protected bool m_IsSelfItem = false;   //该gameObject是否为道具本身
-        private BaseItem m_ItemController;
 
-        public bool IsSelfItem {
-            get {
-                return m_IsSelfItem || m_ItemController;
-            }
-        }
+        protected IInventory m_Inventory;
 
         private void Awake() {
-            m_ItemController = GetComponent<BaseItem>();
-            if (m_ItemController) {
-                m_ItemController.ItemId = m_PickedItemId;
-            }
+            m_Inventory = PlayerBag.Instance;
         }
 
         //捡起道具
-        public void PickUpItem(int id = 0, int? cnt = null) {
+        public void PickUpItem(int id = 0, ItemType? type = null, int? cnt = null) {
             if (id <= 0) id = m_PickedItemId;
+            ItemType itemType = type ?? m_PickedItemType;
             int count = cnt ?? m_PickedCnt;
-            int pickedCnt = PlayerBag.Instance.AddItem(id, count);
-            if (IsSelfItem) ItemManager.Instance.ReleaseItemObjectById(id, gameObject);
+            int pickedCnt = m_Inventory.AddItem(id, itemType, count);
             OnPicked(pickedCnt, count - pickedCnt);
         }
 

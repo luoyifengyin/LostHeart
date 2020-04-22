@@ -41,7 +41,7 @@ namespace MyGameApplication.Second
             if (other.gameObject == m_LevelBeginGameObject[1])
             {
 
-                Dialogue.main.ShowDialogue("点击鼠标左键可放置箱子",new Color(0,0,255));
+                Dialogue.main.ShowDialogue("[点击鼠标左键可放置箱子]",new Color(0,0,255));
                 m_Box = 1;
                 m_Heal = 3;
                 m_Scene.GetComponent<AdultScene>().m_LevelTime[1] = 0;
@@ -100,24 +100,30 @@ namespace MyGameApplication.Second
                     Destroy(m_Moster.gameObject);
                 }
             }
+            if (other.gameObject == m_LevelBeginGameObject[5])
+            {
+                Manager.SceneController.LoadScene("Maze");
+            }
 
-            if(other.gameObject.tag=="Car" && m_Stage==2)
+                if (other.gameObject.tag=="Car" && m_Stage==2)
             {
                 m_Box++;
+                Dialogue.main.ShowDialogue("[获得道具 小熊]", new Color(0, 0, 1.0f));
                 Destroy(other.gameObject);
             }
 
             if (other.gameObject.tag == "Finish" && m_Stage == 3)
             {
                 m_Love++;
+                Dialogue.main.ShowDialogue("[获得道具 小熊]", new Color(0, 0, 1.0f));
                 Destroy(other.gameObject);
             }
 
 
-            if (other.gameObject.tag == "GameController")
+            /*if (other.gameObject.tag == "GameController")
             {
                 other.transform.Translate(Vector3.back);
-            }
+            }*/
         }
 
         void IsDeath()

@@ -8,7 +8,7 @@ namespace MyGameApplication.Second
     public class AdultControl : MonoBehaviour
     {
         public GameObject m_Audio;
-        public float Speed = 0.1f;//主角速度
+        public float Speed = 10.0f;//主角速度
         public GameObject m_Camera;//主镜头
         public GameObject m_SecondCamera;//隐藏镜头
         public GameObject m_Lead;//主角隐藏位置
@@ -40,39 +40,22 @@ namespace MyGameApplication.Second
        
         void Update()
         {
+            PlayerInput();
+        }
+
+        void FixedUpdate()
+        {
             Move();//主角移动
+        }
+        void LateUpdate()
+        {
             CameraMove();//镜头移动
         }
-        
+
         void Move()
         {
             
-            m_X = Input.GetAxis("Horizontal");
-            m_Y = Input.GetAxis("Vertical");
-            m_MouseLeftButtonDown = Input.GetMouseButtonDown(0);
-            m_MouseLeftButtonUp = Input.GetMouseButtonUp(0);
-            m_MouseRightButtonDown = Input.GetMouseButton(1);
-
-            
-
-            if(m_MouseLeftButtonDown==true && m_MouseLeft==false && this.GetComponent<AdultLead>().m_Box>0 && this.GetComponent<AdultLead>().m_Stage!=2)
-            {
-                //Debug.Log("asd");
-                m_MouseLeft = true;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if(hit.transform.tag=="ItemSprite")
-                    {
-                        this.GetComponent<AdultLead>().m_Box--;
-                        GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
-                        goClone.transform.parent = m_BoxGameObject.gameObject.transform;
-                        goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
-                        m_Audio.GetComponent<AdultSoundEffects>().Box();
-                    }
-                }
-            }
+           
 
             if(m_MouseLeftButtonUp==true && m_MouseLeft==true)
             {
@@ -80,21 +63,7 @@ namespace MyGameApplication.Second
             }
 
 
-            if (m_MouseRightButtonDown == true)
-            {
-                m_MouseMove=Input.GetAxis("Mouse X");
-                m_MouseMove2 = Input.GetAxis("Mouse Y");
-                m_CameraRotate = m_CameraRotate + m_MouseMove;
-                m_CameraRotateDown = m_CameraRotateDown - m_MouseMove2;
-                if(m_CameraRotateDown>90.0f)
-                {
-                    m_CameraRotateDown = 90.0f;
-                }
-                if (m_CameraRotateDown <0.0f)
-                {
-                    m_CameraRotateDown = 0.0f;
-                }
-            }
+            
 
             
             //Debug.Log(Input.GetAxis("Horizontal"));
@@ -121,12 +90,56 @@ namespace MyGameApplication.Second
             }
             if (x != 0 || y != 0)
             { 
-                this.transform.Translate(new Vector3(0, 0, Speed));
+                this.transform.Translate(new Vector3(0, 0, Speed*Time.deltaTime));
             }
             x = 0;
             y = 0;
         }
+        void PlayerInput()
+        {
+            m_X = Input.GetAxis("Horizontal");
+            m_Y = Input.GetAxis("Vertical");
+            m_MouseLeftButtonDown = Input.GetMouseButtonDown(0);
+            m_MouseLeftButtonUp = Input.GetMouseButtonUp(0);
+            m_MouseRightButtonDown = Input.GetMouseButton(1);
 
+
+
+            if (m_MouseLeftButtonDown == true && m_MouseLeft == false && this.GetComponent<AdultLead>().m_Box > 0 && this.GetComponent<AdultLead>().m_Stage != 2)
+            {
+                //Debug.Log("asd");
+                m_MouseLeft = true;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.transform.tag == "ItemSprite")
+                    {
+                        this.GetComponent<AdultLead>().m_Box--;
+                        GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
+                        goClone.transform.parent = m_BoxGameObject.gameObject.transform;
+                        goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
+                        m_Audio.GetComponent<AdultSoundEffects>().Box();
+                    }
+                }
+            }
+
+            if (m_MouseRightButtonDown == true)
+            {
+                m_MouseMove = Input.GetAxis("Mouse X");
+                m_MouseMove2 = Input.GetAxis("Mouse Y");
+                m_CameraRotate = m_CameraRotate + m_MouseMove;
+                m_CameraRotateDown = m_CameraRotateDown - m_MouseMove2;
+                if (m_CameraRotateDown > 90.0f)
+                {
+                    m_CameraRotateDown = 90.0f;
+                }
+                if (m_CameraRotateDown < 0.0f)
+                {
+                    m_CameraRotateDown = 0.0f;
+                }
+            }
+        }
         void CameraMove()
         {
             m_Lead.transform.position = this.transform.position;
