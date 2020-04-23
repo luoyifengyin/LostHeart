@@ -10,7 +10,7 @@ namespace MyGameApplication.Item {
     public class ItemManager : MonoBehaviour {
         [SerializeField] private ItemInfo m_ItemInfo;
 
-        [HideInInspector] public ItemInfo.Param[] propList;
+        [HideInInspector] public Prop[] propList;
 
         private Dictionary<ItemType, BaseItem[]> m_Items =
             new Dictionary<ItemType, BaseItem[]>();
@@ -28,7 +28,8 @@ namespace MyGameApplication.Item {
             m_Items.Add(ItemType.Prop, Instance.propList);
 
             for(int i = 1;i < propList.Length; i++) {
-                var prop = Instance.propList[i];
+                print("id " + propList[i].id);
+                var prop = propList[i];
                 prop.sprite = Resources.Load<Sprite>("Items/Props/Sprites/P" + i);
                 prop.prefab = Resources.Load<GameObject>("Items/Props/Prefabs/P" + i);
                 Type type = Type.GetType("MyGameApplication.Item.Effect.P" + i);

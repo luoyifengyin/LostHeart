@@ -9,7 +9,7 @@ namespace MyGameApplication.MainMenu {
     public class Setting : MonoBehaviour {
         public static Setting Instance { get; private set; }
 
-        private Animator m_Animator;
+        private Animator m_Animator = null;
 
         private void Awake() {
             Instance = this;
@@ -32,10 +32,10 @@ namespace MyGameApplication.MainMenu {
         }
 
         [Header("Audio Volume Control")]
-        [SerializeField] private AudioMixer m_AudioMixer;
+        [SerializeField] private AudioMixer m_AudioMixer = null;
 
-        [SerializeField] private Slider m_MasterAudioSlider;
-        [SerializeField] private Text m_MasterVolumeText;
+        [SerializeField] private Slider m_MasterAudioSlider = null;
+        [SerializeField] private Text m_MasterVolumeText = null;
         public void OnSoundChange() {
             AudioListener.volume = Mathf.InverseLerp(m_MasterAudioSlider.minValue,
                 m_MasterAudioSlider.maxValue, m_MasterAudioSlider.value);
@@ -49,21 +49,21 @@ namespace MyGameApplication.MainMenu {
             text.text = "" + (int)(value * 100);
         }
 
-        [SerializeField] private Slider m_BgmSlider;
-        [SerializeField] private Text m_BgmVolumeText;
+        [SerializeField] private Slider m_BgmSlider = null;
+        [SerializeField] private Text m_BgmVolumeText = null;
         public void OnBgmChange() {
             ChangeVolume("BGM Volume", m_BgmSlider, m_BgmVolumeText);
         }
 
-        [SerializeField] private Slider m_SESlider;
-        [SerializeField] private Text m_SEVolumeText;
+        [SerializeField] private Slider m_SESlider = null;
+        [SerializeField] private Text m_SEVolumeText = null;
         public void OnSEChange() {
             ChangeVolume("SE Volume", m_SESlider, m_SEVolumeText);
         }
 
         [Header("Text Type Speed Control")]
-        [SerializeField] private Slider m_TextSpeedSlider;
-        [SerializeField] private Text m_SpeedText;
+        [SerializeField] private Slider m_TextSpeedSlider = null;
+        [SerializeField] private Text m_SpeedText = null;
         public float TextTypeIntervalTime { get; private set; }
         public void OnTextSpeedChange() {
             float tot = m_TextSpeedSlider.maxValue - m_TextSpeedSlider.minValue;
