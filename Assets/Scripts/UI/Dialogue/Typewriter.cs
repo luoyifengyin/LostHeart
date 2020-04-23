@@ -168,7 +168,6 @@ namespace MyGameApplication.UI {
         public Coroutine Typewrite(string content) {
             if (m_Coroutine != null) m_Text.StopCoroutine(m_Coroutine);
             typeIntervalTime = Setting.Instance.TextTypeIntervalTime;
-            Debug.Log("typeIntervalTime" + typeIntervalTime);
             m_Content = content;
             return m_Coroutine = m_Text.StartCoroutine(Typewrite());
         }

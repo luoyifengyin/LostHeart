@@ -28,10 +28,6 @@ namespace MyGameApplication.UI {
             return m_Coroutine = StartCoroutine(Display());
         }
 
-        public virtual Coroutine ShowDialogue(string content) {
-            return ShowDialogue(content, Color.white);
-        }
-
         private IEnumerator Display() {
             yield return OnShow();
             yield return OnWait();

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using MyGameApplication.Item;
@@ -11,19 +11,7 @@ namespace MyGameApplication {
 		[System.SerializableAttribute]
 		public class Sheet {
 			public string name = string.Empty;
-			public List<Param> list = new List<Param>();
-		}
-
-		[System.SerializableAttribute]
-		public class Param : BaseItem {
-			public bool consumable;
-			public bool isCarItem;
-
-			[NonSerialized] public PropEffect effect;
-
-			public Param() {
-				type = ItemType.Prop;
-			}
+			public List<Prop> list = new List<Prop>();
 		}
 	}
 }

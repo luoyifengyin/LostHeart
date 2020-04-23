@@ -15,6 +15,13 @@ MonoBehaviour:
   sheets:
   - name: Prop
     list:
+    - id: 0
+      type: 0
+      name: 
+      description: 
+      capacity: -1
+      consumable: 0
+      isCarItem: 0
     - id: 1
       type: 0
       name: "\u52A0\u901F\u5668"
@@ -33,6 +40,6 @@ MonoBehaviour:
       type: 0
       name: "\u5B58\u6863"
       description: ' '
-      capacity: 0
-      consumable: 0
+      capacity: -1
+      consumable: 1
       isCarItem: 0

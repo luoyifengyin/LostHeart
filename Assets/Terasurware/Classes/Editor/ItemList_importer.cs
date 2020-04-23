@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.IO;
 using UnityEditor;
@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
+using MyGameApplication.Item;
 
 namespace MyGameApplication {
 	public class ItemList_importer : AssetPostprocessor {
@@ -45,17 +46,18 @@ namespace MyGameApplication {
 						ItemInfo.Sheet s = new ItemInfo.Sheet();
 						s.name = sheetName;
 
+						s.list.Add(null);
 						for (int i = 2; i <= sheet.LastRowNum; i++) {
 							IRow row = sheet.GetRow(i);
 							ICell cell = null;
 
-							ItemInfo.Param p = new ItemInfo.Param();
+							Prop p = new Prop();
 
 							cell = row.GetCell(0); p.id = (int)(cell == null ? 0 : cell.NumericCellValue);
 							cell = row.GetCell(1); p.name = (cell == null ? "" : cell.StringCellValue);
 							cell = row.GetCell(2); p.description = (cell == null ? "" : cell.StringCellValue);
-							cell = row.GetCell(3); p.capacity = (int)(cell == null ? 0 : cell.NumericCellValue);
-							cell = row.GetCell(4); p.consumable = (cell == null ? false : cell.BooleanCellValue);
+							cell = row.GetCell(3); if (cell != null) p.capacity = (int)cell.NumericCellValue;
+							cell = row.GetCell(4); p.consumable = (cell == null ? true : cell.BooleanCellValue);
 							cell = row.GetCell(5); p.isCarItem = (cell == null ? false : cell.BooleanCellValue);
 							s.list.Add(p);
 						}
