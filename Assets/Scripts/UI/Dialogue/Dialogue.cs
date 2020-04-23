@@ -8,7 +8,49 @@ using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.UI {
-    public static class Dialogue {
+    public abstract class Dialogue : MonoBehaviour {
+        public Text text;
+        protected string content;
+        private Coroutine m_Coroutine;
+
+        private void Awake() {
+            if (!text) text = GetComponentInChildren<Text>();
+        }
+
+        public Coroutine ShowDialogue(string content, Color? color = null) {
+            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(content = content.Trim())) return null;
+            text.color = color ?? Color.white;
+            if (m_Coroutine != null) {
+                StopCoroutine(m_Coroutine);
+                m_Coroutine = null;
+            }
+            this.content = content;
+            return m_Coroutine = StartCoroutine(Display());
+        }
+
+        public virtual Coroutine ShowDialogue(string content) {
+            return ShowDialogue(content, Color.white);
+        }
+
+        private IEnumerator Display() {
+            yield return OnShow();
+            yield return OnWait();
+            yield return OnHide();
+            m_Coroutine = null;
+        }
+
+        public virtual Coroutine HideDialogue() {
+            if (m_Coroutine != null) StopCoroutine(m_Coroutine);
+            return m_Coroutine = StartCoroutine(OnHide());
+        }
+
+        protected abstract IEnumerator OnShow();
+
+        protected abstract IEnumerator OnWait();
+
+        protected abstract IEnumerator OnHide();
+
+
         private static Subtitle m_Subtitle;
 
         private static DialogBox m_DialogBox;

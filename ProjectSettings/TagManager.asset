@@ -18,7 +18,7 @@ TagManager:
   - 
   - 
   - Terrian
-  - 
+  - PersistentUI
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Menu
+    uniqueID: 3119347101
     locked: 0

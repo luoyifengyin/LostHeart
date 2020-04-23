@@ -75,9 +75,5 @@ namespace MyGameApplication.Manager {
             Application.Quit();
 #endif
         }
-
-        public void Setting() {
-            print("setting");
-        }
     }
 }
