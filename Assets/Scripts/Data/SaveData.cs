@@ -47,7 +47,7 @@ namespace MyGameApplication.Data {
             quaternionValues.Clear();
         }
 
-        public void Save<T>(List<string> keyList, List<T> valueList, string key, T value) {
+        private void Save<T>(List<string> keyList, List<T> valueList, string key, T value) {
             int idx = keyList.FindIndex(x => x == key);
             if (idx >= 0) valueList[idx] = value;
             else {
@@ -56,7 +56,7 @@ namespace MyGameApplication.Data {
             }
         }
 
-        public bool Load<T>(List<string> keyList, List<T> valueList, string key, ref T value) {
+        private bool Load<T>(List<string> keyList, List<T> valueList, string key, ref T value) {
             int idx = keyList.FindIndex(x => x == key);
             if (idx >= 0) {
                 value = valueList[idx];
