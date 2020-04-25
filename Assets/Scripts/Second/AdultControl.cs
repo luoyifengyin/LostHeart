@@ -90,7 +90,7 @@ namespace MyGameApplication.Second
             }
             if (x != 0 || y != 0)
             { 
-                this.transform.Translate(new Vector3(0, 0, Speed*Time.deltaTime));
+                this.transform.Translate(new Vector3(0, 0, Speed*Time.fixedDeltaTime));
             }
             x = 0;
             y = 0;
@@ -111,16 +111,13 @@ namespace MyGameApplication.Second
                 m_MouseLeft = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer("Terrain")))
                 {
-                    if (hit.transform.tag == "ItemSprite")
-                    {
-                        this.GetComponent<AdultLead>().m_Box--;
-                        GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
-                        goClone.transform.parent = m_BoxGameObject.gameObject.transform;
-                        goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
-                        m_Audio.GetComponent<AdultSoundEffects>().Box();
-                    }
+                    this.GetComponent<AdultLead>().m_Box--;
+                    GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
+                    goClone.transform.parent = m_BoxGameObject.gameObject.transform;
+                    goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
+                    m_Audio.GetComponent<AdultSoundEffects>().Box();
                 }
             }
 

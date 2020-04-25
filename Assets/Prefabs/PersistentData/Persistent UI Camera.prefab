@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7263996870386414097}
   - component: {fileID: 7263996870386414096}
   m_Layer: 5
-  m_Name: Dynamic UI Camera
+  m_Name: Persistent UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 275
-  m_Depth: 2
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 512

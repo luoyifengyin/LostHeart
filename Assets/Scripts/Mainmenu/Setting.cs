@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.MainMenu {
     public class Setting : MonoBehaviour {
         public static Setting Instance { get; private set; }
 
         private Animator m_Animator = null;
+        private readonly int OPEN_HASH = Animator.StringToHash("Open");
+
+        public bool IsOpening => m_Animator.GetBool(OPEN_HASH);
 
         private void Awake() {
             Instance = this;
@@ -25,10 +29,18 @@ namespace MyGameApplication.MainMenu {
         }
 
         public void OpenWindow() {
-            m_Animator.SetBool("Open", true);
+            m_Animator.SetBool(OPEN_HASH, true);
+            m_MasterAudioSlider.Select();
         }
         public void CloseWindow() {
-            m_Animator.SetBool("Open", false);
+            m_Animator.SetBool(OPEN_HASH, false);
+        }
+
+        private void ChangeVolume(string volumeName, Slider slider, Text text) {
+            float value = Mathf.InverseLerp(slider.minValue, slider.maxValue, slider.value);
+            if (slider.value == slider.minValue) m_AudioMixer.SetFloat(volumeName, -80);
+            else m_AudioMixer.SetFloat(volumeName, slider.value);
+            text.text = "" + Mathf.RoundToInt(value * 100);
         }
 
         [Header("Audio Volume Control")]
@@ -37,16 +49,7 @@ namespace MyGameApplication.MainMenu {
         [SerializeField] private Slider m_MasterAudioSlider = null;
         [SerializeField] private Text m_MasterVolumeText = null;
         public void OnSoundChange() {
-            AudioListener.volume = Mathf.InverseLerp(m_MasterAudioSlider.minValue,
-                m_MasterAudioSlider.maxValue, m_MasterAudioSlider.value);
-            m_MasterVolumeText.text = "" + (int)(AudioListener.volume * 100);
-        }
-
-        private void ChangeVolume(string volumeName, Slider slider, Text text) {
-            float value = Mathf.InverseLerp(slider.minValue, slider.maxValue, slider.value);
-            if (slider.value == slider.minValue) m_AudioMixer.SetFloat(volumeName, -80);
-            else m_AudioMixer.SetFloat(volumeName, slider.value);
-            text.text = "" + (int)(value * 100);
+            ChangeVolume("Master Volume", m_MasterAudioSlider, m_MasterVolumeText);
         }
 
         [SerializeField] private Slider m_BgmSlider = null;
@@ -66,10 +69,9 @@ namespace MyGameApplication.MainMenu {
         [SerializeField] private Text m_SpeedText = null;
         public float TextTypeIntervalTime { get; private set; }
         public void OnTextSpeedChange() {
-            float tot = m_TextSpeedSlider.maxValue - m_TextSpeedSlider.minValue;
-            TextTypeIntervalTime = Mathf.Lerp(0, 0.2f, m_TextSpeedSlider.maxValue - m_TextSpeedSlider.value);
-            m_SpeedText.text = "" + (int)(Mathf.Lerp(m_TextSpeedSlider.minValue,
-                m_TextSpeedSlider.maxValue, m_TextSpeedSlider.value) * 100);
+            float val = Mathf.InverseLerp(m_TextSpeedSlider.minValue, m_TextSpeedSlider.maxValue, m_TextSpeedSlider.value);
+            TextTypeIntervalTime = Mathf.Lerp(0.2f, 0, val);
+            m_SpeedText.text = "" + Mathf.RoundToInt(val * 100);
         }
     }
 }

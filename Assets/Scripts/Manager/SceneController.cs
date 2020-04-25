@@ -29,13 +29,21 @@ namespace MyGameApplication.Manager {
             //if (!fader) fader = FindObjectOfType<Fader>();
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                //print("fadingOut: " + info.normalizedTime);
-                return info.normalizedTime > 1.0f && info.IsName("FadeOut");
+                if (info.IsName("FadeOut")) {
+                    //print("fadingOut: " + info.normalizedTime);
+                    AudioListener.volume = Mathf.Clamp01(1 - info.normalizedTime);
+                    return info.normalizedTime > 1.0f;
+                }
+                return false;
             });
             waitWhileFadingIn = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                //print("fadingIn: " + info.normalizedTime);
-                return info.normalizedTime > 1.0f && info.IsName("FadeIn");
+                if (info.IsName("FadeIn")) {
+                    //print("fadingIn: " + info.normalizedTime);
+                    AudioListener.volume = Mathf.Clamp01(info.normalizedTime);
+                    return info.normalizedTime > 1.0f;
+                }
+                return false;
             });
         }
 

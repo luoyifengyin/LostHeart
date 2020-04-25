@@ -28,7 +28,6 @@ namespace MyGameApplication.Item {
             m_Items.Add(ItemType.Prop, Instance.propList);
 
             for(int i = 1;i < propList.Length; i++) {
-                print("id " + propList[i].id);
                 var prop = propList[i];
                 prop.sprite = Resources.Load<Sprite>("Items/Props/Sprites/P" + i);
                 prop.prefab = Resources.Load<GameObject>("Items/Props/Prefabs/P" + i);
