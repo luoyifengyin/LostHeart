@@ -20,7 +20,7 @@ MonoBehaviour:
       name: 
       description: 
       capacity: -1
-      consumable: 0
+      consumable: 1
       isCarItem: 0
     - id: 1
       type: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     - id: 3
       type: 0
       name: "\u5B58\u6863"
-      description: ' '
+      description: 
       capacity: -1
       consumable: 1
       isCarItem: 0

@@ -8,6 +8,8 @@ TagManager:
   - ObjectPool
   - Fire
   - Racer
+  - StreetLamp
+  - NPC
   layers:
   - Default
   - TransparentFX

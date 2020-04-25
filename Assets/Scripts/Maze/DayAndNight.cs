@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DayAndNight : MonoBehaviour
 {
-    float speed = 0.05f;
+    float speed = 0.02f;
     // Start is called before the first frame update
     void Start()
     {
