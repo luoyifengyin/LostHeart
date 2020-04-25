@@ -135,7 +135,7 @@ namespace MyGameApplication.Manager {
 
         private void InitNewScene() {
             var list = FindObjectsOfType<Light>();
-            foreach(var light in list) {
+            foreach (var light in list) {
                 if (light.cullingMask == -1) {
                     light.cullingMask ^= (1 << LayerMask.NameToLayer("PersistentUI"));
                 }

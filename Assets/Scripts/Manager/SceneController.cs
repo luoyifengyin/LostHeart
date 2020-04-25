@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Manager {
@@ -11,6 +12,9 @@ namespace MyGameApplication.Manager {
         //public Fader fader;
         //public float fadeDuration = 1f;
         public Animator transition;
+        public AudioMixer audioMixer;
+        [SerializeField] private int lowestVolume = -45;
+        private float originVolume;
         [SerializeField] private string startingSceneName = null;
 
         [HideInInspector] public event Action onBeforeSceneUnload;
@@ -27,11 +31,11 @@ namespace MyGameApplication.Manager {
         private void Awake() {
             Instance = this;
             //if (!fader) fader = FindObjectOfType<Fader>();
+            audioMixer.GetFloat("Master Volume", out originVolume);
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
                 if (info.IsName("FadeOut")) {
-                    //print("fadingOut: " + info.normalizedTime);
-                    AudioListener.volume = Mathf.Clamp01(1 - info.normalizedTime);
+                    ChangeVolume(1 - info.normalizedTime);
                     return info.normalizedTime > 1.0f;
                 }
                 return false;
@@ -39,12 +43,17 @@ namespace MyGameApplication.Manager {
             waitWhileFadingIn = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
                 if (info.IsName("FadeIn")) {
-                    //print("fadingIn: " + info.normalizedTime);
-                    AudioListener.volume = Mathf.Clamp01(info.normalizedTime);
+                    ChangeVolume(info.normalizedTime);
                     return info.normalizedTime > 1.0f;
                 }
                 return false;
             });
+        }
+
+        private void ChangeVolume(float val) {
+            if (audioMixer) {
+                audioMixer.SetFloat("Master Volume", Mathf.Lerp(lowestVolume, originVolume, val));
+            }
         }
 
         IEnumerator Start() {

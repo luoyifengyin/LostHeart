@@ -21,10 +21,15 @@ namespace MyGameApplication.Item.Inventory {
             return cnt;
         }
 
-        public virtual int GetCntByIdAndType(int id, ItemType type) {
+        public virtual int GetCnt(int id, ItemType type) {
             var items = GetItemsByType(type);
             if (!items.ContainsKey(id)) items.Add(id, 0);
             return items[id];
+        }
+
+        public virtual void ClearItem(int id, ItemType type) {
+            var items = GetItemsByType(type);
+            if (items.ContainsKey(id)) items[id] = 0;
         }
     }
 }

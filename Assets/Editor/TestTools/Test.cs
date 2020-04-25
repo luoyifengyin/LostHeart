@@ -14,7 +14,8 @@ namespace MyGameApplication.Editor.TestTools {
     class Test : AbstractTest {
         [MenuItem("Test/对话测试/字幕", true)]
         [MenuItem("Test/对话测试/对话框", true)]
-        [MenuItem("Test/道具测试", true)]
+        [MenuItem("Test/道具测试/增加道具", true)]
+        [MenuItem("Test/道具测试/减少道具", true)]
         [MenuItem("Test/协程测试", true)]
         static bool IsAbleToTest() {
             return EditorApplication.isPlaying;
@@ -25,8 +26,8 @@ namespace MyGameApplication.Editor.TestTools {
             CoroutineFactory.Start(Caption());
         }
         static private IEnumerator Caption() {
-            yield return Dialogue.Subtitle.ShowDialogue(m_Content);
-            yield return Dialogue.Subtitle.ShowDialogue("hello, world");
+            yield return Dialogue.Caption.ShowDialogue(m_Content);
+            yield return Dialogue.Caption.ShowDialogue("hello, world");
         }
 
         [MenuItem("Test/对话测试/对话框", false, 1)]
@@ -49,11 +50,16 @@ namespace MyGameApplication.Editor.TestTools {
             //Dialogue.DialogBox.HideDialogue();
         }
 
-        [MenuItem("Test/道具测试", false, 10)]
-        static void ItemTest() {
+        [MenuItem("Test/道具测试/增加道具", false, 10)]
+        static void ItemAddTest() {
             PlayerBag.Instance.AddItem(1);
             PlayerBag.Instance.AddItem(2);
             PlayerBag.Instance.AddItem(1);
+        }
+        [MenuItem("Test/道具测试/减少道具", false, 11)]
+        static void ItemReduceTest() {
+            PlayerBag.Instance.AddProp(1, -2);
+            PlayerBag.Instance.AddProp(2, -1);
         }
 
         [MenuItem("Test/协程测试", false, 20)]

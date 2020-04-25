@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transition: {fileID: 5213630480201017389}
+  audioMixer: {fileID: 24100000, guid: fc9b9805910fc9047bd49b569b64aeb7, type: 2}
+  lowestVolume: -45
   startingSceneName: 
 --- !u!1 &9033596845315916764
 GameObject:

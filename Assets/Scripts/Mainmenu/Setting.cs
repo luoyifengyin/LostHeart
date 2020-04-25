@@ -49,7 +49,10 @@ namespace MyGameApplication.MainMenu {
         [SerializeField] private Slider m_MasterAudioSlider = null;
         [SerializeField] private Text m_MasterVolumeText = null;
         public void OnSoundChange() {
-            ChangeVolume("Master Volume", m_MasterAudioSlider, m_MasterVolumeText);
+            float value = Mathf.InverseLerp(m_MasterAudioSlider.minValue,
+                m_MasterAudioSlider.maxValue, m_MasterAudioSlider.value);
+            AudioListener.volume = value;
+            m_MasterVolumeText.text = "" + Mathf.RoundToInt(value * 100);
         }
 
         [SerializeField] private Slider m_BgmSlider = null;
