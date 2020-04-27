@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace MyGameApplication.UI {
-    public class Subtitle : Dialogue {
+    public class Caption : Dialogue {
         public float showDuaration = 3f;            //对话显示时间
         public float fadeOutDuration = 1f;          //对话淡出时间
 

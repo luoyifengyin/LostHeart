@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using MyGameApplication.Second;
+using MyGameApplication.Item.Inventory;
 
 namespace MyGameApplication.Second
 {
@@ -67,7 +68,7 @@ namespace MyGameApplication.Second
 
         void BoxDisplay()
         {
-            m_BoxText.text = m_Leap.GetComponent<AdultLead>().m_Box.ToString();
+            m_BoxText.text = PlayerBag.Instance.GetCnt(AdultLead.ITEM_BOX_ID).ToString();
         }
 
         void TipDisplay()

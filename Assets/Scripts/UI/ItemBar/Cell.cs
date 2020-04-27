@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 using MyGameApplication.Item.Inventory;
 
 namespace MyGameApplication.UI.ItemBar {
-    public class Grid : MonoBehaviour, IPointerDownHandler {
+    [RequireComponent(typeof(Selectable))]
+    public class Cell : MonoBehaviour {
         private Image m_Img;
         private Text m_NameText;
         private Text m_CntText;
@@ -28,7 +29,7 @@ namespace MyGameApplication.UI.ItemBar {
             var itemManager = ItemManager.Instance;
             if (!sprite) sprite = itemManager.GetItemSprite(id, type);
             if (string.IsNullOrEmpty(name)) name = itemManager.GetItemName(id, type);
-            if (cnt <= 0) cnt = PlayerBag.Instance.GetCntByIdAndType(id);
+            if (cnt <= 0) cnt = PlayerBag.Instance.GetCnt(id);
             ItemId = id;
             ItemType = type;
             m_Img.sprite = sprite;
@@ -50,14 +51,9 @@ namespace MyGameApplication.UI.ItemBar {
             selectable.interactable = false;
         }
 
-        public void OnPointerDown(PointerEventData eventData) {
-            print("pointer down");
-            OnSelected();
-        }
-
         public void OnSelected() {
-            print("on selected");
-            if (selectable && selectable.IsInteractable())
+            print("on selcet");
+            if (selectable.IsInteractable())
                 detail.SetItem(ItemId, ItemType, m_Img.sprite, m_NameText.text);
         }
     }

@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MyGameApplication.Editor.TestTools {
+namespace MyGameApplication.TestTools {
     abstract class AbstractTest {
         private static readonly string TEST_ASSET_ROOT_PATH = "Assets/Prefabs/Test/";
 

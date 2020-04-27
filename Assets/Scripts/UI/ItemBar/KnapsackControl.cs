@@ -6,16 +6,17 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.UI {
     public class KnapsackControl : MonoBehaviour {
-        [SerializeField] private Knapsack m_Knapsack = null;
+        private Animator m_Animator;
+        private readonly int OPEN_HASH = Animator.StringToHash("Open");
 
         private void Awake() {
-            if (!m_Knapsack) m_Knapsack = FindObjectOfType<Knapsack>();
+            m_Animator = GetComponent<Animator>();
         }
 
         // Update is called once per frame
         void Update() {
-            if (m_Knapsack && CrossPlatformInputManager.GetButtonDown("Cancel")) {
-                m_Knapsack.gameObject.SetActive(!m_Knapsack.gameObject.activeSelf);
+            if (CrossPlatformInputManager.GetButtonDown("Cancel")) {
+                m_Animator.SetBool(OPEN_HASH, !m_Animator.GetBool(OPEN_HASH));
             }
         }
     }

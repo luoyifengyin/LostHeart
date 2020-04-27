@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyGameApplication.Item.Inventory;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,11 +31,11 @@ namespace MyGameApplication.Second
         private float m_SecondCameraRotateDown = 90.0f;//隐藏镜头偏转度
         private float m_SecondCameraHeight = 30.0f;//隐藏镜头高度
 
-
+        private AdultLead m_AdultLead;
 
         void Start()
         {
-
+            m_AdultLead = GetComponent<AdultLead>();
         }
 
        
@@ -105,15 +106,15 @@ namespace MyGameApplication.Second
 
 
 
-            if (m_MouseLeftButtonDown == true && m_MouseLeft == false && this.GetComponent<AdultLead>().m_Box > 0 && this.GetComponent<AdultLead>().m_Stage != 2)
+            if (m_MouseLeftButtonDown == true && m_MouseLeft == false &&
+                PlayerBag.Instance.GetCnt(AdultLead.ITEM_BOX_ID) > 0 && m_AdultLead.m_Stage != 2)
             {
                 //Debug.Log("asd");
                 m_MouseLeft = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.NameToLayer("Terrain")))
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.NameToLayer("Terrain")))
                 {
-                    this.GetComponent<AdultLead>().m_Box--;
+                    PlayerBag.Instance.AddProp(AdultLead.ITEM_BOX_ID, -1);
                     GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
                     goClone.transform.parent = m_BoxGameObject.gameObject.transform;
                     goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);

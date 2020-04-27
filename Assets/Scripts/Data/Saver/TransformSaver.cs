@@ -13,9 +13,8 @@ namespace MyGameApplication.Data.Saver {
         protected string rotationKey;
         protected string scaleKey;
 
-        private new void Awake() {
-            if (!transformToSave) transformToSave = transform;
-            base.Awake();
+        private void Reset() {
+            transformToSave = transform;
         }
 
         protected override string CreateKey() {

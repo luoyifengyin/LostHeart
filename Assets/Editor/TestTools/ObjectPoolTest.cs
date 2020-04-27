@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MyGameApplication.Editor.TestTools {
+namespace MyGameApplication.TestTools {
     class ObjectPoolTest : AbstractTest {
         static GameObject m_Prefab;
 

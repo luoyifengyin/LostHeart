@@ -38,8 +38,8 @@ MonoBehaviour:
       isCarItem: 1
     - id: 3
       type: 0
-      name: "\u5B58\u6863"
-      description: 
+      name: "\u7BB1\u5B50"
+      description: "\u53EF\u7528\u4E8E\u9632\u5FA1\u6765\u81EA\u5916\u754C\u7684\u653B\u51FB"
       capacity: -1
       consumable: 1
       isCarItem: 0

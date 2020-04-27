@@ -7,7 +7,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
@@ -17,17 +19,19 @@ namespace MyGameApplication.Manager {
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private string m_StartSceneName = "Origin";
-        [SerializeField] private string m_SaveFileName = "save.archive";
-        private PersistentSaveData gameData;
-        private string m_SaveFullPath;
+
+        private static string s_SaveFileName = "save.archive";
+        public static string SaveFullPath { get; private set; }
+
+        public PersistentSaveData GameData { get; private set; } = new PersistentSaveData();
 
         public event Action OnSaveSuccess;
+
 
         private void Awake() {
             DontDestroyOnLoad(transform.root.gameObject);
             Instance = this;
-            m_SaveFullPath = Application.persistentDataPath + "/" + m_SaveFileName;
-            gameData = PersistentSaveData.Instance;
+            SaveFullPath = Application.persistentDataPath + "/" + s_SaveFileName;
         }
 
         public void StartGame() {
@@ -47,7 +51,7 @@ namespace MyGameApplication.Manager {
 
         //是否存在存档文件
         public bool HasSaveArchive() {
-            return File.Exists(m_SaveFullPath);
+            return File.Exists(SaveFullPath);
         }
 
         //保存游戏（存档）
@@ -56,35 +60,74 @@ namespace MyGameApplication.Manager {
             foreach (var saver in savers) {
                 if (saver.enabled) saver.Save();
             }
-            Scene curScene = SceneManager.GetActiveScene();
-            gameData.Save(curScene.GetType().FullName, curScene.name);
             SaveFile();
         }
         //把游戏数据保存到磁盘
         public async void SaveFile() {
-            FileStream fs = new FileStream(m_SaveFullPath, FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
-            string json = JsonUtility.ToJson(gameData);
-            await sw.WriteAsync(json);
-            sw.Close();
-            fs.Close();
+            Scene curScene = SceneManager.GetActiveScene();
+            GameData.Save(curScene.GetType().FullName, curScene.name);
+
+            string json = JsonUtility.ToJson(GameData);
+#if UNITY_EDITOR
+            await CreateFile(Path.ChangeExtension(SaveFullPath, ".json"), json);
+#endif
+            await CreateFile(SaveFullPath, Encrypt(json));
             OnSaveSuccess?.Invoke();
             print("save success!");
         }
 
         //读取游戏存档
-        public void LoadGame() {
+        public async void LoadGame() {
             if (!HasSaveArchive()) return;
-            FileStream fs = new FileStream(m_SaveFullPath, FileMode.Open);
-            StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-            string json = sr.ReadToEnd();
-            gameData = JsonUtility.FromJson<PersistentSaveData>(json);
+            string json = Decrypt(await LoadFile(SaveFullPath));
+            GameData = JsonUtility.FromJson<PersistentSaveData>(json);
 
             Scene scene = default;
             string sceneName = default;
-            if (gameData.Load(scene.GetType().FullName, ref sceneName)) {
+            if (GameData.Load(scene.GetType().FullName, ref sceneName)) {
                 SceneController.LoadScene(sceneName);
             }
+        }
+
+        public async Task CreateFile(string filePath, string text) {
+            FileStream fs = new FileStream(filePath, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+            await sw.WriteAsync(text);
+            sw.Close();
+            fs.Close();
+        }
+
+        public async Task<string> LoadFile(string filePath) {
+            FileStream fs = new FileStream(filePath, FileMode.Open);
+            StreamReader sr = new StreamReader(fs, Encoding.UTF8);
+            string text = await sr.ReadToEndAsync();
+            sr.Close();
+            fs.Close();
+            return text;
+        }
+
+        private readonly byte[] _secretKey = Encoding.UTF8.GetBytes("12348578902223367877723456789012");
+
+        public string Encrypt(string text) {
+            ICryptoTransform encryptor = GetRijndaelManaged().CreateEncryptor();
+            byte[] buffer = Encoding.UTF8.GetBytes(text);
+            byte[] resArr = encryptor.TransformFinalBlock(buffer, 0, buffer.Length);
+            return Convert.ToBase64String(resArr);
+        }
+
+        public string Decrypt(string text) {
+            ICryptoTransform decryptor = GetRijndaelManaged().CreateDecryptor();
+            byte[] buffer = Convert.FromBase64String(text);
+            byte[] resArr = decryptor.TransformFinalBlock(buffer, 0, buffer.Length);
+            return Encoding.UTF8.GetString(resArr);
+        }
+
+        private RijndaelManaged GetRijndaelManaged() {
+            RijndaelManaged rm = new RijndaelManaged();
+            rm.Key = _secretKey;
+            rm.Mode = CipherMode.ECB;
+            rm.Padding = PaddingMode.PKCS7;
+            return rm;
         }
 
         public bool IsPausing { get; private set; }
@@ -135,7 +178,7 @@ namespace MyGameApplication.Manager {
 
         private void InitNewScene() {
             var list = FindObjectsOfType<Light>();
-            foreach(var light in list) {
+            foreach (var light in list) {
                 if (light.cullingMask == -1) {
                     light.cullingMask ^= (1 << LayerMask.NameToLayer("PersistentUI"));
                 }

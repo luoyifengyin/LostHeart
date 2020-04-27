@@ -47,32 +47,32 @@ namespace MyGameApplication.UI {
         protected abstract IEnumerator OnHide();
 
 
-        private static Subtitle m_Subtitle;
+        private static Caption s_Caption;
 
-        private static DialogBox m_DialogBox;
+        private static DialogBox s_DialogBox;
 
         [Obsolete("Dialogue.main has been deprecated. Use Dialogue.Subtitle instead.")]
-        public static Subtitle main {
+        public static Caption main {
             get {
-                return m_Subtitle ?? (m_Subtitle = GameObject.FindObjectOfType<Subtitle>());
+                return s_Caption ?? (s_Caption = GameObject.FindObjectOfType<Caption>());
             }
         }
 
-        public static Subtitle Subtitle {
+        public static Caption Caption {
             get {
-                return m_Subtitle ?? (m_Subtitle = GameObject.FindObjectOfType<Subtitle>());
+                return s_Caption ?? (s_Caption = GameObject.FindObjectOfType<Caption>());
             }
         }
 
         public static DialogBox DialogBox {
             get {
-                return m_DialogBox ?? (m_DialogBox = GameObject.FindObjectOfType<DialogBox>());
+                return s_DialogBox ?? (s_DialogBox = GameObject.FindObjectOfType<DialogBox>());
             }
         }
 
         [RuntimeInitializeOnLoadMethod]
         static void AfterSceneLoad() {
-            _ = Subtitle; _ = DialogBox;
+            _ = Caption; _ = DialogBox;
         }
     }
 }
