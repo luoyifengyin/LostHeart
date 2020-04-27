@@ -1039,6 +1039,7 @@ GameObject:
   - component: {fileID: 6184016246684296644}
   - component: {fileID: 6184016248358946850}
   - component: {fileID: 6153143012882562290}
+  - component: {fileID: 3096284520661516235}
   m_Layer: 0
   m_Name: NPC(8)GetTrueItems(Day)
   m_TagString: NPC
@@ -1205,6 +1206,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &3096284520661516235
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072125441663512052}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37622812, y: 0.9150065, z: 0.28356916}
+  m_Center: {x: -0.015594482, y: 0.45191592, z: -0.011478722}
 --- !u!1 &6072125441665936630
 GameObject:
   m_ObjectHideFlags: 0

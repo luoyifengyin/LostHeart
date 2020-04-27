@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 3480588891518480048}
   - component: {fileID: 3480588891105030934}
   - component: {fileID: 3529654274045302212}
+  - component: {fileID: 7407103810796639623}
   m_Layer: 0
   m_Name: NPC(7)BadEnd(Night)
   m_TagString: NPC
@@ -354,6 +355,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &7407103810796639623
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592472610447000642}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.36073303, y: 0.8812672, z: 0.2919922}
+  m_Center: {x: -0.04334259, y: 0.40289444, z: 0.024978638}
 --- !u!1 &3592472610572168274
 GameObject:
   m_ObjectHideFlags: 0

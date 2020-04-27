@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 7907058219585795826}
   - component: {fileID: 7907058220815778008}
   - component: {fileID: 7858169426231272366}
+  - component: {fileID: 6953657347241378625}
   m_Layer: 0
   m_Name: NPC(1)GetCar(Day)
   m_TagString: NPC
@@ -545,6 +546,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &6953657347241378625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7794900167636597160}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.34140003, y: 0.84411716, z: 0.47000098}
+  m_Center: {x: -0.0087649375, y: 0.41857767, z: -0.03687483}
 --- !u!1 &7794900167772758304
 GameObject:
   m_ObjectHideFlags: 0

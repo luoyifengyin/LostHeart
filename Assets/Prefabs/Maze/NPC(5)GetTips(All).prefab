@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 3589194778579614465}
   - component: {fileID: 3589194826002901865}
   - component: {fileID: 3564934839494680073}
+  - component: {fileID: 7108682516543113582}
   m_Layer: 0
   m_Name: NPC(5)GetTips(All)
   m_TagString: NPC
@@ -986,6 +987,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &7108682516543113582
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484077796302068469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3176879, y: 0.8651947, z: 0.19519036}
+  m_Center: {x: 0.019976586, y: 0.39819854, z: -0.04706715}
 --- !u!1 &3484077796407552757
 GameObject:
   m_ObjectHideFlags: 0

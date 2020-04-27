@@ -727,6 +727,7 @@ GameObject:
   - component: {fileID: 7238104423648299714}
   - component: {fileID: 7238104424421180362}
   - component: {fileID: 7261132372159477950}
+  - component: {fileID: 4741380337637246974}
   m_Layer: 0
   m_Name: NPC(11)GetTrueItems(Night)
   m_TagString: NPC
@@ -893,6 +894,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &4741380337637246974
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342105964415934466}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.47991943, y: 0.95410985, z: 0.44863892}
+  m_Center: {x: -0.026184082, y: 0.49357882, z: -0.038513184}
 --- !u!1 &7342105964566924922
 GameObject:
   m_ObjectHideFlags: 0

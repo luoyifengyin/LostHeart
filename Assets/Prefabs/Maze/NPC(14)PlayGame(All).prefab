@@ -1089,6 +1089,7 @@ GameObject:
   - component: {fileID: 4952079325669354531}
   - component: {fileID: 4952079322431009401}
   - component: {fileID: 4904139702321776627}
+  - component: {fileID: 5097155093710131498}
   m_Layer: 0
   m_Name: NPC(14)PlayGame(All)
   m_TagString: NPC
@@ -1103,7 +1104,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4985447411207513877}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -320.51862, y: 4.4270535, z: 132.94875}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -1255,6 +1256,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &5097155093710131498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4985447411207513877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37635803, y: 0.94354486, z: 0.35845947}
+  m_Center: {x: 0.037117004, y: 0.45277095, z: -0.04170227}
 --- !u!1 &4985447411305881395
 GameObject:
   m_ObjectHideFlags: 0

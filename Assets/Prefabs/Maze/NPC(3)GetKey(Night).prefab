@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 7255603499828045515}
   - component: {fileID: 7255603498318997069}
   - component: {fileID: 7207804509788899487}
+  - component: {fileID: 1198348292}
   m_Layer: 0
   m_Name: NPC(3)GetKey(Night)
   m_TagString: NPC
@@ -1006,6 +1007,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!65 &1198348292
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7288965043622839093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.30096436, y: 0.88834953, z: 0.30044556}
+  m_Center: {x: -0.01713562, y: 0.44694614, z: -0.045333862}
 --- !u!1 &7288965043999362427
 GameObject:
   m_ObjectHideFlags: 0

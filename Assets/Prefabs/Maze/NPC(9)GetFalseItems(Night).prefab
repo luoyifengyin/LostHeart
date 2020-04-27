@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: 37810025555452927}
   - component: {fileID: 37810025555485951}
   - component: {fileID: 37810025569018495}
+  - component: {fileID: 1420534007557676940}
   m_Layer: 0
   m_Name: NPC(9)GetFalseItems(Night)
   m_TagString: NPC
@@ -1421,3 +1422,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &1420534007557676940
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37810025561062627}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3435171, y: 0.9032966, z: 0.27471915}
+  m_Center: {x: 0.0110684335, y: 0.44879264, z: -0.013956681}
