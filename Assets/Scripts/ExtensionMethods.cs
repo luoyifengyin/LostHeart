@@ -18,15 +18,30 @@ namespace MyGameApplication {
             return go.transform.GetGameObjectInParentWithTag(tag);
         }
 
-        public static void Swap(this Array arr, int idxA, int idxB) {
-            object c = arr.GetValue(idxA);
-            arr.SetValue(arr.GetValue(idxB), idxA);
-            arr.SetValue(c, idxB);
+        //public static void Swap(this Array arr, int idxA, int idxB) {
+        //    object c = arr.GetValue(idxA);
+        //    arr.SetValue(arr.GetValue(idxB), idxA);
+        //    arr.SetValue(c, idxB);
+        //}
+        //public static void Swap<T>(this List<T> list, int idxA, int idxB) {
+        //    T c = list[idxA];
+        //    list[idxA] = list[idxB];
+        //    list[idxB] = c;
+        //}
+
+        public static void BeforeSerialize<TKey, TValue>(this Dictionary<TKey, TValue> dic, List<TKey> keys, List<TValue> values) {
+            keys.Clear();
+            values.Clear();
+            foreach(var kvp in dic) {
+                keys.Add(kvp.Key);
+                values.Add(kvp.Value);
+            }
         }
-        public static void Swap<T>(this List<T> list, int idxA, int idxB) {
-            T c = list[idxA];
-            list[idxA] = list[idxB];
-            list[idxB] = c;
+
+        public static void AfterDeserialize<TKey, TValue>(this Dictionary<TKey, TValue> dic, List<TKey> keys, List<TValue> values) {
+            dic.Clear();
+            for (int i = 0; i != Math.Min(keys.Count, values.Count); i++)
+                dic.Add(keys[i], values[i]);
         }
     }
 }

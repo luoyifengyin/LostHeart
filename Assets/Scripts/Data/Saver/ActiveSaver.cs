@@ -12,6 +12,14 @@ namespace MyGameApplication.Data.Saver {
                 activeToSave.name + "Active" + uniqueIdentifier;
         }
 
+        private new void Awake() {
+            if (activeToSave == gameObject) {
+                Debug.LogError("ActiveSaver不能挂载在自己需要存储active信息的GameObject上，" +
+                    "请挂载在另一个GameObject上并把activeToSave引用现在的GameObject。");
+            }
+            base.Awake();
+        }
+
         public override void Save() {
             gameData.Save(key, activeToSave.activeSelf);
         }
@@ -20,51 +28,6 @@ namespace MyGameApplication.Data.Saver {
             bool active = default;
             if (gameData.Load(key, ref active))
                 activeToSave.SetActive(active);
-        }
-
-        private new void Awake() {
-            if (!activeToSave) activeToSave = gameObject;
-            base.Awake();
-
-#if UNITY_EDITOR
-            if (!sceneController) return;
-#endif
-            if (AutoSaveOnSwitchScene && activeToSave == gameObject) {
-                sceneController.onBeforeSceneUnload += Save;
-            }
-        }
-
-        private new void OnEnable() {
-#if UNITY_EDITOR
-            if (!sceneController) return;
-#endif
-            if (AutoSaveOnSwitchScene) {
-                sceneController.onAfterSceneLoad += Load;
-                if (activeToSave != gameObject) {
-                    sceneController.onAfterSceneLoad += Save;
-                }
-            }
-        }
-
-        private new void OnDisable() {
-#if UNITY_EDITOR
-            if (!sceneController) return;
-#endif
-            if (AutoSaveOnSwitchScene) {
-                sceneController.onAfterSceneLoad -= Load;
-                if (activeToSave != gameObject) {
-                    sceneController.onAfterSceneLoad -= Save;
-                }
-            }
-        }
-
-        private void OnDestroy() {
-#if UNITY_EDITOR
-            if (!sceneController) return;
-#endif
-            if (AutoSaveOnSwitchScene && activeToSave == gameObject) {
-                sceneController.onBeforeSceneUnload -= Save;
-            }
         }
     }
 }

@@ -7,25 +7,30 @@ using UnityEditor;
 using UnityEngine;
 
 namespace MyGameApplication.Data {
-    [CreateAssetMenu(menuName = "SaveData/KeyValueListData")]
-    public class SaveData : ScriptableObject {
-        public List<string> boolKeys = new List<string>();
-        public List<bool> boolValues = new List<bool>();
+    public class SaveData : ISerializationCallbackReceiver {
+        [SerializeField] private List<string> boolKeys = new List<string>();
+        [SerializeField] private List<bool> boolValues = new List<bool>();
+        private Dictionary<string, bool> _boolDictionary = new Dictionary<string, bool>();
 
-        public List<string> intKeys = new List<string>();
-        public List<int> intValues = new List<int>();
+        [SerializeField] private List<string> intKeys = new List<string>();
+        [SerializeField] private List<int> intValues = new List<int>();
+        private Dictionary<string, int> _intDictionary = new Dictionary<string, int>();
 
-        public List<string> floatKeys = new List<string>();
-        public List<float> floatValues = new List<float>();
+        [SerializeField] private List<string> floatKeys = new List<string>();
+        [SerializeField] private List<float> floatValues = new List<float>();
+        private Dictionary<string, float> _floatDictionary = new Dictionary<string, float>();
 
-        public List<string> stringKeys = new List<string>();
-        public List<string> stringValues = new List<string>();
+        [SerializeField] private List<string> stringKeys = new List<string>();
+        [SerializeField] private List<string> stringValues = new List<string>();
+        private Dictionary<string, string> _stringDictionary = new Dictionary<string, string>();
 
-        public List<string> vector3Keys = new List<string>();
-        public List<Vector3> vector3Values = new List<Vector3>();
+        [SerializeField] private List<string> vector3Keys = new List<string>();
+        [SerializeField] private List<Vector3> vector3Values = new List<Vector3>();
+        private Dictionary<string, Vector3> _vector3Dictionary = new Dictionary<string, Vector3>();
 
-        public List<string> quaternionKeys = new List<string>();
-        public List<Quaternion> quaternionValues = new List<Quaternion>();
+        [SerializeField] private List<string> quaternionKeys = new List<string>();
+        [SerializeField] private List<Quaternion> quaternionValues = new List<Quaternion>();
+        private Dictionary<string, Quaternion> _quaternionDictionary = new Dictionary<string, Quaternion>();
 
         public void Clear() {
             boolKeys.Clear();
@@ -47,70 +52,83 @@ namespace MyGameApplication.Data {
             quaternionValues.Clear();
         }
 
-        private void Save<T>(List<string> keyList, List<T> valueList, string key, T value) {
-            int idx = keyList.FindIndex(x => x == key);
-            if (idx >= 0) valueList[idx] = value;
-            else {
-                keyList.Add(key);
-                valueList.Add(value);
-            }
+        private void Save<T>(Dictionary<string, T> dic, string key, T value) {
+            if (!dic.ContainsKey(key)) dic.Add(key, value);
+            else dic[key] = value;
         }
 
-        private bool Load<T>(List<string> keyList, List<T> valueList, string key, ref T value) {
-            int idx = keyList.FindIndex(x => x == key);
-            if (idx >= 0) {
-                value = valueList[idx];
+        private bool Load<T>(Dictionary<string, T> dic, string key, ref T value) {
+            if (dic.ContainsKey(key)) {
+                value = dic[key];
                 return true;
             }
             return false;
         }
 
         public void Save(string key, bool value) {
-            Save(boolKeys, boolValues, key, value);
+            Save(_boolDictionary, key, value);
         }
 
         public void Save(string key, int value) {
-            Save(intKeys, intValues, key, value);
+            Save(_intDictionary, key, value);
         }
 
         public void Save(string key, float value) {
-            Save(floatKeys, floatValues, key, value);
+            Save(_floatDictionary, key, value);
         }
 
         public void Save(string key, string value) {
-            Save(stringKeys, stringValues, key, value);
+            Save(_stringDictionary, key, value);
         }
 
         public void Save(string key, Vector3 value) {
-            Save(vector3Keys, vector3Values, key, value);
+            Save(_vector3Dictionary, key, value);
         }
 
         public void Save(string key, Quaternion value) {
-            Save(quaternionKeys, quaternionValues, key, value);
+            Save(_quaternionDictionary, key, value);
         }
 
         public bool Load(string key, ref bool value) {
-            return Load(boolKeys, boolValues, key, ref value);
+            return Load(_boolDictionary, key, ref value);
         }
 
         public bool Load(string key, ref int value) {
-            return Load(intKeys, intValues, key, ref value);
+            return Load(_intDictionary, key, ref value);
         }
 
         public bool Load(string key, ref float value) {
-            return Load(floatKeys, floatValues, key, ref value);
+            return Load(_floatDictionary, key, ref value);
         }
 
         public bool Load(string key, ref string value) {
-            return Load(stringKeys, stringValues, key, ref value);
+            return Load(_stringDictionary, key, ref value);
         }
 
         public bool Load(string key, ref Vector3 value) {
-            return Load(vector3Keys, vector3Values, key, ref value);
+            return Load(_vector3Dictionary, key, ref value);
         }
 
         public bool Load(string key, ref Quaternion value) {
-            return Load(quaternionKeys, quaternionValues, key, ref value);
+            return Load(_quaternionDictionary, key, ref value);
+        }
+
+        public void OnBeforeSerialize() {
+            _boolDictionary.BeforeSerialize(boolKeys, boolValues);
+            _intDictionary.BeforeSerialize(intKeys, intValues);
+            _floatDictionary.BeforeSerialize(floatKeys, floatValues);
+            _stringDictionary.BeforeSerialize(stringKeys, stringValues);
+            _vector3Dictionary.BeforeSerialize(vector3Keys, vector3Values);
+            _quaternionDictionary.BeforeSerialize(quaternionKeys, quaternionValues);
+        }
+
+        public void OnAfterDeserialize() {
+            _boolDictionary.AfterDeserialize(boolKeys, boolValues);
+            _intDictionary.AfterDeserialize(intKeys, intValues);
+            _floatDictionary.AfterDeserialize(floatKeys, floatValues);
+            _stringDictionary.AfterDeserialize(stringKeys, stringValues);
+            _vector3Dictionary.AfterDeserialize(vector3Keys, vector3Values);
+            _quaternionDictionary.AfterDeserialize(quaternionKeys, quaternionValues);
         }
     }
 }

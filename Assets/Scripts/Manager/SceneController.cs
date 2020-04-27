@@ -31,7 +31,7 @@ namespace MyGameApplication.Manager {
         private void Awake() {
             Instance = this;
             //if (!fader) fader = FindObjectOfType<Fader>();
-            audioMixer.GetFloat("Master Volume", out originVolume);
+            audioMixer.GetFloat("MasterVolume", out originVolume);
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
                 if (info.IsName("FadeOut")) {
@@ -52,7 +52,7 @@ namespace MyGameApplication.Manager {
 
         private void ChangeVolume(float val) {
             if (audioMixer) {
-                audioMixer.SetFloat("Master Volume", Mathf.Lerp(lowestVolume, originVolume, val));
+                audioMixer.SetFloat("MasterVolume", Mathf.Lerp(lowestVolume, originVolume, val));
             }
         }
 

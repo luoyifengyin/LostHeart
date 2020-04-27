@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace MyGameApplication.Item {
     [Serializable]
     public class ItemManager : MonoBehaviour {
-        [SerializeField] private ItemInfo m_ItemInfo;
+        [SerializeField] private ItemInfo m_ItemInfo = null;
 
         [HideInInspector] public Prop[] propList;
 

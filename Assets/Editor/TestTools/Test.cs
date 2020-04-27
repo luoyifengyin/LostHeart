@@ -6,11 +6,13 @@ using MyGameApplication.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MyGameApplication.Editor.TestTools {
+namespace MyGameApplication.TestTools {
     class Test : AbstractTest {
         [MenuItem("Test/对话测试/字幕", true)]
         [MenuItem("Test/对话测试/对话框", true)]
@@ -62,10 +64,10 @@ namespace MyGameApplication.Editor.TestTools {
             PlayerBag.Instance.AddProp(2, -1);
         }
 
-        [MenuItem("Test/协程测试", false, 20)]
-        static void CoroutineTest() {
-            
-        }
+        //[MenuItem("Test/协程测试", false, 20)]
+        //static void CoroutineTest() {
+
+        //}
     }
 
     public class MonoTest : MonoBehaviour {

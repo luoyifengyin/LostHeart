@@ -190,7 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4283983558642210169}
-  - component: {fileID: 2653495900483348376}
+  - component: {fileID: 4876999194790206195}
   m_Layer: 0
   m_Name: Developer
   m_TagString: Untagged
@@ -214,7 +214,7 @@ Transform:
   m_Father: {fileID: 7130623651122396251}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2653495900483348376
+--- !u!114 &4876999194790206195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,7 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_StartSceneName: Origin
-  m_SaveFileName: save.archive
   m_StopSoundWhilePause: 0
 --- !u!1 &4956357030430093034
 GameObject:
