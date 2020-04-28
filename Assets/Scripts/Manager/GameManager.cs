@@ -69,9 +69,9 @@ namespace MyGameApplication.Manager {
 
             string json = JsonUtility.ToJson(GameData);
 #if UNITY_EDITOR
-            await CreateFile(Path.ChangeExtension(SaveFullPath, ".json"), json);
+            await CreateFileAsync(Path.ChangeExtension(SaveFullPath, ".json"), json);
 #endif
-            await CreateFile(SaveFullPath, Encrypt(json));
+            await CreateFileAsync(SaveFullPath, Encrypt(json));
             OnSaveSuccess?.Invoke();
             print("save success!");
         }
@@ -79,7 +79,7 @@ namespace MyGameApplication.Manager {
         //读取游戏存档
         public async void LoadGame() {
             if (!HasSaveArchive()) return;
-            string json = Decrypt(await LoadFile(SaveFullPath));
+            string json = Decrypt(await LoadFileAsync(SaveFullPath));
             GameData = JsonUtility.FromJson<PersistentSaveData>(json);
 
             Scene scene = default;
@@ -89,7 +89,7 @@ namespace MyGameApplication.Manager {
             }
         }
 
-        public async Task CreateFile(string filePath, string text) {
+        public async Task CreateFileAsync(string filePath, string text) {
             FileStream fs = new FileStream(filePath, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
             await sw.WriteAsync(text);
@@ -97,7 +97,7 @@ namespace MyGameApplication.Manager {
             fs.Close();
         }
 
-        public async Task<string> LoadFile(string filePath) {
+        public async Task<string> LoadFileAsync(string filePath) {
             FileStream fs = new FileStream(filePath, FileMode.Open);
             StreamReader sr = new StreamReader(fs, Encoding.UTF8);
             string text = await sr.ReadToEndAsync();
@@ -106,16 +106,17 @@ namespace MyGameApplication.Manager {
             return text;
         }
 
-        private readonly byte[] _secretKey = Encoding.UTF8.GetBytes("12348578902223367877723456789012");
-
-        public string Encrypt(string text) {
+        //加密与解密需要使用的32位密钥
+        private readonly byte[] _secretKey = Encoding.UTF8.GetBytes("WuZhipengDengHuanlinChenXingming");
+        
+        public string Encrypt(string text) {        //加密
             ICryptoTransform encryptor = GetRijndaelManaged().CreateEncryptor();
             byte[] buffer = Encoding.UTF8.GetBytes(text);
             byte[] resArr = encryptor.TransformFinalBlock(buffer, 0, buffer.Length);
             return Convert.ToBase64String(resArr);
         }
 
-        public string Decrypt(string text) {
+        public string Decrypt(string text) {        //解密
             ICryptoTransform decryptor = GetRijndaelManaged().CreateDecryptor();
             byte[] buffer = Convert.FromBase64String(text);
             byte[] resArr = decryptor.TransformFinalBlock(buffer, 0, buffer.Length);
@@ -123,19 +124,21 @@ namespace MyGameApplication.Manager {
         }
 
         private RijndaelManaged GetRijndaelManaged() {
-            RijndaelManaged rm = new RijndaelManaged();
-            rm.Key = _secretKey;
-            rm.Mode = CipherMode.ECB;
-            rm.Padding = PaddingMode.PKCS7;
+            RijndaelManaged rm = new RijndaelManaged {
+                Key = _secretKey,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
             return rm;
         }
 
         public bool IsPausing { get; private set; }
         private float m_TimeScaleRef = 1f;
         private float m_VolumeRef = 1f;
-        [SerializeField] private bool m_StopSoundWhilePause;
+        [SerializeField] private bool m_StopSoundWhilePause = false;
         private WaitWhile m_WaitWhilePause;
 
+        //暂停游戏
         public void Pause() {
             m_TimeScaleRef = Time.timeScale;
             Time.timeScale = 0f;
