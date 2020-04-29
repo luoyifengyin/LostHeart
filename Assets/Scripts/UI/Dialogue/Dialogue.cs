@@ -50,6 +50,7 @@ namespace MyGameApplication.UI {
         private static Caption s_Caption;
 
         private static DialogBox s_DialogBox;
+        private static DialogChoices s_DialogChoices;
 
         [Obsolete("Dialogue.main has been deprecated. Use Dialogue.Subtitle instead.")]
         public static Caption main {
@@ -69,10 +70,15 @@ namespace MyGameApplication.UI {
                 return s_DialogBox ?? (s_DialogBox = GameObject.FindObjectOfType<DialogBox>());
             }
         }
+        public static DialogChoices DialogChoices {
+            get {
+                return s_DialogChoices ?? (s_DialogChoices = FindObjectOfType<DialogChoices>());
+            }
+        }
 
         [RuntimeInitializeOnLoadMethod]
         static void AfterSceneLoad() {
-            _ = Caption; _ = DialogBox;
+            _ = Caption; _ = DialogBox; _ = DialogChoices;
         }
     }
 }

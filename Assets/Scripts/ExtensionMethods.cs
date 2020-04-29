@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace MyGameApplication {
@@ -43,5 +46,9 @@ namespace MyGameApplication {
             for (int i = 0; i != Math.Min(keys.Count, values.Count); i++)
                 dic.Add(keys[i], values[i]);
         }
+
+        //public static IEnumerator AsIEnumerator(this Coroutine routine) {
+        //    yield return routine;
+        //}
     }
 }

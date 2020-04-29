@@ -1,8 +1,6 @@
 ﻿using MyGameApplication.Data;
 using MyGameApplication.Data.Saver;
-using MyGameApplication.Item;
 using MyGameApplication.MainMenu;
-using MyGameApplication.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,9 +27,15 @@ namespace MyGameApplication.Manager {
 
 
         private void Awake() {
-            DontDestroyOnLoad(transform.root.gameObject);
+            if (Instance) {
+                gameObject.SetActive(false);
+                Destroy(transform.root.gameObject);
+                return;
+            }
             Instance = this;
             SaveFullPath = Application.persistentDataPath + "/" + s_SaveFileName;
+
+            DontDestroyOnLoad(transform.root.gameObject);
         }
 
         public void StartGame() {
@@ -147,6 +151,7 @@ namespace MyGameApplication.Manager {
                 AudioListener.volume = 0f;
             }
             IsPausing = true;
+            GC.Collect();
             StartCoroutine(Pausing());
         }
         private IEnumerator Pausing() {

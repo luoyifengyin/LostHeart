@@ -18,26 +18,26 @@ namespace MyGameApplication.UI {
         }
 
         private class RichTextChecker {
-            private const string TAGS = "(b|i|size|color|material)";
+            private static readonly string TAGS = "(b|i|size|color|material)";
             //private const string SINGLE_TAGS = "(quad)";
 
-            private readonly Regex tagPattern = new Regex(string.Format("</?{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex openTagPattern = new Regex(string.Format("<{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex closeTagPattern = new Regex(string.Format("</{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex singleTagPattern = new Regex(string.Format("<{0}>", SINGLE_TAGS), RegexOptions.IgnoreCase);
-            private readonly Regex wordPattern = new Regex(string.Format("(?<=^</?){0}", TAGS), RegexOptions.IgnoreCase);
+            private static readonly Regex tagPattern = new Regex(string.Format("</?{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex openTagPattern = new Regex(string.Format("<{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex closeTagPattern = new Regex(string.Format("</{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex singleTagPattern = new Regex(string.Format("<{0}>", SINGLE_TAGS), RegexOptions.IgnoreCase);
+            private static readonly Regex wordPattern = new Regex(string.Format("(?<=^</?){0}", TAGS), RegexOptions.IgnoreCase);
 
             private class Tag {
                 internal int index;         //该标签处于纯文本中的位置
                 internal string tag;        //标签本体
                 internal string closeTag;   //开始标签对应的结束标签
-                public bool isOpen {        //是否为开始标签
+                internal bool isOpen {        //是否为开始标签
                     get {
                         if (closeTag != null) return true;
                         else return false;
                     }
                 }
-                public Tag(int idx, string tag) {
+                internal Tag(int idx, string tag) {
                     index = idx;
                     this.tag = tag;
                 }
