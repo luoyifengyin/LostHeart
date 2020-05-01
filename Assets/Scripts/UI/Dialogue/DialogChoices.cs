@@ -19,14 +19,19 @@ namespace MyGameApplication.UI {
         }
 
         public async Task<int> DisplayChoices(params string[] choices) {
-            Animator animator = Dialogue.DialogBox.GetComponent<Animator>();
-            if (animator.IsInTransition(0)) animator.SetBool(OPEN_HASH, true);
+            Animator dialogBoxAnimator = Dialogue.DialogBox.GetComponent<Animator>();
+            if (dialogBoxAnimator.IsInTransition(0)) {
+                dialogBoxAnimator.SetBool(OPEN_HASH, true);
+            }
             RefreshUI(choices);
             m_Animator.SetBool(OPEN_HASH, true);
 
             m_Result = -1;
             await new WaitUntil(() => m_Result >= 0);
             m_Animator.SetBool(OPEN_HASH, false);
+            if (dialogBoxAnimator.GetCurrentAnimatorStateInfo(0).IsName("Open")) {
+                dialogBoxAnimator.SetBool(OPEN_HASH, false);
+            }
             return m_Result;
         }
 

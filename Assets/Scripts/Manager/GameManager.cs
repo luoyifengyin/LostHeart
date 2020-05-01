@@ -86,9 +86,8 @@ namespace MyGameApplication.Manager {
             string json = Decrypt(await LoadFileAsync(SaveFullPath));
             GameData = JsonUtility.FromJson<PersistentSaveData>(json);
 
-            Scene scene = default;
             string sceneName = default;
-            if (GameData.Load(scene.GetType().FullName, ref sceneName)) {
+            if (GameData.Load(typeof(Scene).FullName, ref sceneName)) {
                 SceneController.LoadScene(sceneName);
             }
         }
