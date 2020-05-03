@@ -22,9 +22,13 @@ namespace MyGameApplication.UI.ItemBar {
 
         private void Start() {
             //若角色背包的道具数量发生改变，则设置“下次激活时需要刷新”的标记
-            PlayerBag.Instance.onItemChange += () => m_RefreshFlag = true;
+            PlayerBag.Instance.onItemChange += NeedToRefresh;
             m_RefreshFlag = true;
             //gameObject.SetActive(false);
+        }
+
+        private void NeedToRefresh() {
+            m_RefreshFlag = true;
         }
 
         public void Refresh() {
@@ -72,7 +76,7 @@ namespace MyGameApplication.UI.ItemBar {
         }
 
         private void OnDestroy() {
-            if (PlayerBag.Instance != null) PlayerBag.Instance.onItemChange -= Refresh;
+            if (PlayerBag.Instance != null) PlayerBag.Instance.onItemChange -= NeedToRefresh;
         }
     }
 }

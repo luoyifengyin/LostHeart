@@ -21,7 +21,6 @@ namespace MyGameApplication.Maze {
             Instance = this;
 
             float x = transform.rotation.eulerAngles.x;
-            print(x);
             if (m_NightToDayTerminator <= x && x < m_DayToNightTerminator) {
                 IsDaytime = true;
             }

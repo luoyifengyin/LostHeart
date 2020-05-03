@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace MyGameApplication.ObjectPool {
@@ -49,6 +50,10 @@ namespace MyGameApplication.ObjectPool {
 
         public void Put(string key, object obj) {
             GetPool(key).Put(obj);
+        }
+
+        public void DestroyPoolOnLoad(string key) {
+            SceneManager.MoveGameObjectToScene(GetPool(key).gameObject, SceneManager.GetActiveScene());
         }
     }
 }

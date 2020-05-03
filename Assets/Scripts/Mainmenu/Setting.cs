@@ -80,6 +80,7 @@ namespace MyGameApplication.MainMenu {
             m_SESlider.value = PlayerPrefs.GetFloat("SEVolume", m_SESlider.value);
 
             m_TextSpeedSlider.value = PlayerPrefs.GetFloat("TextTypeSpeed", m_TextSpeedSlider.value);
+            OnTextSpeedChange();
         }
     }
 }

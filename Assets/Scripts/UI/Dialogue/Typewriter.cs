@@ -18,28 +18,32 @@ namespace MyGameApplication.UI {
         }
 
         private class RichTextChecker {
-            private const string TAGS = "(b|i|size|color|material)";
+            private static readonly string TAGS = "(b|i|size|color|material)";
             //private const string SINGLE_TAGS = "(quad)";
 
-            private readonly Regex tagPattern = new Regex(string.Format("</?{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex openTagPattern = new Regex(string.Format("<{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex closeTagPattern = new Regex(string.Format("</{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
-            //private readonly Regex singleTagPattern = new Regex(string.Format("<{0}>", SINGLE_TAGS), RegexOptions.IgnoreCase);
-            private readonly Regex wordPattern = new Regex(string.Format("(?<=^</?){0}", TAGS), RegexOptions.IgnoreCase);
+            private static readonly Regex tagPattern = new Regex(string.Format("</?{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex openTagPattern = new Regex(string.Format("<{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex closeTagPattern = new Regex(string.Format("</{0}(=[^<>]+)?>", TAGS), RegexOptions.IgnoreCase);
+            //private static readonly Regex singleTagPattern = new Regex(string.Format("<{0}>", SINGLE_TAGS), RegexOptions.IgnoreCase);
+            private static readonly Regex wordPattern = new Regex(string.Format("(?<=^</?){0}", TAGS), RegexOptions.IgnoreCase);
 
             private class Tag {
-                internal int index;         //该标签处于纯文本中的位置
-                internal string tag;        //标签本体
-                internal string closeTag;   //开始标签对应的结束标签
-                public bool isOpen {        //是否为开始标签
+                internal int index;             //该标签处于纯文本中的位置
+                internal string tag;            //标签本体
+                internal int closeTagIdx = -1;  //开始标签对应的结束标签
+                internal string word;
+                internal bool isOpen {          //是否为开始标签
                     get {
-                        if (closeTag != null) return true;
+                        if (closeTagIdx >= 0) return true;
                         else return false;
                     }
                 }
-                public Tag(int idx, string tag) {
+                internal Tag(int idx, string tag) {
                     index = idx;
                     this.tag = tag;
+                }
+                internal Tag(int idx, string tag, string word) : this(idx, tag) {
+                    this.word = word;
                 }
             }
             private List<Tag> tagList = new List<Tag>();            //按出现顺序存储的标签列表
@@ -75,17 +79,20 @@ namespace MyGameApplication.UI {
                 for (int i = 0; i < tagMatches.Count; i++) {
                     if (tagMatches[i].Value[1] != '/') {
                         //如果是开始标签，则压入栈中
-                        tagStack.Push(wordPattern.Match(tagMatches[i].Value).Value);
+                        string word = wordPattern.Match(tagMatches[i].Value).Value;
+                        tagStack.Push(word);
                         tagIdxStack.Push(i);
+                        
                         int len = tagMatches[i].Index - st;
                         pureText.Append(content.Substring(st, len));
                         st += len + tagMatches[i].Length;
-                        tagList.Add(new Tag(pureText.Length, tagMatches[i].Value));
+                        tagList.Add(new Tag(pureText.Length, tagMatches[i].Value, word));
                     }
                     else if (tagStack.Count > 0 && wordPattern.Match(tagMatches[i].Value).Value == tagStack.Peek()) {
                         //如果是结束标签且与栈顶的开始标签匹配，则从栈中弹出标签
                         tagStack.Pop();
-                        tagList[tagIdxStack.Pop()].closeTag = tagMatches[i].Value;  //记下开始标签所对应的结束标签
+                        tagList[tagIdxStack.Pop()].closeTagIdx = i;  //记下开始标签所对应的结束标签
+                        
                         int len = tagMatches[i].Index - st;
                         pureText.Append(content.Substring(st, len));
                         st += len + tagMatches[i].Length;
@@ -132,7 +139,7 @@ namespace MyGameApplication.UI {
                 prePos = curPos + curMatchedTagLenTot;
                 StringBuilder sb = new StringBuilder(preText.ToString());
                 foreach (var tag in matchingTagStack) {
-                    sb.Append(tag.closeTag);
+                    sb.Append(tagList[tag.closeTagIdx].tag);
                 }
                 text.text = sb.ToString();
             }
@@ -146,11 +153,11 @@ namespace MyGameApplication.UI {
             m_RichTextChecker.CheckRichText(m_Content);
 
             int len = m_RichTextChecker.PureText.Length;
-            float stTime = Time.time;
+            int curPos = 1;
+            float elapsedTime = 0;
             do {
-                int curPos;
-                if (Mathf.Approximately(typeIntervalTime, 0)) curPos = len;
-                else curPos = Mathf.FloorToInt((Time.time - stTime) / typeIntervalTime) + 1;
+                curPos += Mathf.FloorToInt(elapsedTime / typeIntervalTime);
+                elapsedTime %= typeIntervalTime;
                 curPos = Mathf.Min(curPos, len);
 
                 if (m_DisplayImmediately) {
@@ -162,12 +169,18 @@ namespace MyGameApplication.UI {
 
                 if (curPos >= len) yield break;
                 yield return null;
+                elapsedTime += Time.deltaTime;
             } while (true);
         }
 
         public Coroutine Typewrite(string content) {
             if (m_Coroutine != null) m_Text.StopCoroutine(m_Coroutine);
+            m_Coroutine = null;
             typeIntervalTime = Setting.Instance.TextTypeIntervalTime;
+            if (Mathf.Approximately(typeIntervalTime, 0)) {
+                m_Text.text = content;
+                return null;
+            }
             m_Content = content;
             return m_Coroutine = m_Text.StartCoroutine(Typewrite());
         }

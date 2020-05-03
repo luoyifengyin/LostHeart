@@ -86,5 +86,17 @@ namespace MyGameApplication.ObjectPool {
             }
             return false;
         }
+
+        public void Remove(int cnt) {
+            for(int i = 0;i < cnt; i++) {
+                if (m_UnuseCache.TryTake(out object obj)) {
+                    if (obj is Object) Destroy(obj as Object);
+                }
+                else break;
+            }
+        }
+        public void Clear() {
+            Remove(Count);
+        }
     }
 }
