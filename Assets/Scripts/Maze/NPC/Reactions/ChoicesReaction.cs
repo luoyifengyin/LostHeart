@@ -9,14 +9,14 @@ using Object = UnityEngine.Object;
 namespace MyGameApplication.Maze.NPC.Reactions {
     [Serializable]
     public class Branch {
-        public enum BranchType {
-            ReactionCollection,
-            Goto,
-        }
+        //public enum BranchType {
+        //    ReactionCollection,
+        //    Goto,
+        //}
 
         public string name;
 
-        public int gotoIdx;
+        public int gotoIdx = -1;
     }
 
     public class ChoicesReaction : Reaction {

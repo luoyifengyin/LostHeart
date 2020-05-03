@@ -1,4 +1,5 @@
 ﻿using MyGameApplication.Maze.NPC.Reactions;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,8 +42,8 @@ namespace MyGameApplication.Maze.NPC {
             reactionsProperty = serializedObject.FindProperty(reactionsPropName);
             if (reactionCollection.reactions == null)
                 reactionCollection.reactions = new Reaction[0];
-            CreateSubEditors(reactionCollection.reactions);
             SetReactionTypesAndNames();
+            CreateSubEditors(reactionCollection.reactions);
         }
 
         private void OnDisable() {
@@ -95,10 +96,10 @@ namespace MyGameApplication.Maze.NPC {
                 reactionNames[i] = reactionTypes[i].Name;
             }
 
-            CheckAndCreateReactionSubEditors();
+            CheckAndCreateReactionSubEditorClasses();
         }
 
-        private void CheckAndCreateReactionSubEditors() {
+        private void CheckAndCreateReactionSubEditorClasses() {
             const string templatePath = "Assets/Scripts/Editor/Reactions/Template/ReactionSubEditor.txt";
             const string editorPath = "Assets/Scripts/Editor/Reactions/";
             Type editorType = typeof(ReactionEditor);
@@ -109,7 +110,7 @@ namespace MyGameApplication.Maze.NPC {
                 int idx = allEditorTypes.FindIndex((x) => x.Name == editorName);
                 if (idx < 0) {
                     string template = File.ReadAllText(templatePath);
-                    template = template.Replace("$SubClassName$", editorName);
+                    template = template.Replace("$SubClassName$", reactionNames[i]);
                     File.WriteAllText(editorPath + editorName + ".cs", template);
                 }
                 else allEditorTypes.RemoveAt(idx);
