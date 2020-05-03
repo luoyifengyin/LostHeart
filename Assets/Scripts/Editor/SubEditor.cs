@@ -21,7 +21,10 @@ namespace MyGameApplication {
 
             EditorGUILayout.BeginHorizontal();
             isExpanded = EditorGUILayout.Foldout(isExpanded, target.GetType().Name);
-            EditorGUILayout.LabelField(index.ToString(), GUILayout.Width(50));
+            GUIStyle fontStyle = new GUIStyle();
+            fontStyle.normal.textColor = Color.red;
+            fontStyle.fontStyle = FontStyle.Bold;
+            EditorGUILayout.LabelField(index.ToString(), fontStyle, GUILayout.Width(50));
             if (GUILayout.Button("Delete", GUILayout.Width(delBtnWidth))) {
                 OnRemoveObject?.Invoke(target);
             }

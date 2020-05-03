@@ -6,16 +6,21 @@ using UnityEngine;
 
 namespace MyGameApplication.Maze.NPC {
     public class ReactionCollection : MonoBehaviour {
-#if UNITY_EDITOR
-        public string description;
-#endif
         public Reaction[] reactions = new Reaction[0];
+
+        [SerializeField] private bool autoRunOnStart = false;
 
         public int CurRunIndex { get; set; }
 
         private void Awake() {
             for(int i = 0;i < reactions.Length; i++) {
                 reactions[i].reactionCollection = this;
+            }
+        }
+
+        private async void Start() {
+            if (autoRunOnStart) {
+                await React();
             }
         }
 

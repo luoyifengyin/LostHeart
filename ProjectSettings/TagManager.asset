@@ -10,6 +10,7 @@ TagManager:
   - Racer
   - StreetLamp
   - NPC
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Terrian
   - PersistentUI
   - MiniMap Icon
-  - Interactable
+  - 
   - 
   - 
   - 
