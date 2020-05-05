@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace MyGameApplication.UI {
     public class DialogChoices : MonoBehaviour {
-        [SerializeField] private Animator m_Animator;
+        [SerializeField] private Animator m_Animator = null;
         private readonly int OPEN_HASH = Animator.StringToHash("Open");
 
         private Button[] m_Buttons;

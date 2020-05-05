@@ -6,12 +6,19 @@ using UnityEngine;
 
 namespace MyGameApplication.Maze.NPC {
     public class ReactionCollection : MonoBehaviour {
-#if UNITY_EDITOR
-        public string description;
-#endif
         public Reaction[] reactions = new Reaction[0];
 
-        public int CurRunIndex { get; set; }
+        [SerializeField] private bool autoRunOnStart = false;
+
+        private int m_CurRunIdx = 0;
+        public int CurRunIndex {
+            get => m_CurRunIdx;
+            set {
+                m_CurRunIdx = value;
+                m_GotoFlag = true;
+            }
+        }
+        private bool m_GotoFlag = false;
 
         private void Awake() {
             for(int i = 0;i < reactions.Length; i++) {
@@ -19,10 +26,19 @@ namespace MyGameApplication.Maze.NPC {
             }
         }
 
+        private async void Start() {
+            if (autoRunOnStart) {
+                await React();
+            }
+        }
+
         public async Task React() {
-            for(CurRunIndex = 0; CurRunIndex < reactions.Length; CurRunIndex++) {
-                await reactions[CurRunIndex].React();
-                if (CurRunIndex < 0) return;
+            m_CurRunIdx = 0;
+            while (m_CurRunIdx < reactions.Length) {
+                await reactions[m_CurRunIdx].React();
+                if (m_CurRunIdx < 0) return;
+                if (!m_GotoFlag) m_CurRunIdx++;
+                else m_GotoFlag = false;
             }
         }
     }

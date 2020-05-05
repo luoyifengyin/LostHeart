@@ -1,7 +1,9 @@
 ﻿using MyGameApplication.Maze.NPC.Reactions;
+using NPOI.SS.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -11,10 +13,8 @@ namespace MyGameApplication.Maze.NPC {
     public class ReactionCollectionEditor : EditorWithSubEditors<Reaction> {
         private ReactionCollection reactionCollection;
 
-#if UNITY_EDITOR
-        private SerializedProperty nameProperty;
-        private const string namePropName = "description";
-#endif
+        private SerializedProperty autoRunProperty;
+        private const string autoRunPropName = "autoRunOnStart";
 
         private SerializedProperty reactionsProperty;
         private const string reactionsPropName = "reactions";
@@ -38,14 +38,12 @@ namespace MyGameApplication.Maze.NPC {
 
         private void OnEnable() {
             reactionCollection = (ReactionCollection)target;
-#if UNITY_EDITOR
-            nameProperty = serializedObject.FindProperty(namePropName);
-#endif
+            autoRunProperty = serializedObject.FindProperty(autoRunPropName);
             reactionsProperty = serializedObject.FindProperty(reactionsPropName);
             if (reactionCollection.reactions == null)
                 reactionCollection.reactions = new Reaction[0];
-            CreateSubEditors(reactionCollection.reactions);
             SetReactionTypesAndNames();
+            CreateSubEditors(reactionCollection.reactions);
         }
 
         private void OnDisable() {
@@ -60,9 +58,7 @@ namespace MyGameApplication.Maze.NPC {
 
         public override void OnInspectorGUI() {
             serializedObject.Update();
-#if UNITY_EDITOR
-            EditorGUILayout.PropertyField(nameProperty);
-#endif
+            EditorGUILayout.PropertyField(autoRunProperty);
 
             CreateSubEditors(reactionCollection.reactions);
             for (int i = 0; i < subEditors.Count; i++) {
@@ -85,7 +81,7 @@ namespace MyGameApplication.Maze.NPC {
             serializedObject.ApplyModifiedProperties();
         }
 
-        public void SetReactionTypesAndNames() {
+        private void SetReactionTypesAndNames() {
             Type reactionType = typeof(Reaction);
             Type[] allTypes = reactionType.Assembly.GetTypes();
             List<Type> reactionSubTypeList = new List<Type>();
@@ -98,6 +94,26 @@ namespace MyGameApplication.Maze.NPC {
             reactionNames = new string[reactionTypes.Length];
             for (int i = 0; i < reactionTypes.Length; i++) {
                 reactionNames[i] = reactionTypes[i].Name;
+            }
+
+            CheckAndCreateReactionSubEditorClasses();
+        }
+
+        private void CheckAndCreateReactionSubEditorClasses() {
+            const string templatePath = "Assets/Scripts/Editor/Reactions/Template/ReactionSubEditor.txt";
+            const string editorPath = "Assets/Scripts/Editor/Reactions/";
+            Type editorType = typeof(ReactionEditor);
+            List<Type> allEditorTypes = editorType.Assembly.GetTypes().ToList();
+            
+            for(int i = 0;i < reactionNames.Length; i++) {
+                string editorName = reactionNames[i] + "Editor";
+                int idx = allEditorTypes.FindIndex((x) => x.Name == editorName);
+                if (idx < 0) {
+                    string template = File.ReadAllText(templatePath);
+                    template = template.Replace("$SubClassName$", reactionNames[i]);
+                    File.WriteAllText(editorPath + editorName + ".cs", template);
+                }
+                else allEditorTypes.RemoveAt(idx);
             }
         }
     }

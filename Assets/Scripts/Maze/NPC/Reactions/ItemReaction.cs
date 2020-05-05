@@ -7,10 +7,10 @@ using UnityEngine;
 namespace MyGameApplication.Maze.NPC.Reactions {
     public class ItemReaction : Reaction {
         [SerializeField] private int m_ItemId;
-        [SerializeField] private int m_GainCnt;
+        [SerializeField] private int m_GainCnt = 0;
 
         public override async Task React() {
-            PlayerBag.Instance.AddProp(m_ItemId, m_GainCnt);
+            await Task.Run(() => PlayerBag.Instance.AddProp(m_ItemId, m_GainCnt));
         }
     }
 }

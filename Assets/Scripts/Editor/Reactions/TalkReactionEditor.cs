@@ -27,13 +27,14 @@ namespace MyGameApplication.Maze.NPC.Reactions {
             nameProperty.stringValue = EditorGUILayout.TextField(nameProperty.stringValue);
             EditorGUILayout.EndHorizontal();
 
-            //EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(sayPropName, GUILayout.MaxWidth(labelWidth));
             EditorGUILayout.BeginHorizontal();
-            GUILayout.Space(singleLineHeight);
-            sayProperty.stringValue = GUILayout.TextArea(sayProperty.stringValue);
-            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.LabelField(sayPropName, GUILayout.MaxWidth(labelWidth));
+            //EditorGUILayout.BeginHorizontal();
+            //GUILayout.Space(singleLineHeight);
+            sayProperty.stringValue = EditorGUILayout.TextArea(sayProperty.stringValue,
+                GUI.skin.GetStyle("TextArea"));
             //EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

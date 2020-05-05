@@ -1,0 +1,8 @@
+using UnityEditor;
+
+namespace MyGameApplication.Maze.NPC.Reactions {
+    [CustomEditor(typeof($SubClassName$))]
+    public class $SubClassName$Editor : ReactionEditor {
+
+    }
+}

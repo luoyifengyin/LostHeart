@@ -7,21 +7,20 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace MyGameApplication.Maze.NPC.Reactions {
-    public enum BranchType {
-        ReactionCollection,
-        Goto,
-    }
-
     [Serializable]
     public class Branch {
+        //public enum BranchType {
+        //    ReactionCollection,
+        //    Goto,
+        //}
 
         public string name;
 
-        public int gotoIdx;
+        public int gotoIdx = -1;
     }
 
     public class ChoicesReaction : Reaction {
-        public Branch[] choiceBranches;
+        [SerializeField] private Branch[] choiceBranches;
 
         private void OnEnable() {
             if (choiceBranches == null) {
