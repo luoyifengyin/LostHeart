@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Data.Saver {
-    public abstract class Saver : MonoBehaviour {
+    public abstract class Saver : MonoBehaviour, ISaver {
         [SerializeField] protected string uniqueIdentifier;
         protected SaveData gameData;
         [SerializeField] private bool autoSaveOnSwitchScene = true; //是否在切换场景时自动保存（仅在游戏运行期间保存，不是保存在磁盘上(存档)）
