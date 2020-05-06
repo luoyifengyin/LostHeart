@@ -1,12 +1,16 @@
-﻿using MyGameApplication.UI.ItemBar;
+﻿using MyGameApplication.Data;
+using MyGameApplication.Data.Saver;
+using MyGameApplication.Manager;
+using MyGameApplication.UI.ItemBar;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Item.Inventory {
-    public class PlayerBag : Inventory {
+    public class PlayerBag : Inventory, IPersistentSaver {
         private static PlayerBag _instance;
 
         public static PlayerBag Instance {
@@ -14,6 +18,14 @@ namespace MyGameApplication.Item.Inventory {
         }
 
         public event Action onItemChange;
+
+        private PersistentSaveData gameData;
+
+        private PlayerBag() {
+            gameData = GameManager.Instance.GameData;
+            GameManager.Instance.OnSave += Save;
+            GameManager.Instance.OnLoad += Load;
+        }
 
         public override int AddItem(int id, ItemType type = ItemType.Prop, int cnt = 1) {
             if (cnt == 0) return 0;
@@ -44,6 +56,22 @@ namespace MyGameApplication.Item.Inventory {
 
         public override void ClearItem(int id, ItemType type = ItemType.Prop) {
             base.ClearItem(id, type);
+        }
+
+        public void Save() {
+            var items = GetItemsByType(ItemType.Prop);
+            foreach(var item in items) {
+                gameData.SavePropCnt(item.Key, item.Value);
+            }
+        }
+
+        public void Load() {
+            List<int> propCntList = gameData.LoadPropCnt();
+            for(int i = 0;i < propCntList.Count; i++) {
+                if (propCntList[i] > 0) {
+                    AddProp(i, propCntList[i]);
+                }
+            }
         }
     }
 }

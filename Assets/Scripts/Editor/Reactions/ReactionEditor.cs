@@ -5,6 +5,6 @@ using UnityEditor;
 namespace MyGameApplication.Maze.NPC.Reactions {
     [CustomEditor(typeof(Reaction))]
     public abstract class ReactionEditor : SubEditor {
-        
+        public bool Visible { get; protected set; }
     }
 }

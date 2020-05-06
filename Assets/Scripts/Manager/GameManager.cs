@@ -23,6 +23,8 @@ namespace MyGameApplication.Manager {
 
         public PersistentSaveData GameData { get; private set; } = new PersistentSaveData();
 
+        public event Action OnSave;
+        public event Action OnLoad;
         public event Action OnSaveSuccess;
 
 
@@ -64,6 +66,7 @@ namespace MyGameApplication.Manager {
             foreach (var saver in savers) {
                 if (saver.enabled) saver.Save();
             }
+            OnSave?.Invoke();
             SaveFile();
         }
         //把游戏数据保存到磁盘
@@ -86,6 +89,7 @@ namespace MyGameApplication.Manager {
             string json = Decrypt(await LoadFileAsync(SaveFullPath));
             GameData = JsonUtility.FromJson<PersistentSaveData>(json);
 
+            OnLoad?.Invoke();
             string sceneName = default;
             if (GameData.Load(typeof(Scene).FullName, ref sceneName)) {
                 SceneController.LoadScene(sceneName);
