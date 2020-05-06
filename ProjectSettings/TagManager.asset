@@ -11,6 +11,20 @@ TagManager:
   - StreetLamp
   - NPC
   - Interactable
+  - Wall
+  - PLANE
+  - Coins
+  - Fireworks
+  - EXP
+  - Rocket
+  - AI
+  - AIFireworks
+  - AIFireworks1
+  - AIFireworks2
+  - AIFireworks3
+  - AIFireworks4
+  - PlayerFireworks
+  - Obstacle
   layers:
   - Default
   - TransparentFX
