@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4c4e20fb4d919834981b26bca02fc28c
   - enabled: 1
-    path: Assets/Scenes/Origin.unity
+    path: Assets/Scenes/origin.unity
     guid: 97f6bc89d475c044cb009b470edba6e3
   - enabled: 1
     path: Assets/Scenes/CarRacing.unity
@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maze.unity
     guid: 8cf884b363f085e46b68c9b9a31d4650
+  - enabled: 1
+    path: Assets/Scenes/FireworksWar/GameScene.unity
+    guid: 62fd1bd9a9acb18409e9cd396b3dea55
+  - enabled: 1
+    path: Assets/Scenes/FireworksWar/FireworkMenu.unity
+    guid: f904357007e9e894eaf750c39f618698
   m_configObjects: {}
