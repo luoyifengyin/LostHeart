@@ -3,25 +3,23 @@ using MyGameApplication.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Utility;
 
 namespace MyGameApplication.CarRacing {
     public class ReachGoal : MonoBehaviour {
-        private static RankCalculator m_RankCal;
+        public static RankCalculator rankCal;
 
-        [SerializeField] private int m_Identifier;
-
-        private void Awake() {
-            if (!m_RankCal) m_RankCal = FindObjectOfType<RankCalculator>();
-        }
+        public int identifier;
 
         private void OnTriggerStay(Collider other) {
             if (other.CompareTag("Car")) {
                 Vector3 pos = transform.InverseTransformPoint(other.transform.position);
                 if (pos.z > 0) {
-                    m_RankCal.racers[other.gameObject].segmentation = m_Identifier;
+                    rankCal.racers[other.attachedRigidbody.gameObject].segmentation = identifier;
                 }
                 else {
-                    m_RankCal.racers[other.gameObject].segmentation = m_Identifier - 1;
+                    if (identifier > 0)
+                        rankCal.racers[other.attachedRigidbody.gameObject].segmentation = identifier - 1;
                 }
             }
         }

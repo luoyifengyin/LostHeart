@@ -32,6 +32,15 @@ namespace MyGameApplication {
         //    list[idxB] = c;
         //}
 
+        public static Transform[] GetChildren(this Transform transform) {
+            var children = new Transform[transform.childCount];
+            int i = 0;
+            foreach(Transform child in transform) {
+                children[i++] = child;
+            }
+            return children;
+        }
+
         public static void BeforeSerialize<TKey, TValue>(this Dictionary<TKey, TValue> dic, List<TKey> keys, List<TValue> values) {
             keys.Clear();
             values.Clear();
@@ -46,9 +55,5 @@ namespace MyGameApplication {
             for (int i = 0; i != Math.Min(keys.Count, values.Count); i++)
                 dic.Add(keys[i], values[i]);
         }
-
-        //public static IEnumerator AsIEnumerator(this Coroutine routine) {
-        //    yield return routine;
-        //}
     }
 }

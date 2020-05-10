@@ -27,7 +27,6 @@ namespace MyGameApplication.Manager {
         public event Action OnLoad;
         public event Action OnSaveSuccess;
 
-
         private void Awake() {
             if (Instance) {
                 gameObject.SetActive(false);

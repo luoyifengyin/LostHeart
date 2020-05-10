@@ -14,14 +14,16 @@ namespace MyGameApplication.Car {
         [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
         [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
         [SerializeField] private Vector3 m_CenterOfMassOffset = new Vector3(0, 0, 0);       //质心偏移量
-        [SerializeField] private float m_TurnAngle = 30;                                    //转弯角度
+        [SerializeField] private float m_MaxTurnAngle = 30;                                    //转弯角度
         [SerializeField] private float m_ForwardTorque = 2500;                              //前进车轮扭矩
         [SerializeField] private float m_BackwardTorque = 500;                              //后退车轮扭矩
         [SerializeField] private float m_TractionStep = 10;                                 //牵引力递进量
         //[SerializeField] private float m_MaxSpeed = 100;                                    //最大速度
         [SerializeField] private float m_BrakeTorque = float.MaxValue;                      //刹车扭矩
         [SerializeField] private float m_DownForce = 100;                                   //增大抓地力
-        [SerializeField] private bool m_UseAntiRollBar = false;                             //是否使用平衡杆
+        //[SerializeField] private bool m_UseAntiRollBar = false;                             //是否使用平衡杆
+        [SerializeField] private float m_AntiRoll = 0;
+
         private Rigidbody m_Rb;
         private float m_CurTorque = 0;
 
@@ -34,9 +36,10 @@ namespace MyGameApplication.Car {
             get => m_ForwardTorque;
             set => m_ForwardTorque = value;
         }
+        public float CurrentTorque => m_CurTorque;
 
         private void Awake() {
-            if (!m_UseAntiRollBar) return;
+            if (Mathf.Approximately(m_AntiRoll, 0)) return;
             AntiRollBar[] antiRollBars = GetComponents<AntiRollBar>();
             if (antiRollBars.Length != 2) {
                 foreach (var bar in antiRollBars) {
@@ -45,7 +48,7 @@ namespace MyGameApplication.Car {
                 for (int i = 0; i < 2; i++) {
                     gameObject.AddComponent<AntiRollBar>()
                         .SetWheels(m_WheelColliders[i << 1], m_WheelColliders[i << 1 | 1])
-                        .SetAntiRoll(m_WheelColliders[i << 1].suspensionSpring.spring);
+                        .SetAntiRoll(m_AntiRoll);
                 }
             }
         }
@@ -75,7 +78,7 @@ namespace MyGameApplication.Car {
         }
 
         public void Move(float h, float v) {
-            SteerAngle = h * m_TurnAngle;
+            SteerAngle = h * m_MaxTurnAngle;
             m_WheelColliders[0].steerAngle = SteerAngle;
             m_WheelColliders[1].steerAngle = SteerAngle;
 
@@ -106,7 +109,6 @@ namespace MyGameApplication.Car {
             ApplyDrive(accel);
 
             //LimitSpeedByDrag();
-            //print("speed " + CurrentSpeed);
         }
 
         private void ApplyDrive(float torque) {

@@ -9,15 +9,17 @@ namespace MyGameApplication.CarRacing {
         private static int s_Order = 0;
 
         [SerializeField] private int m_Order = 0;
-        [SerializeField] private CarController m_Car = null;
+        [SerializeField] private GameObject m_Car = null;
         [SerializeField] private string m_PhaseName = null;
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Car") && other.transform.GetGameObjectInParentWithTag("Player")) {
                 if (s_Order < m_Order) {
                     s_Order = m_Order;
-                    m_Car.gameObject.SetActive(true);
-                    Ranking.Instance.SetPlayerName(m_PhaseName);
+                    if (m_Car) {
+                        m_Car.gameObject.SetActive(true);
+                        Ranking.Instance.SetPlayerName(m_PhaseName);
+                    }
                 }
                 else if (m_Order < 0) {
                     SceneController.LoadScene("Second");
