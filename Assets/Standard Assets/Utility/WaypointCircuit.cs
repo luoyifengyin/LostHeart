@@ -18,6 +18,7 @@ namespace UnityStandardAssets.Utility
 
         public float editorVisualisationSubsteps = 100;
         public float Length { get; private set; }
+        public float[] Distances => distances;
 
         public Transform[] Waypoints
         {
@@ -254,8 +255,6 @@ namespace UnityStandardAssets.Utility.Inspector
             {
                 for (int i = -1; i < items.arraySize; ++i)
                 {
-                    var item = items.GetArrayElementAtIndex(i);
-
                     float rowX = x;
                     for (int n = 0; n < props.Length; ++n)
                     {
@@ -273,6 +272,7 @@ namespace UnityStandardAssets.Utility.Inspector
                         {
                             if (n == 0)
                             {
+                                var item = items.GetArrayElementAtIndex(i);
                                 EditorGUI.ObjectField(rect, item.objectReferenceValue, typeof (Transform), true);
                             }
                             else

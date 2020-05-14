@@ -4982,6 +4982,49 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4553064419862240580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7134102974107052575}
+  - component: {fileID: 8641470923760482297}
+  m_Layer: 0
+  m_Name: Helpers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7134102974107052575
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4553064419862240580}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8918420942347050454}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8641470923760482297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4553064419862240580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1f5c1645f5d3c4387155cd87a8a5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5819284748760008152
 GameObject:
   m_ObjectHideFlags: 0
@@ -5981,6 +6024,7 @@ Transform:
   - {fileID: 8918420941803956618}
   - {fileID: 1010782388}
   - {fileID: 1323723767}
+  - {fileID: 7134102974107052575}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6024,13 +6068,13 @@ MonoBehaviour:
   - {fileID: 8918420941804320220}
   - {fileID: 8918420941804320218}
   m_CenterOfMassOffset: {x: 0, y: 0, z: 0}
-  m_TurnAngle: 40
+  m_MaxTurnAngle: 30
   m_ForwardTorque: 2500
   m_BackwardTorque: 500
   m_TractionStep: 10
   m_BrakeTorque: 3.4028235e+38
   m_DownForce: 100
-  m_UseAntiRollBar: 1
+  m_AntiRoll: 30000
 --- !u!114 &5661471917845015260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6109,7 +6153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueIdentifier: 
-  gameData: {fileID: 11400000, guid: 9b39f4f2fc684644caf4629d61e2d39a, type: 2}
   autoSaveOnSwitchScene: 1
   transformToSave: {fileID: 8918420942347050454}
   saveRotation: 1
@@ -6261,9 +6304,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: bf5faaa3a8e23de45bf1350be2893dd7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6fec471c20b9d148b1f87910e67bea4, type: 3}
---- !u!1 &8918420941804320200 stripped
+--- !u!1 &8918420941804320208 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100046, guid: e6fec471c20b9d148b1f87910e67bea4,
+  m_CorrespondingSourceObject: {fileID: 100054, guid: e6fec471c20b9d148b1f87910e67bea4,
     type: 3}
   m_PrefabInstance: {fileID: 8918420941804352262}
   m_PrefabAsset: {fileID: 0}
@@ -6276,12 +6319,6 @@ GameObject:
 --- !u!1 &8918420941804320220 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100058, guid: e6fec471c20b9d148b1f87910e67bea4,
-    type: 3}
-  m_PrefabInstance: {fileID: 8918420941804352262}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8918420941804320218 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100060, guid: e6fec471c20b9d148b1f87910e67bea4,
     type: 3}
   m_PrefabInstance: {fileID: 8918420941804352262}
   m_PrefabAsset: {fileID: 0}
@@ -6309,9 +6346,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8918420941804352262}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8918420941804320208 stripped
+--- !u!1 &8918420941804320200 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 100054, guid: e6fec471c20b9d148b1f87910e67bea4,
+  m_CorrespondingSourceObject: {fileID: 100046, guid: e6fec471c20b9d148b1f87910e67bea4,
+    type: 3}
+  m_PrefabInstance: {fileID: 8918420941804352262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8918420941804320218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100060, guid: e6fec471c20b9d148b1f87910e67bea4,
     type: 3}
   m_PrefabInstance: {fileID: 8918420941804352262}
   m_PrefabAsset: {fileID: 0}

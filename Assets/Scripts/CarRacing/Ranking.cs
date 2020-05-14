@@ -10,6 +10,7 @@ namespace MyGameApplication.CarRacing {
         [SerializeField] private Text m_SuffixText = null;
         [SerializeField] private Text m_TotalText = null;
         [SerializeField] private GameObject m_RankingList = null;
+        [SerializeField] private GameObject m_RankSlot = null;
         private Text[] m_Names;
         private Outline[] m_Outlines;
         [SerializeField] private string m_EnemyName = "Enemy Car";
@@ -17,7 +18,7 @@ namespace MyGameApplication.CarRacing {
         [SerializeField] private Color m_PlayerNameColor = default;
         [SerializeField] private Color m_EnemyNameColor = default;
 
-        public List<GameObject> racerRankList = new List<GameObject>();
+        [HideInInspector] public List<GameObject> racerRankList = new List<GameObject>();
         private GameObject m_PlayerCar = null;
 
         public static Ranking Instance { get; private set; }
@@ -27,17 +28,26 @@ namespace MyGameApplication.CarRacing {
         private void Awake() {
             Instance = this;
 
-            m_Names = m_RankingList.GetComponentsInChildren<Text>();
-            m_Outlines = m_RankingList.GetComponentsInChildren<Outline>();
-            m_TotalText.text = "" + m_Names.Length;
-            Rank = m_Names.Length;
-
             m_PlayerCar = GameObject.FindGameObjectWithTag("Player");
             racerRankList.Add(m_PlayerCar);
             racerRankList.AddRange(GameObject.FindGameObjectsWithTag("Racer"));
         }
 
         private void Start() {
+            for(int i = racerRankList.Count; i < m_RankingList.transform.childCount; i++) {
+                var go = m_RankingList.transform.GetChild(i).gameObject;
+                go.SetActive(false);
+                Destroy(go);
+            }
+            while(m_RankingList.transform.childCount < racerRankList.Count) {
+                Instantiate(m_RankSlot, m_RankingList.transform);
+            }
+
+            m_Names = m_RankingList.GetComponentsInChildren<Text>();
+            m_Outlines = m_RankingList.GetComponentsInChildren<Outline>();
+            m_TotalText.text = "" + m_Names.Length;
+            Rank = m_Names.Length;
+
             Refresh();
         }
 
@@ -69,7 +79,7 @@ namespace MyGameApplication.CarRacing {
 
         public void SetPlayerName(string name) {
             m_PlayerName = name;
-            m_Names[Rank].text = name;
+            m_Names[Rank - 1].text = name;
         }
     }
 }

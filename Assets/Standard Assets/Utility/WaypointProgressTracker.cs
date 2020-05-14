@@ -49,6 +49,11 @@ namespace UnityStandardAssets.Utility
         private Vector3 lastPosition; // Used to calculate current speed (since we may not have a rigidbody component)
         private float speed; // current speed of this object (calculated from delta since last frame)
 
+        [SerializeField] private Transform progressStartPos = null;
+
+        public float ProgressDistance => progressDistance;
+        public int ProgressNum => progressNum;
+
         // setup script properties
         private void Start()
         {
@@ -61,9 +66,19 @@ namespace UnityStandardAssets.Utility
             if (target == null)
             {
                 target = new GameObject(name + " Waypoint Target").transform;
+                target.transform.parent = transform;
             }
 
             Reset();
+            if (progressStartPos) {
+                for(int i = 0;i < circuit.transform.childCount; i++) {
+                    if (progressStartPos == circuit.transform.GetChild(i)) {
+                        progressNum = i;
+                        break;
+                    }
+                }
+            }
+            progressDistance = circuit.Distances[Mathf.Max(progressNum - 1, 0)];
         }
 
 
@@ -127,15 +142,30 @@ namespace UnityStandardAssets.Utility
 
                 // get our current progress along the route
                 progressPoint = circuit.GetRoutePoint(progressDistance);
-                Vector3 progressDelta = progressPoint.position - transform.position;
-                if (Vector3.Dot(progressDelta, progressPoint.direction) < 0)
-                {
+                var lastTargetPoint = circuit.Waypoints[(progressNum - 1 + circuit.Waypoints.Length) % circuit.Waypoints.Length];
+                var footPoint = FootPoint(lastTargetPoint.position, target.position, transform.position);
+                Vector3 progressDelta = footPoint - progressPoint.position;
+                if (Vector3.Dot(progressDelta, progressPoint.direction) > 0) {
                     progressDistance += progressDelta.magnitude;
                 }
+                else progressDistance -= progressDelta.magnitude;
+
                 lastPosition = transform.position;
             }
         }
 
+        private Vector3 FootPoint(Vector3 a, Vector3 b, Vector3 p) {
+            var ab = b - a;
+            var ac = p - a;
+
+            var f = Vector3.Dot(ab, ac);
+            if (f <= 0) return a;
+            var d = Vector3.Dot(ab, ab);
+            if (f >= d) return b;
+
+            var k = f / d;
+            return a + k * ab;
+        }
 
         private void OnDrawGizmos()
         {

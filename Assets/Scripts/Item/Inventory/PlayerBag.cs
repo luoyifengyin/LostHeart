@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MyGameApplication.Item.Inventory {
-    public class PlayerBag : Inventory, IPersistentSaver {
+    public class PlayerBag : Inventory {
         private static PlayerBag _instance;
 
         public static PlayerBag Instance {
@@ -25,6 +25,10 @@ namespace MyGameApplication.Item.Inventory {
             gameData = GameManager.Instance.GameData;
             GameManager.Instance.OnSave += Save;
             GameManager.Instance.OnLoad += Load;
+        }
+        ~PlayerBag() {
+            GameManager.Instance.OnSave -= Save;
+            GameManager.Instance.OnLoad -= Load;
         }
 
         public override int AddItem(int id, ItemType type = ItemType.Prop, int cnt = 1) {

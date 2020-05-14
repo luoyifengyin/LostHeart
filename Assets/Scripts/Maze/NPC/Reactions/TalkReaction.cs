@@ -13,7 +13,7 @@ namespace MyGameApplication.Maze.NPC.Reactions {
 
     [Serializable]
     public class TalkReaction : Reaction {
-        [SerializeField] private new string name;
+        [SerializeField] private new string name = null;
         [Multiline] [SerializeField] private string say;
 
         public override async Task React() {
