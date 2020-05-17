@@ -69,12 +69,13 @@ namespace MyGameApplication.Manager {
             IsLoading = false;
         }
 
-        public static void LoadScene(string sceneName) {
-            Instance.SwitchScene(sceneName);
+        public static Coroutine LoadScene(string sceneName) {
+            return Instance.SwitchScene(sceneName);
         }
 
-        public void SwitchScene(string sceneName) {
-            if (!IsLoading) StartCoroutine(Loading(sceneName));
+        public Coroutine SwitchScene(string sceneName) {
+            if (!IsLoading) return StartCoroutine(Loading(sceneName));
+            return null;
         }
 
         private IEnumerator Loading(string sceneName) {
