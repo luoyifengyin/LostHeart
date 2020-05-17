@@ -112,13 +112,16 @@ namespace MyGameApplication.Second
                 //Debug.Log("asd");
                 m_MouseLeft = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.NameToLayer("Terrain")))
+                if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    PlayerBag.Instance.AddProp(AdultLead.ITEM_BOX_ID, -1);
-                    GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
-                    goClone.transform.parent = m_BoxGameObject.gameObject.transform;
-                    goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
-                    m_Audio.GetComponent<AdultSoundEffects>().Box();
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+                    {
+                        PlayerBag.Instance.AddProp(AdultLead.ITEM_BOX_ID, -1);
+                        GameObject goClone = GameObject.Instantiate(m_BoxPrefabs);
+                        goClone.transform.parent = m_BoxGameObject.gameObject.transform;
+                        goClone.transform.position = new Vector3(hit.point.x, 3.45f, hit.point.z);
+                        m_Audio.GetComponent<AdultSoundEffects>().Box();
+                    }
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyGameApplication.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +19,12 @@ namespace MyGameApplication.Car {
             return this;
         }
 
+        public float travelL { get; private set; } = 1.0f;
+        public float travelR { get; private set; } = 1.0f;
+        public float antiRollForce { get; private set; } = 0;
+
         private void FixedUpdate() {
             WheelHit hit;
-            float travelL = 1.0f;
-            float travelR = 1.0f;
 
             bool groundedL = m_WheelL.GetGroundHit(out hit);
             if (groundedL)
@@ -29,9 +32,8 @@ namespace MyGameApplication.Car {
             bool groundedR = m_WheelR.GetGroundHit(out hit);
             if (groundedR)
                 travelR = (-m_WheelR.transform.InverseTransformPoint(hit.point).y - m_WheelR.radius) / m_WheelR.suspensionDistance;
-            //print("travel: " + travelL + " " + travelR);
 
-            float antiRollForce = (travelL - travelR) * m_AntiRoll;
+            antiRollForce = (travelL - travelR) * m_AntiRoll;
 
             if (groundedL)
                 m_WheelL.attachedRigidbody.AddForceAtPosition(m_WheelL.transform.up * -antiRollForce, m_WheelL.transform.position);

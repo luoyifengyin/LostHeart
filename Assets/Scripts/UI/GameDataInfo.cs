@@ -15,7 +15,9 @@ namespace MyGameApplication.UI {
         }
 
         public static void Display(object message) {
+#if UNITY_EDITOR
             m_Msgs.Add(message.ToString());
+#endif
         }
 
         private void LateUpdate() {

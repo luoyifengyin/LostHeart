@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Utility;
@@ -16,10 +17,20 @@ namespace MyGameApplication.CarRacing {
         private void Start() {
             StartOrder = Mathf.Max(m_Tracker.ProgressNum, 0);
             gameObject.SetActive(false);
+
+            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+            void visFunc() { visCnt++; }
+            void invisFunc() { visCnt--; }
+            foreach (var renderer in renderers) {
+                var vis = renderer.gameObject.AddComponent<VisibleTool>();
+                vis.BecameVisible += visFunc;
+                vis.BecameInvisible += invisFunc;
+            }
         }
 
-        private void Update() {
-            
+        private int visCnt = 0;
+        public bool Visible {
+            get => visCnt > 0;
         }
     }
 }

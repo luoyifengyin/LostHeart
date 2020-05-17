@@ -38,7 +38,7 @@ namespace MyGameApplication.CarRacing {
             m_PlayerCar = m_RacerList[0];
             racers.Add(m_PlayerCar, new Order(0, default));
             for (int i = 1; i < m_RacerList.Count; i++) {
-                int seg = m_RacerList[i].GetComponent<EnemyCar>().StartOrder;
+                int seg = m_RacerList[i].GetComponent<EnemyCar>().StartOrder - 1;
                 racers.Add(m_RacerList[i], new Order(seg, default));
             }
         }
