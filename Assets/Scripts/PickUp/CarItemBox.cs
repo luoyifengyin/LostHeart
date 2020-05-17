@@ -68,14 +68,5 @@ namespace MyGameApplication.PickUp {
         private void Appear() {
             gameObject.SetActive(true);
         }
-
-#if UNITY_EDITOR
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-                CarItemBar.Instance.AddProp(1);
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-                CarItemBar.Instance.AddProp(2);
-        }
-#endif
     }
 }

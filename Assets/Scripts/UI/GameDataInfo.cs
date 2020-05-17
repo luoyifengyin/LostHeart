@@ -20,9 +20,11 @@ namespace MyGameApplication.UI {
 #endif
         }
 
+#if UNITY_EDITOR
         private void LateUpdate() {
             m_Text.text = string.Join("\n", m_Msgs);
             m_Msgs.Clear();
         }
+#endif
     }
 }
