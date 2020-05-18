@@ -43,3 +43,73 @@ MonoBehaviour:
       capacity: -1
       consumable: 1
       isCarItem: 0
+    - id: 4
+      type: 0
+      name: "\u94A5\u5319"
+      description: "\u770B\u8D77\u6765\u50CF\u662F\u67D0\u6247\u95E8\u7684\u94A5\u5319"
+      capacity: 1
+      consumable: 1
+      isCarItem: 0
+    - id: 5
+      type: 0
+      name: "\u8F66\u94A5\u5319"
+      description: "\u53EF\u7528\u4E8E\u542F\u52A8\u6C7D\u8F66"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 6
+      type: 0
+      name: "\u5C0F\u8F66\u6B8B\u9AB8"
+      description: "\u53EF\u7528\u4E8E\u89E3\u9501BadEnd"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 7
+      type: 0
+      name: "\u4E66\u4FE1"
+      description: "\u53EF\u7528\u4E8E\u89E3\u9501GoodEnd"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 8
+      type: 0
+      name: "\u7834\u635F\u7684\u4E66\u4FE1"
+      description: "\u53EF\u7528\u4E8E\u89E3\u9501BadEnd"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 9
+      type: 0
+      name: "\u5168\u5BB6\u798F"
+      description: "\u53EF\u7528\u4E8E\u89E3\u9501GoodEnd"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 10
+      type: 0
+      name: "\u5B64\u72EC\u7167\u7247"
+      description: "\u53EF\u7528\u4E8E\u89E3\u9501BadEnd"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 11
+      type: 0
+      name: "\u5377\u8F74"
+      description: "\u4E0A\u9762\u5199\u7740714221"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 12
+      type: 0
+      name: "\u5377\u8F74"
+      description: "\u4E0A\u9762\u5199\u7740122417"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
+    - id: 13
+      type: 0
+      name: "\u5149\u76D8"
+      description: "\u597D\u50CF\u662F\u4E00\u5F20\u6E38\u620F\u5149\u76D8"
+      capacity: 1
+      consumable: 0
+      isCarItem: 0
