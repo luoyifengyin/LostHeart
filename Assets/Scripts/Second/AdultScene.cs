@@ -108,7 +108,7 @@ namespace MyGameApplication.Second
 
             GameObject goClone = GameObject.Instantiate(m_TrapGameObject);
             ObjectPoolManager.Instance.CreateSpecifiedObjects("Trap", goClone, 100);
-            ObjectPoolManager.Instance.DestroyPoolOnLoad("Trap");
+            ObjectPoolManager.Instance.DontPersistPool("Trap");
         }
 
         void SetTrap(int RemoveTime, float Speed, int Direction, float x, float y, float z)//陷阱方向 0->前，1->后，2->左，3->右，4->上，5->下

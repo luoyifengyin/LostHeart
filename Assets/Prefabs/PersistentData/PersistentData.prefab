@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 611191590533386254}
   - component: {fileID: 611191590533386253}
   - component: {fileID: 611191590533386252}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Dynamic UI Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3186373865215721600}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6664393479352077532}
   - component: {fileID: 6664393479352077531}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Extra Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -945,6 +945,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3186373865215721600}
     m_Modifications:
+    - target: {fileID: 8008386766614001436, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogueUI
+      objectReference: {fileID: 0}
     - target: {fileID: 3105603737209540927, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -999,11 +1004,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8008386766614001436, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogueUI
       objectReference: {fileID: 0}
     - target: {fileID: 8529244579574033197, guid: 2c452215f7f6efb4dab5874fd1bdcc66,
         type: 3}
@@ -1280,6 +1280,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3186373865215721600}
     m_Modifications:
+    - target: {fileID: 7263996870386414103, guid: 98fe58780e707674fba7ae487171fd9f,
+        type: 3}
+      propertyPath: m_Name
+      value: UI Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 7263996870386414097, guid: 98fe58780e707674fba7ae487171fd9f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1335,11 +1340,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7263996870386414103, guid: 98fe58780e707674fba7ae487171fd9f,
-        type: 3}
-      propertyPath: m_Name
-      value: UI Camera
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98fe58780e707674fba7ae487171fd9f, type: 3}
 --- !u!4 &6339619584739934305 stripped
@@ -1361,6 +1361,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4283983558642210169}
     m_Modifications:
+    - target: {fileID: 100000, guid: 81154777d5417884981849c5243f6c01, type: 3}
+      propertyPath: m_Name
+      value: FramerateCounter
+      objectReference: {fileID: 0}
     - target: {fileID: 22409990, guid: 81154777d5417884981849c5243f6c01, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1481,10 +1485,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 81154777d5417884981849c5243f6c01, type: 3}
-      propertyPath: m_Name
-      value: FramerateCounter
-      objectReference: {fileID: 0}
     - target: {fileID: 22323452, guid: 81154777d5417884981849c5243f6c01, type: 3}
       propertyPath: m_SortingOrder
       value: 10
@@ -1516,6 +1516,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3186373865215721600}
     m_Modifications:
+    - target: {fileID: 2291513299338745098, guid: c0169a6fb12751b4c82bdff500bc621f,
+        type: 3}
+      propertyPath: m_Name
+      value: Setting
+      objectReference: {fileID: 0}
+    - target: {fileID: 2291513299338745098, guid: c0169a6fb12751b4c82bdff500bc621f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2291513299338745099, guid: c0169a6fb12751b4c82bdff500bc621f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1620,16 +1630,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291513299338745098, guid: c0169a6fb12751b4c82bdff500bc621f,
-        type: 3}
-      propertyPath: m_Name
-      value: Setting
-      objectReference: {fileID: 0}
-    - target: {fileID: 2291513299338745098, guid: c0169a6fb12751b4c82bdff500bc621f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2291513299338745102, guid: c0169a6fb12751b4c82bdff500bc621f,
         type: 3}
@@ -2431,6 +2431,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4283983558642210169}
     m_Modifications:
+    - target: {fileID: 5891761406021589879, guid: 6f96d3a556fc93346aceb11c094ab93d,
+        type: 3}
+      propertyPath: m_Name
+      value: Debugger
+      objectReference: {fileID: 0}
     - target: {fileID: 4929172236351962518, guid: 6f96d3a556fc93346aceb11c094ab93d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2486,11 +2491,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5891761406021589879, guid: 6f96d3a556fc93346aceb11c094ab93d,
-        type: 3}
-      propertyPath: m_Name
-      value: Debugger
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f96d3a556fc93346aceb11c094ab93d, type: 3}
 --- !u!4 &414844654682396963 stripped
@@ -2506,6 +2506,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1364615298556453341}
     m_Modifications:
+    - target: {fileID: 1327249765456527669, guid: bba75c3be305710438eec04875f61abb,
+        type: 3}
+      propertyPath: m_Name
+      value: SceneLoader
+      objectReference: {fileID: 0}
     - target: {fileID: 906111020350769992, guid: bba75c3be305710438eec04875f61abb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2560,11 +2565,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1327249765456527669, guid: bba75c3be305710438eec04875f61abb,
-        type: 3}
-      propertyPath: m_Name
-      value: SceneLoader
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bba75c3be305710438eec04875f61abb, type: 3}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7263996870386414097}
   - component: {fileID: 7263996870386414096}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Persistent UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

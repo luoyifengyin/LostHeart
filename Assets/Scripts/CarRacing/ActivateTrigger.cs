@@ -14,11 +14,12 @@ namespace MyGameApplication.CarRacing {
 
         private void OnTriggerEnter(Collider other) {
             if (other.CompareTag("Car") && other.transform.GetGameObjectInParentWithTag("Player")) {
+                Ranking.Instance.SetPlayerName(m_PhaseName);
+
                 if (s_Order < m_Order) {
                     s_Order = m_Order;
                     if (m_Car) {
                         m_Car.gameObject.SetActive(true);
-                        Ranking.Instance.SetPlayerName(m_PhaseName);
                     }
                 }
                 else if (m_Order < 0) {

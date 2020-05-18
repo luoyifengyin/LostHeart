@@ -77,6 +77,11 @@ namespace MyGameApplication.CarRacing {
             else m_SuffixText.text = SUFFIXES[0];
         }
 
+        public GameObject GetRacer(int rank) {
+            rank = Mathf.Clamp(rank, 1, racerRankList.Count);
+            return racerRankList[rank - 1];
+        }
+
         public void SetPlayerName(string name) {
             m_PlayerName = name;
             m_Names[Rank - 1].text = name;

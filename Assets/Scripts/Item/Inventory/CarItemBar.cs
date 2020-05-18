@@ -41,15 +41,39 @@ namespace MyGameApplication.Item.Inventory {
             //print("use item");
             int id = m_ItemQueue.Dequeue();
             ItemManager.Instance.UsePropEffect(id);
-            for (int i = 0; i < m_ItemCapacity - 1; i++) {
-                m_ItemImgs[i].sprite = m_ItemImgs[i + 1].sprite;
-            }
-            m_ItemImgs[m_ItemCapacity - 1].sprite = m_Mask;
+
+            RefreshUI();
         }
 
         private void Update() {
             bool use = CrossPlatformInputManager.GetButtonDown("Fire1");
             if (use && m_ItemQueue.Count > 0) UseItem();
+
+            bool change = CrossPlatformInputManager.GetButtonDown("Fire2");
+            if (change && m_ItemQueue.Count >= 2) {
+                int id = m_ItemQueue.Dequeue();
+                m_ItemQueue.Enqueue(id);
+                RefreshUI();
+            }
         }
+
+        private void RefreshUI() {
+            int i = 0;
+            foreach(var id in m_ItemQueue) {
+                m_ItemImgs[i++].sprite = ItemManager.Instance.GetItemSprite(id, ItemType.Prop);
+            }
+            while(i < m_ItemCapacity) {
+                m_ItemImgs[i++].sprite = m_Mask;
+            }
+        }
+
+#if UNITY_EDITOR
+        private void LateUpdate() {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                CarItemBar.Instance.AddProp(1);
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                CarItemBar.Instance.AddProp(2);
+        }
+#endif
     }
 }

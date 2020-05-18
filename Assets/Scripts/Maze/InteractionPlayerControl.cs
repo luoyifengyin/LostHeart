@@ -7,17 +7,16 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.Maze {
     public class InteractionPlayerControl : MonoBehaviour {
-        [SerializeField] private float m_InteractableMaxDistance = 2f;
+        private float m_InteractableMaxDistance = 2f;
         
-        public bool IsInteracting { get; private set; }
+        public Interactable Interacting { get; private set; }
 
-        public Interactable interactionTest;
-        private async void Start() {
-            if (interactionTest) await interactionTest.Interact();
+        private void Awake() {
+            m_InteractableMaxDistance = GetComponent<SphereCollider>().radius;
         }
 
         private void OnTriggerStay(Collider other) {
-            if (IsInteracting) return;
+            if (Interacting) return;
             if (other.GetComponentInChildren<Interactable>()) {
 
                 Vector3 pos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
@@ -35,7 +34,7 @@ namespace MyGameApplication.Maze {
         }
 
         public void OnInteractionClick() {
-            if (IsInteracting) return;
+            if (Interacting) return;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, m_InteractableMaxDistance)) {
                 Interactable interactable = hitInfo.collider.GetComponentInChildren<Interactable>();
@@ -45,9 +44,9 @@ namespace MyGameApplication.Maze {
         }
 
         private async void Interact(Interactable interactable) {
-            IsInteracting = true;
+            Interacting = interactable;
             await interactable.Interact();
-            IsInteracting = false;
+            Interacting = null;
         }
     }
 }

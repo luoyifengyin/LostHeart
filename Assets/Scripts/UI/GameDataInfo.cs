@@ -15,12 +15,16 @@ namespace MyGameApplication.UI {
         }
 
         public static void Display(object message) {
+#if UNITY_EDITOR
             m_Msgs.Add(message.ToString());
+#endif
         }
 
+#if UNITY_EDITOR
         private void LateUpdate() {
             m_Text.text = string.Join("\n", m_Msgs);
             m_Msgs.Clear();
         }
+#endif
     }
 }

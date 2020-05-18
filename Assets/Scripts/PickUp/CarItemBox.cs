@@ -17,7 +17,10 @@ namespace MyGameApplication.PickUp {
                 this.weight = weight;
             }
         }
-        private static InfoBean[] m_CarRacingItemList = { new InfoBean(1, 10) };
+        private static InfoBean[] m_CarRacingItemList = {
+            new InfoBean(1, 10),
+            new InfoBean(2, 10),
+        };
         private static int[] m_WeightPreSum = null;
 
         [SerializeField] private float m_RefreshTime = 5;

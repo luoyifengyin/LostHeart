@@ -18,7 +18,7 @@ namespace MyGameApplication.Manager {
 
         [SerializeField] private string m_StartSceneName = "Origin";
 
-        private static string s_SaveFileName = "save.archive";
+        private static string s_SaveFilePath = "save.archive";
         public static string SaveFullPath { get; private set; }
 
         public PersistentSaveData GameData { get; private set; } = new PersistentSaveData();
@@ -34,7 +34,7 @@ namespace MyGameApplication.Manager {
                 return;
             }
             Instance = this;
-            SaveFullPath = Application.persistentDataPath + "/" + s_SaveFileName;
+            SaveFullPath = Application.persistentDataPath + "/" + s_SaveFilePath;
 
             DontDestroyOnLoad(transform.root.gameObject);
         }
@@ -96,6 +96,7 @@ namespace MyGameApplication.Manager {
         }
 
         public async Task CreateFileAsync(string filePath, string text) {
+            Directory.CreateDirectory(Directory.GetParent(filePath).FullName);
             FileStream fs = new FileStream(filePath, FileMode.Create);
             StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
             await sw.WriteAsync(text);

@@ -52,8 +52,10 @@ namespace MyGameApplication.ObjectPool {
             GetPool(key).Put(obj);
         }
 
-        public void DestroyPoolOnLoad(string key) {
-            SceneManager.MoveGameObjectToScene(GetPool(key).gameObject, SceneManager.GetActiveScene());
+        public void DontPersistPool(string key) {
+            var pool = GetPool(key).gameObject;
+            pool.transform.parent = null;
+            SceneManager.MoveGameObjectToScene(pool, SceneManager.GetActiveScene());
         }
     }
 }
