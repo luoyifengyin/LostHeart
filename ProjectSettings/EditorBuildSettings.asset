@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FireworksWar/FireworkMenu.unity
     guid: f904357007e9e894eaf750c39f618698
+  - enabled: 1
+    path: Assets/Scenes/BetMan.unity
+    guid: 1b0ccf4cfd1e6304a970b0632e93daa6
   m_configObjects: {}
