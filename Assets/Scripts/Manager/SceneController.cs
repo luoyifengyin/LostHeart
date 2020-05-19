@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyGameApplication.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace MyGameApplication.Manager {
             audioMixer.GetFloat("MasterVolume", out originVolume);
             waitWhileFadingOut = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                if (info.IsName("FadeOut")) {
+                if (info.shortNameHash == AnimatorHash.FADE_OUT) {
                     ChangeVolume(1 - info.normalizedTime);
                     return info.normalizedTime > 1.0f;
                 }
@@ -42,7 +43,7 @@ namespace MyGameApplication.Manager {
             });
             waitWhileFadingIn = new WaitUntil(() => {
                 AnimatorStateInfo info = transition.GetCurrentAnimatorStateInfo(0);
-                if (info.IsName("FadeIn")) {
+                if (info.shortNameHash == AnimatorHash.FADE_IN) {
                     ChangeVolume(info.normalizedTime);
                     return info.normalizedTime > 1.0f;
                 }
@@ -87,7 +88,7 @@ namespace MyGameApplication.Manager {
 
         private IEnumerator UnloadCurrentScene() {
             //yield return fader.Fade(1f, fadeDuration);
-            transition.SetTrigger("Start");
+            transition.SetTrigger(AnimatorHash.START);
             yield return waitWhileFadingOut;
 
             onBeforeSceneUnload?.Invoke();
@@ -105,7 +106,7 @@ namespace MyGameApplication.Manager {
             onAfterSceneLoad?.Invoke();
             //yield return fader.Fade(0f, fadeDuration);
             //yield return new WaitForSeconds(1);
-            transition.SetTrigger("End");
+            transition.SetTrigger(AnimatorHash.END);
             yield return waitWhileFadingIn;
         }
     }

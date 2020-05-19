@@ -1056,11 +1056,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3477490587385491868, guid: 69dad319fd74abc439905b408b79137e,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 6339619584739934304}
     - target: {fileID: 7521117657960729567, guid: 69dad319fd74abc439905b408b79137e,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -1071,6 +1066,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3477490587385491868, guid: 69dad319fd74abc439905b408b79137e,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 6339619584739934304}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69dad319fd74abc439905b408b79137e, type: 3}
 --- !u!224 &6420883462268064373 stripped

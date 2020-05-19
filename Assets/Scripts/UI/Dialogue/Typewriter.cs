@@ -167,7 +167,10 @@ namespace MyGameApplication.UI {
 
                 m_RichTextChecker.ShowText(m_Text, curPos);
 
-                if (curPos >= len) yield break;
+                if (curPos >= len) {
+                    m_Coroutine = null;
+                    yield break;
+                }
                 yield return null;
                 elapsedTime += Time.deltaTime;
             } while (true);
@@ -177,13 +180,15 @@ namespace MyGameApplication.UI {
             if (m_Coroutine != null) m_Text.StopCoroutine(m_Coroutine);
             m_Coroutine = null;
             typeIntervalTime = Setting.Instance.TextTypeIntervalTime;
+            m_Content = content;
             if (Mathf.Approximately(typeIntervalTime, 0)) {
                 m_Text.text = content;
                 return null;
             }
-            m_Content = content;
             return m_Coroutine = m_Text.StartCoroutine(Typewrite());
         }
+
+        public bool IsTypewriting => m_Coroutine != null;
 
         public void DisplayImmediately() {
             m_DisplayImmediately = true;

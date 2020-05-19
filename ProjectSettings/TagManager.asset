@@ -61,6 +61,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Message
+    uniqueID: 4211534685
+    locked: 0
   - name: Menu
     uniqueID: 3119347101
     locked: 0
