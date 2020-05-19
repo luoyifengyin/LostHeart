@@ -12,8 +12,13 @@ namespace MyGameApplication.Maze.NPC.Reactions {
         [SerializeField] private int cancelGoto = -1;
 
         public override async Task React() {
-            await NumberInputPanel.Instance.Show();
-                
+            string input = await NumberInputPanel.Instance.Show();
+            if (input != null) {
+                if (input == correctAnswer)
+                    reactionCollection.CurRunIndex = correctGoto;
+                else reactionCollection.CurRunIndex = wrongGoto;
+            }
+            else reactionCollection.CurRunIndex = cancelGoto;
         }
     }
 }

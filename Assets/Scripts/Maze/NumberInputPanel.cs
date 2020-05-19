@@ -11,15 +11,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 namespace MyGameApplication.Maze {
     public class NumberInputPanel : MonoBehaviour {
-        private static NumberInputPanel _instance;
-        public static NumberInputPanel Instance {
-            get {
-                if (!_instance) _instance = FindObjectOfType<NumberInputPanel>();
-                if (!_instance) _instance = Instantiate(Resources.Load<NumberInputPanel>("PasswordInput"));
-                return _instance;
-            }
-            private set => _instance = value;
-        }
+        public static NumberInputPanel Instance { get; private set; }
         private Animator m_Animator;
 
         [SerializeField] private Text m_Text;
