@@ -139,8 +139,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingLayerID: -83432611
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1815187297289499877
 MonoBehaviour:
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 7145479082645087894}
   - component: {fileID: 392603422937033043}
   m_Layer: 9
-  m_Name: AlertDialog
+  m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -13,8 +13,8 @@ namespace MyGameApplication.Maze.NPC.Reactions {
         private const string sayPropName = "say";
 
         private const float labelWidth = 47f;
-        private readonly float singleLineHeight = EditorGUIUtility.singleLineHeight;
-        private const float textLines = 3f;
+        //private readonly float singleLineHeight = EditorGUIUtility.singleLineHeight;
+        //private const float textLines = 3f;
 
         private void OnEnable() {
             nameProperty = serializedObject.FindProperty(namePropName);

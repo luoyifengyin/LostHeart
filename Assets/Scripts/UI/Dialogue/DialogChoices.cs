@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyGameApplication.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,7 +8,6 @@ using UnityEngine.UI;
 namespace MyGameApplication.UI {
     public class DialogChoices : MonoBehaviour {
         [SerializeField] private Animator m_Animator = null;
-        private readonly int OPEN_HASH = Animator.StringToHash("Open");
 
         private Button[] m_Buttons;
         private Text[] m_Texts;
@@ -21,16 +21,16 @@ namespace MyGameApplication.UI {
         public async Task<int> DisplayChoices(params string[] choices) {
             Animator dialogBoxAnimator = Dialogue.DialogBox.GetComponent<Animator>();
             if (dialogBoxAnimator.IsInTransition(0)) {
-                dialogBoxAnimator.SetBool(OPEN_HASH, true);
+                dialogBoxAnimator.SetBool(AnimatorHash.OPEN, true);
             }
             RefreshUI(choices);
-            m_Animator.SetBool(OPEN_HASH, true);
+            m_Animator.SetBool(AnimatorHash.OPEN, true);
 
             m_Result = -1;
             await new WaitUntil(() => m_Result >= 0);
-            m_Animator.SetBool(OPEN_HASH, false);
-            if (dialogBoxAnimator.GetCurrentAnimatorStateInfo(0).IsName("Open")) {
-                dialogBoxAnimator.SetBool(OPEN_HASH, false);
+            m_Animator.SetBool(AnimatorHash.OPEN, false);
+            if (dialogBoxAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash == AnimatorHash.OPEN) {
+                dialogBoxAnimator.SetBool(AnimatorHash.OPEN, false);
             }
             return m_Result;
         }

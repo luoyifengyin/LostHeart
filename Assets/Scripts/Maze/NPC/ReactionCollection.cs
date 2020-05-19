@@ -34,6 +34,7 @@ namespace MyGameApplication.Maze.NPC {
 
         public async Task React() {
             m_CurRunIdx = 0;
+            m_GotoFlag = false;
             while (m_CurRunIdx < reactions.Length) {
                 await reactions[m_CurRunIdx].React();
                 if (m_CurRunIdx < 0) return;
