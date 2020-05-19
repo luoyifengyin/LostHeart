@@ -58,16 +58,16 @@ public class ShowTimeController : MonoBehaviour {
 
 	}
 
-	void OnGUI () {
+    //void OnGUI () {
 
-		//SceneChange --------------------------------------------
+    //    //SceneChange --------------------------------------------
 		
-		if (GUI.Button (new Rect (Screen.width -150, Screen.height-100, 150,100), NextSceneButtonLabel))
-		{
-			Application.LoadLevel( NextSceneName );
-		}
+    //    if (GUI.Button (new Rect (Screen.width -150, Screen.height-100, 150,100), NextSceneButtonLabel))
+    //    {
+    //        Application.LoadLevel( NextSceneName );
+    //    }
 
-	}
+    //}
 
 	void ChangeAnimQueries () {
 
@@ -87,11 +87,11 @@ public class ShowTimeController : MonoBehaviour {
 
 	}
 
-	public void GotoFanPage () {
+    //public void GotoFanPage () {
 
-		Application.OpenURL ("http://query-chan.com/queryparty/");
+    //    Application.OpenURL ("http://query-chan.com/queryparty/");
 
-	}
+    //}
 
 	public void ChangePanelPref (int panelNumber) {
 
