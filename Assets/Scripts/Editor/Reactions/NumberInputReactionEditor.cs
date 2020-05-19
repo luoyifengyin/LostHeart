@@ -13,8 +13,8 @@ namespace MyGameApplication.Maze.NPC.Reactions {
         private SerializedProperty wrongGotoProperty;
         private const string wrongGotoPropName = "wrongGoto";
 
-        private SerializedProperty cancelGotoProperty;
-        private const string cancelGotoPropName = "cancelGoto";
+        //private SerializedProperty cancelGotoProperty;
+        //private const string cancelGotoPropName = "cancelGoto";
 
         private int labelWidth = 82;
 
@@ -22,7 +22,7 @@ namespace MyGameApplication.Maze.NPC.Reactions {
             correctAnswerProperty = serializedObject.FindProperty(correctAnswerPropName);
             correctGotoProperty = serializedObject.FindProperty(correctGotoPropName);
             wrongGotoProperty = serializedObject.FindProperty(wrongGotoPropName);
-            cancelGotoProperty = serializedObject.FindProperty(cancelGotoPropName);
+            //cancelGotoProperty = serializedObject.FindProperty(cancelGotoPropName);
         }
 
         protected override void DrawInspector() {
@@ -35,7 +35,7 @@ namespace MyGameApplication.Maze.NPC.Reactions {
             wrongGotoProperty.intValue = EditorGUILayout.IntField(wrongGotoProperty.intValue);
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.PropertyField(cancelGotoProperty);
+            //EditorGUILayout.PropertyField(cancelGotoProperty);
         }
     }
 }

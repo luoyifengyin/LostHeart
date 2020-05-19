@@ -19,7 +19,7 @@ namespace MyGameApplication.Maze {
         private StringBuilder m_StringBuilder = new StringBuilder();
 
         [SerializeField] private Button m_ComfirmBtn;
-        [SerializeField] private Button m_CancelBtn;
+        [SerializeField] private Button m_ClearBtn;
         [SerializeField] private Button m_DelBtn;
         private sbyte m_Finish = 0;
 
@@ -41,7 +41,10 @@ namespace MyGameApplication.Maze {
                 m_Text.text = m_StringBuilder.ToString();
             });
             m_ComfirmBtn.onClick.AddListener(() => m_Finish = 1);
-            m_CancelBtn.onClick.AddListener(() => m_Finish = -1);
+            m_ClearBtn.onClick.AddListener(() => {
+                m_StringBuilder.Clear();
+                m_Text.text = m_StringBuilder.ToString();
+            });
         }
 
         public async Task<string> Show() {

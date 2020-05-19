@@ -19,7 +19,7 @@ namespace MyGameApplication.Maze.NPC.Reactions {
         public override async Task React() {
             string content;
             if (!string.IsNullOrEmpty(name))
-                content = name + "\n" + say;
+                content = name + ":\n" + say;
             else content = say;
             await Dialogue.DialogBox.ShowDialogue(content);
         }

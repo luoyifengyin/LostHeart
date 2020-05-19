@@ -15,6 +15,9 @@ namespace MyGameApplication.Maze.NPC {
 
         private void Start() {
             switch (appearTime) {
+                case AppearTime.None:
+                    gameObject.SetActive(false);
+                    break;
                 case AppearTime.Daytime:
                     DayAndNight.Instance.OnDaySwitch += Appear;
                     DayAndNight.Instance.OnNightSwitch += Disappear;

@@ -29,7 +29,7 @@ namespace MyGameApplication.Maze.NPC.Reactions {
         public string key;
 
         public ValueType valueType;
-        public bool value;
+        public bool value = false;
         public string valueKey;
 
         //public bool boolValue;
@@ -46,25 +46,24 @@ namespace MyGameApplication.Maze.NPC.Reactions {
 
         private void OnEnable() {
             if (string.IsNullOrEmpty(key)) compare = () => true;
-            else if (valueType == ValueType.Variable) {
-                compare = () => {
-                    //SaveData gameData = GameManager.Instance.GameData;
-                    bool val = default;
-                    if (gameData.Load(key, ref value) && gameData.Load(valueKey, ref val)) {
-                        if (value == val) return true;
-                    }
-                    return false;
-                };
-            }
             else {
-                compare = () => {
-                    //SaveData gameData = GameManager.Instance.GameData;
-                    bool val = default;
-                    if (gameData.Load(key, ref val)) {
+                if (valueType == ValueType.Variable) {
+                    compare = () => {
+                        bool val = false;
+                        gameData.Load(key, ref val);
+                        gameData.Load(valueKey, ref value);
+                        if (value == val) return true;
+                        else return false;
+                    };
+                }
+                else {
+                    compare = () => {
+                        bool val = false;
+                        gameData.Load(key, ref val);
                         if (val == value) return true;
-                    }
-                    return false;
-                };
+                        else return false;
+                    };
+                }
             }
         }
 
