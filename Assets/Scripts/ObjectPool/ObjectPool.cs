@@ -16,7 +16,8 @@ namespace MyGameApplication.ObjectPool {
                 object obj = value();
                 if (obj is GameObject) {
                     GameObject go = obj as GameObject;
-                    if (!go.transform.parent) go.transform.parent = transform;
+                    //if (!go.transform.parent)
+                        go.transform.parent = transform;
                 }
                 return obj;
             };
@@ -78,7 +79,8 @@ namespace MyGameApplication.ObjectPool {
                 m_UnuseCache.Add(obj);
                 if (obj is GameObject) {
                     var go = obj as GameObject;
-                    if (!go.transform.parent) go.transform.parent = transform;
+                    //if (!go.transform.parent)
+                        go.transform.parent = transform;
                     go.SetActive(false);
                 }
                 return true;
