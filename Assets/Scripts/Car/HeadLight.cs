@@ -12,6 +12,7 @@ namespace MyGameApplication.Car {
 
         private void Awake() {
             m_Renderer = GetComponent<Renderer>();
+            m_Renderer.enabled = false;
             m_Cnt = m_Light.transform.childCount;
             m_HeadLights = new GameObject[m_Cnt];
             for (int i = 0; i < m_Cnt; i++) {

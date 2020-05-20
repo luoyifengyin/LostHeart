@@ -111,6 +111,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -135,7 +137,6 @@ GameObject:
   - component: {fileID: 9033596845964999570}
   - component: {fileID: 9033596845964999597}
   - component: {fileID: 5213630480201017389}
-  - component: {fileID: 9033596845964999569}
   m_Layer: 0
   m_Name: CrossFade
   m_TagString: Untagged
@@ -254,15 +255,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &9033596845964999569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9033596845964999599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e85898b523b8ce343902a66edad34069, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

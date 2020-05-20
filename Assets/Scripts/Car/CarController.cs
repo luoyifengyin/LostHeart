@@ -51,10 +51,6 @@ namespace MyGameApplication.Car {
                         .SetAntiRoll(m_AntiRoll);
                 }
             }
-        }
-
-        // Start is called before the first frame update
-        void Start() {
             m_Rb = GetComponent<Rigidbody>();
             m_WheelColliders[0].attachedRigidbody.centerOfMass += m_CenterOfMassOffset;
         }

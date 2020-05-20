@@ -27,6 +27,8 @@ namespace MyGameApplication.Car {
         }
 
         private void LateUpdate() {
+            if (!gameObject.GetGameObjectInParentWithTag("Player")) return;
+
             GameDataInfo.Display(string.Format(SPEED_MSG, m_CarController.CurrentSpeed));
             GameDataInfo.Display(string.Format(TORQUE_MSG, m_CarController.CurrentTorque));
 

@@ -31,9 +31,7 @@ namespace MyGameApplication.Maze.NPC {
                 Debug.LogWarning(string.Format("The gameObject named \"{0}\" " +
                     "has no Reaction MonoBehaviour attached to.", gameObject.name));
             m_Follow = GetComponent<FollowTarget>();
-        }
 
-        private void Start() {
             if (!m_Follow || !m_Follow.enabled) return;
             if (!m_Follow.target || m_Follow.target == transform.parent) {
                 m_Follow.enabled = false;
