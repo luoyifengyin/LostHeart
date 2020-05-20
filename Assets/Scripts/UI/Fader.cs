@@ -18,7 +18,6 @@ namespace MyGameApplication.UI {
         }
 
         public Coroutine Fade(float finalAlpha, float duration) {
-            print("fade");
             if (IsFading) StopCoroutine(coroutine);
             float speed = Mathf.Abs(Alpha - finalAlpha) / duration;
             return coroutine = StartCoroutine(Fading(finalAlpha, speed));

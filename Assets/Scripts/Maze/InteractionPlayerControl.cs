@@ -16,12 +16,10 @@ namespace MyGameApplication.Maze {
         }
 
         private void OnTriggerStay(Collider other) {
-            if (Interacting) {
-            print(Interacting.gameObject.name);
-                return;
-            }
+            if (Interacting) return;
+
             if (other.GetComponentInChildren<Interactable>()) {
-                print(other.gameObject.name);
+
                 Vector3 pos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
                 Ray ray = Camera.main.ScreenPointToRay(pos);
                 if (Physics.Raycast(ray, out RaycastHit hitInfo, m_InteractableMaxDistance)) {
@@ -38,6 +36,7 @@ namespace MyGameApplication.Maze {
 
         public void OnInteractionClick() {
             if (Interacting) return;
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, m_InteractableMaxDistance)) {
                 Interactable interactable = hitInfo.collider.GetComponentInChildren<Interactable>();

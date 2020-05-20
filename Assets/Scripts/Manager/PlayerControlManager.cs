@@ -16,16 +16,22 @@ namespace MyGameApplication.Manager {
         private Dictionary<int, PlayerExtraInfo> m_Players = new Dictionary<int, PlayerExtraInfo>();
         //public event Action OnPlayerControlSwitch;
 
+        public int PlayerCnt => m_PlayerList.Count;
+        public GameObject GetPlayer(int index) {
+            return m_PlayerList[index];
+        }
+
         private class PlayerExtraInfo {
-            public GameObject player;
+            public int playerIdx;
             public Camera camera;
             public event Action onControlEnable;
             public event Action onControlDisable;
-            public PlayerExtraInfo(GameObject player, Camera camera) {
-                this.player = player;
+            public PlayerExtraInfo(int idx, Camera camera) {
+                playerIdx = idx;
                 this.camera = camera;
             }
             public void OnEnable() {
+                var player = Instance.GetPlayer(playerIdx);
                 player.tag = "Player";
                 if (camera) {
                     camera.gameObject.tag = "MainCamera";
@@ -36,6 +42,7 @@ namespace MyGameApplication.Manager {
                 onControlEnable?.Invoke();
             }
             public void OnDisable() {
+                var player = Instance.GetPlayer(playerIdx);
                 player.tag = "Untagged";
                 if (camera) {
                     camera.gameObject.tag = "Untagged";
@@ -51,7 +58,7 @@ namespace MyGameApplication.Manager {
             Instance = this;
 
             for(int i = 0;i < m_PlayerList.Count; i++) {
-                m_Players.Add(m_PlayerList[i].GetInstanceID(), new PlayerExtraInfo(m_PlayerList[i], m_CameraList[i]));
+                m_Players.Add(m_PlayerList[i].GetInstanceID(), new PlayerExtraInfo(i, m_CameraList[i]));
             }
             gameObject.AddComponent<PlayerControlSaver>();
             CurPlayer = m_PlayerList[0];
@@ -73,8 +80,8 @@ namespace MyGameApplication.Manager {
 
             CurPlayer = player;
         }
-        public void SwitchPlayerControl(int instanceId) {
-            var player = m_Players[instanceId].player;
+        public void SwitchPlayerControl(int index) {
+            var player = m_PlayerList[index];
             SwitchPlayerControl(player);
         }
 
@@ -91,10 +98,7 @@ namespace MyGameApplication.Manager {
             info.onControlDisable -= OnDisable;
         }
 
-        public int PlayerCnt => m_PlayerList.Count;
-        public GameObject GetPlayer(int index) {
-            return m_PlayerList[index];
-        }
+        public int CurPlayerIdx => m_Players[CurPlayer.GetInstanceID()].playerIdx;
     }
 
     class PlayerControlSaver : Saver {
@@ -103,13 +107,13 @@ namespace MyGameApplication.Manager {
         }
 
         public override void Save() {
-            gameData.Save(key, PlayerControlManager.Instance.CurPlayer.GetInstanceID());
+            gameData.Save(key, PlayerControlManager.Instance.CurPlayerIdx);
         }
 
         public override void Load() {
-            int instanceId = default;
-            if (gameData.Load(key, ref instanceId)) {
-                PlayerControlManager.Instance.SwitchPlayerControl(instanceId);
+            int playerIdx = default;
+            if (gameData.Load(key, ref playerIdx)) {
+                PlayerControlManager.Instance.SwitchPlayerControl(playerIdx);
             }
         }
     }

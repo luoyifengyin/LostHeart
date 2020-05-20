@@ -22,7 +22,6 @@ namespace MyGameApplication.Maze.NPC.Reactions {
             if (!s_CurIsVehicle) {
                 if (isVehicle) {
                     s_Offset = playerToSwitch.transform.InverseTransformPoint(prePlayer.transform.position);
-                    s_CurIsVehicle = isVehicle;
                 }
             }
             else {
@@ -31,6 +30,8 @@ namespace MyGameApplication.Maze.NPC.Reactions {
                     s_Offset = default;
                 }
             }
+            s_CurIsVehicle = isVehicle;
+
             PlayerControlManager.Instance.SwitchPlayerControl(playerToSwitch);
 
             await Fader.Instance.Fade(0, 1);
