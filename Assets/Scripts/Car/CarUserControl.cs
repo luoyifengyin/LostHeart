@@ -12,12 +12,16 @@ namespace MyGameApplication.Car {
         private CarAudio m_CarAudio;
         private Rigidbody m_Rigidbody;
 
+        private PlayerControlManager m_PlayerControlManager;
+
         private void Awake() {
             m_Car = GetComponent<CarController>();
             m_CarAudio = GetComponent<CarAudio>();
             m_Rigidbody = GetComponent<Rigidbody>();
 
-            PlayerControlManager.Instance.AddSwitchCallback(gameObject, OnControlEnable, OnControlDisable);
+            m_PlayerControlManager = PlayerControlManager.Instance;
+            if (m_PlayerControlManager)
+                m_PlayerControlManager.AddSwitchCallback(gameObject, OnControlEnable, OnControlDisable);
         }
 
         private void FixedUpdate() {
@@ -47,7 +51,8 @@ namespace MyGameApplication.Car {
         }
 
         private void OnDestroy() {
-            PlayerControlManager.Instance.RemoveSwitchCallback(gameObject, OnControlEnable, OnControlDisable);
+            if (m_PlayerControlManager)
+                m_PlayerControlManager.RemoveSwitchCallback(gameObject, OnControlEnable, OnControlDisable);
         }
     }
 }
