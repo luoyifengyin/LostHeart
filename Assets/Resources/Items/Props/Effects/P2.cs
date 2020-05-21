@@ -9,6 +9,7 @@ namespace MyGameApplication.Item.Effect {
         private float explosionPower = 1.5e6f;
         private float explosionRadius = 5f;
         private Vector3 rotateForce = new Vector3(0, 1e5f, 1e5f);
+        private AudioSource audio = null;
 
         public override bool Condition() {
             return SceneManager.GetActiveScene().name == "CarRacing";
@@ -22,6 +23,10 @@ namespace MyGameApplication.Item.Effect {
             if (enemyCar && enemyCar.Visible) {
                 var helper = target.GetComponent<P2_EffectHelper>();
                 if (!helper) target.AddComponent<P2_EffectHelper>();
+                if (!audio) {
+                    var go = Object.Instantiate(Resources.Load<GameObject>("Items/Props/Prefabs/P2"));
+                    audio = go.GetComponent<AudioSource>();
+                }
                 Explode(target);
             }
         }
@@ -29,9 +34,13 @@ namespace MyGameApplication.Item.Effect {
         private void Explode(GameObject target) {
             Rigidbody rb = target.GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-            Vector3 explosionLocalPos = new Vector3(0, -0.5f, -2f);
-            rb.AddExplosionForce(explosionPower, target.transform.TransformPoint(explosionLocalPos), explosionRadius, 1f);
+            Vector3 explosionPos = new Vector3(0, -0.5f, -2f);
+            explosionPos = target.transform.TransformPoint(explosionPos);
+            rb.AddExplosionForce(explosionPower, explosionPos, explosionRadius, 1f);
             rb.AddTorque(rotateForce);
+
+            audio.gameObject.transform.position = explosionPos;
+            audio.Play();
         }
     }
 
