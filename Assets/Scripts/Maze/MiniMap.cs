@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
-    public Transform target;
+    //public Transform target;
+    private GameObject T;
 
      private void LateUpdate()
         {
-            transform.position = new Vector3(target.position.x, transform.position.y, target.position.z);
-            transform.rotation = Quaternion.Euler(new Vector3(90, target.eulerAngles.y, 0)); 
+            T = GameObject.FindGameObjectWithTag("Player");
+            transform.position = new Vector3(T.transform.position.x, transform.position.y, T.transform.position.z);
+            transform.rotation = Quaternion.Euler(new Vector3(90, T.transform.eulerAngles.y, 0)); 
         }
 }
