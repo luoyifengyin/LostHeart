@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 5313626057162642298}
   - component: {fileID: 5313626057162642293}
   - component: {fileID: 5313626057162642292}
+  - component: {fileID: 2244347607665139083}
   m_Layer: 5
   m_Name: AcademicAdvisor
   m_TagString: Untagged
@@ -178,6 +179,21 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u6307\u5BFC\u8001\u5E08\uFF1A\n   \u90B9\u6606"
+--- !u!114 &2244347607665139083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313626057162642297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5313626057448492213
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +205,7 @@ GameObject:
   - component: {fileID: 5313626057448492214}
   - component: {fileID: 5313626057448492209}
   - component: {fileID: 5313626057448492208}
+  - component: {fileID: 4456142965277569731}
   m_Layer: 5
   m_Name: Thanks
   m_TagString: Untagged
@@ -257,6 +274,21 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u611F\u8C22\u60A8\u7684\u6E38\u73A9\uFF01"
+--- !u!114 &4456142965277569731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313626057448492213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5313626057791602928
 GameObject:
   m_ObjectHideFlags: 0
